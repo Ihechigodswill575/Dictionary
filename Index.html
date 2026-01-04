@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>𝐖𝐨𝐫𝐝𝐍𝐞𝐬𝐭 - Dictionary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Welcome Page Styles */
+        #welcomePage {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .welcome-logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease;
+        }
+
+        .welcome-title {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .welcome-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .welcome-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Main App Styles */
+        #mainApp {
+            display: none;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .search-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        #searchBtn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #searchBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #searchBtn:active {
+            transform: translateY(0);
+        }
+
+        #searchBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .word-title {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-family: Georgia, serif;
+        }
+
+        .phonetic {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .part-of-speech {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px 5px 15px 0;
+        }
+
+        .definition-group {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .definition-group:last-child {
+            border-bottom: none;
+        }
+
+        .definition-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .definition-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            padding-left: 20px;
+        }
+
+        .example {
+            font-style: italic;
+            color: #666;
+            padding-left: 40px;
+            margin-top: 5px;
+        }
+
+        .example:before {
+            content: "\"";
+        }
+
+        .example:after {
+            content: "\"";
+        }
+
+        .synonyms-section, .related-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .section-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .word-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .error-message {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .welcome-title {
+                font-size: 2em;
+            }
+
+            .welcome-logo {
+                font-size: 3em;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .word-title {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome Page -->
+    <div id="welcomePage">
+        <div class="welcome-logo">📚</div>
+        <h1 class="welcome-title">𝐖𝐨𝐫𝐝𝐍𝐞𝐬𝐭</h1>
+        <p class="welcome-subtitle">Your Comprehensive Dictionary Companion</p>
+        <button class="welcome-btn" onclick="enterApp()">Get Started</button>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp">
+        <div class="header">
+            <h1>𝐖𝐨𝐫𝐝𝐍𝐞𝐬𝐭</h1>
+            <p>Discover meanings, pronunciations, and more</p>
+        </div>
+
+        <div class="container">
+            <div class="search-section">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Enter a word..." autocomplete="off">
+                </div>
+                <button id="searchBtn" onclick="searchWord()">Search</button>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Searching for word...</p>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <div class="result-section" id="resultSection">
+                <div id="wordContent"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Created by <strong>DevGodswill</strong></p>
+            <p>Contact us: <a href="mailto:Ihechigodswill575@gmail.com">Ihechigodswill575@gmail.com</a></p>
+        </div>
+    </div>
+
+    <script>
+        // API Keys
+        const MW_COLLEGIATE_KEY = '628e1b76-5bfd-4452-a4bc-106803232ccc';
+        const MW_SCHOOL_KEY = '5881996e-d3f3-4985-8ea9-0abe309e8c70';
+
+        // Enter app function
+        function enterApp() {
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+        }
+
+        // Allow Enter key to search
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchWord();
+                    }
+                });
+            }
+        });
+
+        // Main search function
+        async function searchWord() {
+            const word = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            if (!word) {
+                showError('Please enter a word to search');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+            hideResults();
+
+            try {
+                // Fetch from all APIs
+                const [mwCollegiate, mwSchool, freeDict, datamuse] = await Promise.allSettled([
+                    fetchMerriamWebster(word, MW_COLLEGIATE_KEY, 'collegiate'),
+                    fetchMerriamWebster(word, MW_SCHOOL_KEY, 'sd3'),
+                    fetchFreeDictionary(word),
+                    fetchDatamuse(word)
+                ]);
+
+                // Combine results
+                const combinedData = combineResults(word, mwCollegiate, mwSchool, freeDict, datamuse);
+                
+                if (combinedData) {
+                    displayResults(combinedData);
+                } else {
+                    showError('Word not found. Please check spelling and try again.');
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                showError('An error occurred while searching. Please try again.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Fetch Merriam-Webster
+        async function fetchMerriamWebster(word, apiKey, dictionary) {
+            const url = `https://www.dictionaryapi.com/api/v3/references/${dictionary}/json/${word}?key=${apiKey}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return data;
+        }
+
+        // Fetch Free Dictionary API
+        async function fetchFreeDictionary(word) {
+            const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Not found');
+            const data = await response.json();
+            return data;
+        }
+
+        // Fetch Datamuse API
+        async function fetchDatamuse(word) {
+            const url = `https://api.datamuse.com/words?ml=${word}&max=10`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return data;
+        }
+
+        // Combine results from all APIs
+        function combineResults(word, mwCollegiate, mwSchool, freeDict, datamuse) {
+            const result = {
+                word: word,
+                phonetic: '',
+                definitions: [],
+                synonyms: [],
+                related: []
+            };
+
+            // Get data from Free Dictionary (best for phonetics and structure)
+            if (freeDict.status === 'fulfilled' && freeDict.value && freeDict.value[0]) {
+                const freeDictData = freeDict.value[0];
+                result.phonetic = freeDictData.phonetic || '';
+                
+                if (freeDictData.meanings) {
+                    freeDictData.meanings.forEach(meaning => {
+                        const defGroup = {
+                            partOfSpeech: meaning.partOfSpeech,
+                            definitions: []
+                        };
+                        
+                        meaning.definitions.forEach((def, idx) => {
+                            if (idx < 3) { // Limit to 3 definitions per part of speech
+                                defGroup.definitions.push({
+                                    text: def.definition,
+                                    example: def.example || ''
+                                });
+                            }
+                        });
+                        
+                        result.definitions.push(defGroup);
+                        
+                        // Get synonyms
+                        if (meaning.synonyms && meaning.synonyms.length > 0) {
+                            result.synonyms = [...new Set([...result.synonyms, ...meaning.synonyms.slice(0, 10)])];
+                        }
+                    });
+                }
+            }
+
+            // Supplement with Merriam-Webster if Free Dictionary had no results
+            if (result.definitions.length === 0) {
+                if (mwCollegiate.status === 'fulfilled' && Array.isArray(mwCollegiate.value) && mwCollegiate.value[0]) {
+                    const mwData = mwCollegiate.value[0];
+                    
+                    if (mwData.hwi && mwData.hwi.prs && mwData.hwi.prs[0]) {
+                        result.phonetic = '/' + (mwData.hwi.prs[0].mw || '') + '/';
+                    }
+                    
+                    if (mwData.shortdef) {
+                        const defGroup = {
+                            partOfSpeech: mwData.fl || 'unknown',
+                            definitions: mwData.shortdef.slice(0, 3).map(def => ({
+                                text: def,
+                                example: ''
+                            }))
+                        };
+                        result.definitions.push(defGroup);
+                    }
+                }
+            }
+
+            // Get related words from Datamuse
+            if (datamuse.status === 'fulfilled' && datamuse.value && datamuse.value.length > 0) {
+                result.related = datamuse.value.slice(0, 10).map(item => item.word);
+            }
+
+            return result.definitions.length > 0 ? result : null;
+        }
+
+        // Display results
+        function displayResults(data) {
+            const contentDiv = document.getElementById('wordContent');
+            let html = '';
+
+            // Word title
+            html += `<div class="word-title">${capitalize(data.word)}</div>`;
+
+            // Phonetic
+            if (data.phonetic) {
+                html += `<div class="phonetic">${data.phonetic}</div>`;
+            }
+
+            // Definitions by part of speech
+            data.definitions.forEach(defGroup => {
+                html += `<div class="part-of-speech">${defGroup.partOfSpeech}</div>`;
+                html += `<div class="definition-group">`;
+                
+                defGroup.definitions.forEach((def, idx) => {
+                    html += `<div class="definition-label">${idx + 1}.</div>`;
+                    html += `<div class="definition-text">${def.text}</div>`;
+                    if (def.example) {
+                        html += `<div class="example">${def.example}</div>`;
+                    }
+                });
+                
+                html += `</div>`;
+            });
+
+            // Synonyms
+            if (data.synonyms.length > 0) {
+                html += `<div class="synonyms-section">`;
+                html += `<div class="section-title">Synonyms</div>`;
+                html += `<div class="word-list">`;
+                data.synonyms.forEach(syn => {
+                    html += `<span class="word-tag">${syn}</span>`;
+                });
+                html += `</div></div>`;
+            }
+
+            // Related words
+            if (data.related.length > 0) {
+                html += `<div class="related-section">`;
+                html += `<div class="section-title">Related Words</div>`;
+                html += `<div class="word-list">`;
+                data.related.forEach(rel => {
+                    html += `<span class="word-tag">${rel}</span>`;
+                });
+                html += `</div></div>`;
+            }
+
+            contentDiv.innerHTML = html;
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        // Helper functions
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.getElementById('searchBtn').disabled = show;
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function hideResults() {
+            document.getElementById('resultSection').style.display = 'none';
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
+
+</body>
+</html>
