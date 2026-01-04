@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>𝐖𝐨𝐫𝐝𝐍𝐞𝐬𝐭 - Dictionary</title>
     <style>
         * {
@@ -420,7 +421,7 @@
             }
         });
 
-        // Main search function
+        // Main search function with better error handling
         async function searchWord() {
             const word = document.getElementById('searchInput').value.trim().toLowerCase();
             
@@ -434,16 +435,51 @@
             hideResults();
 
             try {
-                // Fetch from all APIs
-                const [mwCollegiate, mwSchool, freeDict, datamuse] = await Promise.allSettled([
-                    fetchMerriamWebster(word, MW_COLLEGIATE_KEY, 'collegiate'),
-                    fetchMerriamWebster(word, MW_SCHOOL_KEY, 'sd3'),
-                    fetchFreeDictionary(word),
-                    fetchDatamuse(word)
-                ]);
+                // Try Free Dictionary first (no CORS issues)
+                let combinedData = null;
+                
+                try {
+                    const freeDictData = await fetchFreeDictionary(word);
+                    if (freeDictData) {
+                        combinedData = processFreeDictionary(word, freeDictData);
+                    }
+                } catch (e) {
+                    console.log('Free Dictionary failed, trying Merriam-Webster...');
+                }
 
-                // Combine results
-                const combinedData = combineResults(word, mwCollegiate, mwSchool, freeDict, datamuse);
+                // If Free Dictionary fails, try Merriam-Webster
+                if (!combinedData) {
+                    try {
+                        const mwData = await fetchMerriamWebster(word, MW_COLLEGIATE_KEY, 'collegiate');
+                        if (mwData && Array.isArray(mwData) && mwData[0] && typeof mwData[0] === 'object') {
+                            combinedData = processMerriamWebster(word, mwData);
+                        }
+                    } catch (e) {
+                        console.log('Merriam-Webster Collegiate failed, trying School Dictionary...');
+                    }
+                }
+
+                // Try School Dictionary as last resort
+                if (!combinedData) {
+                    try {
+                        const mwSchoolData = await fetchMerriamWebster(word, MW_SCHOOL_KEY, 'sd3');
+                        if (mwSchoolData && Array.isArray(mwSchoolData) && mwSchoolData[0] && typeof mwSchoolData[0] === 'object') {
+                            combinedData = processMerriamWebster(word, mwSchoolData);
+                        }
+                    } catch (e) {
+                        console.log('All APIs failed');
+                    }
+                }
+
+                // Try to get related words (optional, don't fail if this doesn't work)
+                try {
+                    const datamuse = await fetchDatamuse(word);
+                    if (datamuse && combinedData) {
+                        combinedData.related = datamuse.slice(0, 10).map(item => item.word);
+                    }
+                } catch (e) {
+                    console.log('Datamuse failed, skipping related words');
+                }
                 
                 if (combinedData) {
                     displayResults(combinedData);
@@ -458,33 +494,105 @@
             }
         }
 
-        // Fetch Merriam-Webster
+        // Fetch Merriam-Webster with timeout
         async function fetchMerriamWebster(word, apiKey, dictionary) {
-            const url = `https://www.dictionaryapi.com/api/v3/references/${dictionary}/json/${word}?key=${apiKey}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            return data;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+            
+            try {
+                const url = `https://dictionaryapi.com/api/v3/references/${dictionary}/json/${word}?key=${apiKey}`;
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) throw new Error('API request failed');
+                return await response.json();
+            } catch (error) {
+                clearTimeout(timeoutId);
+                throw error;
+            }
         }
 
-        // Fetch Free Dictionary API
+        // Fetch Free Dictionary API with timeout
         async function fetchFreeDictionary(word) {
-            const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
-            const response = await fetch(url);
-            if (!response.ok) throw new Error('Not found');
-            const data = await response.json();
-            return data;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+            
+            try {
+                const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) throw new Error('Not found');
+                return await response.json();
+            } catch (error) {
+                clearTimeout(timeoutId);
+                throw error;
+            }
         }
 
-        // Fetch Datamuse API
+        // Fetch Datamuse API with timeout
         async function fetchDatamuse(word) {
-            const url = `https://api.datamuse.com/words?ml=${word}&max=10`;
-            const response = await fetch(url);
-            const data = await response.json();
-            return data;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+            
+            try {
+                const url = `https://api.datamuse.com/words?ml=${word}&max=10`;
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) throw new Error('Not found');
+                return await response.json();
+            } catch (error) {
+                clearTimeout(timeoutId);
+                throw error;
+            }
         }
 
-        // Combine results from all APIs
-        function combineResults(word, mwCollegiate, mwSchool, freeDict, datamuse) {
+        // Process Free Dictionary response
+        function processFreeDictionary(word, data) {
+            if (!data || !data[0]) return null;
+            
+            const freeDictData = data[0];
+            const result = {
+                word: word,
+                phonetic: freeDictData.phonetic || '',
+                definitions: [],
+                synonyms: [],
+                related: []
+            };
+
+            if (freeDictData.meanings) {
+                freeDictData.meanings.forEach(meaning => {
+                    const defGroup = {
+                        partOfSpeech: meaning.partOfSpeech,
+                        definitions: []
+                    };
+                    
+                    meaning.definitions.forEach((def, idx) => {
+                        if (idx < 3) {
+                            defGroup.definitions.push({
+                                text: def.definition,
+                                example: def.example || ''
+                            });
+                        }
+                    });
+                    
+                    result.definitions.push(defGroup);
+                    
+                    if (meaning.synonyms && meaning.synonyms.length > 0) {
+                        result.synonyms = [...new Set([...result.synonyms, ...meaning.synonyms.slice(0, 10)])];
+                    }
+                });
+            }
+
+            return result.definitions.length > 0 ? result : null;
+        }
+
+        // Process Merriam-Webster response
+        function processMerriamWebster(word, data) {
+            if (!data || !data[0] || typeof data[0] === 'string') return null;
+            
+            const mwData = data[0];
             const result = {
                 word: word,
                 phonetic: '',
@@ -493,62 +601,19 @@
                 related: []
             };
 
-            // Get data from Free Dictionary (best for phonetics and structure)
-            if (freeDict.status === 'fulfilled' && freeDict.value && freeDict.value[0]) {
-                const freeDictData = freeDict.value[0];
-                result.phonetic = freeDictData.phonetic || '';
-                
-                if (freeDictData.meanings) {
-                    freeDictData.meanings.forEach(meaning => {
-                        const defGroup = {
-                            partOfSpeech: meaning.partOfSpeech,
-                            definitions: []
-                        };
-                        
-                        meaning.definitions.forEach((def, idx) => {
-                            if (idx < 3) { // Limit to 3 definitions per part of speech
-                                defGroup.definitions.push({
-                                    text: def.definition,
-                                    example: def.example || ''
-                                });
-                            }
-                        });
-                        
-                        result.definitions.push(defGroup);
-                        
-                        // Get synonyms
-                        if (meaning.synonyms && meaning.synonyms.length > 0) {
-                            result.synonyms = [...new Set([...result.synonyms, ...meaning.synonyms.slice(0, 10)])];
-                        }
-                    });
-                }
+            if (mwData.hwi && mwData.hwi.prs && mwData.hwi.prs[0]) {
+                result.phonetic = '/' + (mwData.hwi.prs[0].mw || '') + '/';
             }
-
-            // Supplement with Merriam-Webster if Free Dictionary had no results
-            if (result.definitions.length === 0) {
-                if (mwCollegiate.status === 'fulfilled' && Array.isArray(mwCollegiate.value) && mwCollegiate.value[0]) {
-                    const mwData = mwCollegiate.value[0];
-                    
-                    if (mwData.hwi && mwData.hwi.prs && mwData.hwi.prs[0]) {
-                        result.phonetic = '/' + (mwData.hwi.prs[0].mw || '') + '/';
-                    }
-                    
-                    if (mwData.shortdef) {
-                        const defGroup = {
-                            partOfSpeech: mwData.fl || 'unknown',
-                            definitions: mwData.shortdef.slice(0, 3).map(def => ({
-                                text: def,
-                                example: ''
-                            }))
-                        };
-                        result.definitions.push(defGroup);
-                    }
-                }
-            }
-
-            // Get related words from Datamuse
-            if (datamuse.status === 'fulfilled' && datamuse.value && datamuse.value.length > 0) {
-                result.related = datamuse.value.slice(0, 10).map(item => item.word);
+            
+            if (mwData.shortdef) {
+                const defGroup = {
+                    partOfSpeech: mwData.fl || 'unknown',
+                    definitions: mwData.shortdef.slice(0, 3).map(def => ({
+                        text: def,
+                        example: ''
+                    }))
+                };
+                result.definitions.push(defGroup);
             }
 
             return result.definitions.length > 0 ? result : null;
@@ -559,15 +624,12 @@
             const contentDiv = document.getElementById('wordContent');
             let html = '';
 
-            // Word title
             html += `<div class="word-title">${capitalize(data.word)}</div>`;
 
-            // Phonetic
             if (data.phonetic) {
                 html += `<div class="phonetic">${data.phonetic}</div>`;
             }
 
-            // Definitions by part of speech
             data.definitions.forEach(defGroup => {
                 html += `<div class="part-of-speech">${defGroup.partOfSpeech}</div>`;
                 html += `<div class="definition-group">`;
@@ -583,8 +645,7 @@
                 html += `</div>`;
             });
 
-            // Synonyms
-            if (data.synonyms.length > 0) {
+            if (data.synonyms && data.synonyms.length > 0) {
                 html += `<div class="synonyms-section">`;
                 html += `<div class="section-title">Synonyms</div>`;
                 html += `<div class="word-list">`;
@@ -594,8 +655,7 @@
                 html += `</div></div>`;
             }
 
-            // Related words
-            if (data.related.length > 0) {
+            if (data.related && data.related.length > 0) {
                 html += `<div class="related-section">`;
                 html += `<div class="section-title">Related Words</div>`;
                 html += `<div class="word-list">`;
@@ -609,7 +669,6 @@
             document.getElementById('resultSection').style.display = 'block';
         }
 
-        // Helper functions
         function showLoading(show) {
             document.getElementById('loading').style.display = show ? 'block' : 'none';
             document.getElementById('searchBtn').disabled = show;
