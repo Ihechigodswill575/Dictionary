@@ -18,8 +18,6 @@
             --secondary: #764ba2;
             --success: #48bb78;
             --danger: #f56565;
-            --warning: #ed8936;
-            --info: #4299e1;
             --dark: #1a202c;
             --dark-light: #2d3748;
             --gray: #4a5568;
@@ -32,48 +30,30 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* Responsive font sizing */
-        @media (max-width: 480px) {
-            html { font-size: 14px; }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            html { font-size: 15px; }
-        }
-
-        @media (min-width: 769px) {
-            html { font-size: 16px; }
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             min-height: 100vh;
-            min-height: -webkit-fill-available;
-            overflow-x: hidden;
-            position: relative;
+            overflow: hidden;
         }
 
-        /* Auth Screen - Fully Responsive */
+        /* Auth Screen */
         .auth-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            min-height: -webkit-fill-available;
-            padding: clamp(10px, 3vw, 20px);
-            width: 100%;
+            padding: 20px;
         }
 
         .auth-box {
             background: white;
-            border-radius: clamp(15px, 4vw, 20px);
-            padding: clamp(20px, 5vw, 40px);
+            border-radius: 20px;
+            padding: 40px 30px;
             width: 100%;
-            max-width: min(450px, 95vw);
+            max-width: 450px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             animation: slideUp 0.5s ease;
-            margin: auto;
         }
 
         @keyframes slideUp {
@@ -89,11 +69,11 @@
 
         .auth-header {
             text-align: center;
-            margin-bottom: clamp(20px, 4vw, 30px);
+            margin-bottom: 30px;
         }
 
         .auth-header h1 {
-            font-size: clamp(20px, 5vw, 28px);
+            font-size: clamp(22px, 5vw, 28px);
             color: var(--dark);
             margin-bottom: 8px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -102,19 +82,13 @@
             background-clip: text;
             font-weight: 800;
             line-height: 1.2;
-            word-break: break-word;
         }
 
         .auth-header .powered-by {
             color: var(--gray);
-            font-size: clamp(11px, 2.5vw, 14px);
+            font-size: 14px;
             font-weight: 600;
             margin-top: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            flex-wrap: wrap;
         }
 
         .auth-header .powered-by span {
@@ -127,27 +101,24 @@
 
         .auth-tabs {
             display: flex;
-            gap: clamp(5px, 2vw, 10px);
-            margin-bottom: clamp(20px, 4vw, 30px);
+            gap: 10px;
+            margin-bottom: 30px;
             background: var(--light);
-            padding: clamp(3px, 1vw, 5px);
-            border-radius: clamp(8px, 2vw, 12px);
+            padding: 5px;
+            border-radius: 12px;
         }
 
         .auth-tab {
             flex: 1;
-            padding: clamp(10px, 2.5vw, 12px);
+            padding: 12px;
             border: none;
             background: transparent;
-            border-radius: clamp(6px, 1.5vw, 8px);
-            font-size: clamp(12px, 2.5vw, 14px);
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--gray);
             cursor: pointer;
             transition: all 0.3s ease;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .auth-tab.active {
@@ -162,52 +133,41 @@
 
         .auth-form.active {
             display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .form-group {
-            margin-bottom: clamp(15px, 3vw, 20px);
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: clamp(6px, 1.5vw, 8px);
+            margin-bottom: 8px;
             color: var(--dark);
-            font-size: clamp(12px, 2.5vw, 14px);
+            font-size: 14px;
             font-weight: 600;
         }
 
-        .form-group input,
-        .form-group select {
+        .form-group input {
             width: 100%;
-            padding: clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px);
+            padding: 12px 16px;
             border: 2px solid var(--border);
-            border-radius: clamp(8px, 2vw, 10px);
-            font-size: clamp(13px, 2.5vw, 14px);
+            border-radius: 10px;
+            font-size: 14px;
             transition: all 0.3s ease;
             outline: none;
-            background: white;
-            -webkit-appearance: none;
-            appearance: none;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
+        .form-group input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .btn {
             width: 100%;
-            padding: clamp(12px, 3vw, 14px);
+            padding: 14px;
             border: none;
-            border-radius: clamp(8px, 2vw, 10px);
-            font-size: clamp(13px, 2.5vw, 15px);
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -215,7 +175,6 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            touch-action: manipulation;
         }
 
         .btn-primary {
@@ -230,9 +189,9 @@
         .divider {
             display: flex;
             align-items: center;
-            margin: clamp(20px, 4vw, 25px) 0;
+            margin: 25px 0;
             color: var(--gray);
-            font-size: clamp(11px, 2.5vw, 13px);
+            font-size: 13px;
         }
 
         .divider::before,
@@ -244,31 +203,29 @@
         }
 
         .divider span {
-            padding: 0 clamp(10px, 3vw, 15px);
-            white-space: nowrap;
+            padding: 0 15px;
         }
 
         .social-buttons {
             display: flex;
             flex-direction: column;
-            gap: clamp(10px, 2.5vw, 12px);
+            gap: 12px;
         }
 
         .btn-social {
             width: 100%;
-            padding: clamp(10px, 2.5vw, 12px);
+            padding: 12px;
             border: 2px solid var(--border);
-            border-radius: clamp(8px, 2vw, 10px);
+            border-radius: 10px;
             background: white;
-            font-size: clamp(12px, 2.5vw, 14px);
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: clamp(8px, 2vw, 10px);
-            touch-action: manipulation;
+            gap: 10px;
         }
 
         .btn-social:active {
@@ -276,31 +233,10 @@
             background: var(--light);
         }
 
-        .btn-social svg {
-            width: clamp(18px, 4vw, 20px);
-            height: clamp(18px, 4vw, 20px);
-            flex-shrink: 0;
-        }
-
-        .phone-input-group {
-            display: flex;
-            gap: clamp(8px, 2vw, 10px);
-        }
-
-        .phone-input-group select {
-            width: clamp(80px, 20vw, 100px);
-            flex-shrink: 0;
-        }
-
-        .phone-input-group input {
-            flex: 1;
-            min-width: 0;
-        }
-
         .error-message,
         .success-message {
-            font-size: clamp(11px, 2.5vw, 13px);
-            margin-top: clamp(6px, 1.5vw, 8px);
+            font-size: 13px;
+            margin-top: 8px;
             display: none;
         }
 
@@ -317,78 +253,67 @@
             display: block;
         }
 
-        /* Main App - Fully Responsive */
+        /* Main App */
         .main-app {
             display: none;
             height: 100vh;
-            height: -webkit-fill-available;
             flex-direction: column;
             background: var(--dark);
-            overflow: hidden;
         }
 
         .main-app.active {
             display: flex;
         }
 
-        /* Top Bar - Mobile Optimized */
+        /* Top Bar */
         .top-bar {
             background: var(--dark-light);
-            padding: clamp(10px, 2.5vw, 15px) clamp(15px, 3vw, 20px);
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            flex-wrap: wrap;
-            gap: 10px;
-            min-height: clamp(50px, 12vw, 60px);
+            flex-shrink: 0;
         }
 
         .top-bar-left {
             display: flex;
             align-items: center;
-            gap: clamp(10px, 2.5vw, 15px);
-            flex: 1;
-            min-width: 0;
+            gap: 15px;
         }
 
         .app-logo {
-            font-size: clamp(16px, 4vw, 20px);
+            font-size: 18px;
             font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            white-space: nowrap;
         }
 
         .powered-badge {
-            font-size: clamp(9px, 2vw, 10px);
+            font-size: 10px;
             color: rgba(255,255,255,0.6);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .top-bar-right {
             display: flex;
             align-items: center;
-            gap: clamp(8px, 2vw, 10px);
+            gap: 10px;
         }
 
         .icon-btn {
-            width: clamp(32px, 8vw, 36px);
-            height: clamp(32px, 8vw, 36px);
+            width: 36px;
+            height: 36px;
             border: none;
             background: rgba(255,255,255,0.1);
-            border-radius: clamp(6px, 1.5vw, 8px);
+            border-radius: 8px;
             color: white;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            flex-shrink: 0;
         }
 
         .icon-btn:active {
@@ -397,11 +322,11 @@
         }
 
         .icon-btn svg {
-            width: clamp(16px, 4vw, 18px);
-            height: clamp(16px, 4vw, 18px);
+            width: 18px;
+            height: 18px;
         }
 
-        /* Mobile Layout */
+        /* App Content */
         .app-content {
             flex: 1;
             display: flex;
@@ -409,16 +334,16 @@
             position: relative;
         }
 
-        /* Sidebar - Collapsible on Mobile */
+        /* Sidebar */
         .sidebar {
             width: 100%;
             max-width: 280px;
             background: var(--dark-light);
             border-right: 1px solid rgba(255,255,255,0.1);
             overflow-y: auto;
-            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
         @media (max-width: 768px) {
@@ -453,29 +378,30 @@
         }
 
         .sidebar-section {
-            padding: clamp(15px, 3vw, 20px);
+            padding: 20px;
         }
 
         .sidebar-title {
             color: rgba(255,255,255,0.5);
-            font-size: clamp(10px, 2.5vw, 11px);
+            font-size: 11px;
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 1px;
-            margin-bottom: clamp(10px, 2.5vw, 12px);
+            margin-bottom: 12px;
         }
 
         .prompt-input {
             width: 100%;
-            padding: clamp(10px, 2.5vw, 12px);
+            padding: 12px;
             background: var(--dark);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: clamp(6px, 1.5vw, 8px);
+            border-radius: 8px;
             color: white;
-            font-size: clamp(13px, 2.5vw, 14px);
+            font-size: 14px;
             resize: vertical;
-            min-height: clamp(80px, 20vw, 100px);
+            min-height: 100px;
             outline: none;
+            font-family: inherit;
         }
 
         .prompt-input:focus {
@@ -484,41 +410,43 @@
 
         .tech-stack-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 15vw, 80px), 1fr));
-            gap: clamp(8px, 2vw, 10px);
-            margin-top: clamp(10px, 2.5vw, 12px);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 12px;
         }
 
         .tech-btn {
-            padding: clamp(8px, 2vw, 10px);
+            padding: 10px;
             background: var(--dark);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: clamp(6px, 1.5vw, 8px);
+            border-radius: 8px;
             color: rgba(255,255,255,0.7);
-            font-size: clamp(11px, 2.5vw, 12px);
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
             font-weight: 600;
         }
 
-        .tech-btn:active,
         .tech-btn.active {
             background: var(--primary);
             border-color: var(--primary);
             color: white;
+        }
+
+        .tech-btn:active {
             transform: scale(0.95);
         }
 
         .generate-btn {
             width: 100%;
-            margin-top: clamp(15px, 3vw, 20px);
-            padding: clamp(12px, 3vw, 14px);
+            margin-top: 20px;
+            padding: 14px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
-            border-radius: clamp(8px, 2vw, 10px);
+            border-radius: 10px;
             color: white;
-            font-size: clamp(13px, 2.5vw, 14px);
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -530,16 +458,16 @@
 
         .templates-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 25vw, 140px), 1fr));
-            gap: clamp(10px, 2.5vw, 12px);
-            margin-top: clamp(10px, 2.5vw, 12px);
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
         }
 
         .template-card {
             background: var(--dark);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: clamp(8px, 2vw, 10px);
-            padding: clamp(12px, 3vw, 15px);
+            border-radius: 10px;
+            padding: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
@@ -551,17 +479,17 @@
         }
 
         .template-icon {
-            font-size: clamp(24px, 6vw, 32px);
-            margin-bottom: clamp(6px, 1.5vw, 8px);
+            font-size: 32px;
+            margin-bottom: 8px;
         }
 
         .template-name {
             color: white;
-            font-size: clamp(11px, 2.5vw, 12px);
+            font-size: 12px;
             font-weight: 600;
         }
 
-        /* Main Editor Area */
+        /* Editor Area */
         .editor-area {
             flex: 1;
             display: flex;
@@ -575,9 +503,8 @@
             background: var(--dark-light);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             overflow-x: auto;
-            overflow-y: hidden;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            flex-shrink: 0;
         }
 
         .editor-tabs::-webkit-scrollbar {
@@ -585,9 +512,9 @@
         }
 
         .editor-tab {
-            padding: clamp(10px, 2.5vw, 12px) clamp(15px, 3vw, 20px);
+            padding: 12px 20px;
             color: rgba(255,255,255,0.6);
-            font-size: clamp(12px, 2.5vw, 13px);
+            font-size: 13px;
             border: none;
             background: transparent;
             cursor: pointer;
@@ -607,28 +534,39 @@
             flex: 1;
             display: flex;
             overflow: hidden;
+            position: relative;
         }
 
         .code-editor {
             flex: 1;
             background: var(--dark);
-            color: white;
-            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-            font-size: clamp(11px, 2.5vw, 13px);
-            padding: clamp(15px, 3vw, 20px);
+            color: #a0aec0;
+            font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            padding: 20px;
             overflow: auto;
             -webkit-overflow-scrolling: touch;
             line-height: 1.6;
             white-space: pre-wrap;
             word-break: break-word;
+            outline: none;
+        }
+
+        .code-editor:empty:before {
+            content: '// Start typing or use AI to generate code...\n// Powered by DevGodswill🕸✍️';
+            color: rgba(255,255,255,0.3);
         }
 
         .preview-pane {
             flex: 1;
             background: white;
             border-left: 1px solid rgba(255,255,255,0.1);
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
+            overflow: hidden;
+            display: none;
+        }
+
+        .preview-pane.active {
+            display: block;
         }
 
         .preview-frame {
@@ -637,24 +575,60 @@
             border: none;
         }
 
-        /* Bottom Action Bar - Mobile Optimized */
+        /* View Modes */
+        .view-code-only .preview-pane {
+            display: none;
+        }
+
+        .view-code-only .code-editor {
+            width: 100%;
+        }
+
+        .view-preview-only .code-editor {
+            display: none;
+        }
+
+        .view-preview-only .preview-pane {
+            display: block;
+            width: 100%;
+        }
+
+        .view-split .code-editor,
+        .view-split .preview-pane {
+            display: block;
+            width: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .view-split .code-editor,
+            .view-split .preview-pane {
+                width: 100%;
+            }
+
+            .view-split .editor-content {
+                flex-direction: column;
+            }
+        }
+
+        /* Bottom Bar */
         .bottom-bar {
             background: var(--dark-light);
-            padding: clamp(10px, 2.5vw, 12px);
+            padding: 12px;
             border-top: 1px solid rgba(255,255,255,0.1);
             display: flex;
-            gap: clamp(8px, 2vw, 10px);
+            gap: 10px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            flex-shrink: 0;
         }
 
         .bottom-btn {
-            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+            padding: 10px 20px;
             background: rgba(255,255,255,0.1);
             border: none;
-            border-radius: clamp(6px, 1.5vw, 8px);
+            border-radius: 8px;
             color: white;
-            font-size: clamp(12px, 2.5vw, 13px);
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
@@ -667,7 +641,7 @@
             transform: scale(0.95);
         }
 
-        /* Modal - Fully Responsive */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -679,7 +653,7 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: clamp(15px, 3vw, 20px);
+            padding: 20px;
         }
 
         .modal.show {
@@ -688,32 +662,30 @@
 
         .modal-content {
             background: var(--dark-light);
-            border-radius: clamp(15px, 3vw, 20px);
-            padding: clamp(20px, 4vw, 30px);
+            border-radius: 20px;
+            padding: 30px;
             width: 100%;
-            max-width: min(500px, 95vw);
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            animation: slideUp 0.3s ease;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: clamp(15px, 3vw, 20px);
+            margin-bottom: 20px;
         }
 
         .modal-title {
             color: white;
-            font-size: clamp(16px, 4vw, 18px);
+            font-size: 18px;
             font-weight: 700;
         }
 
         .modal-close {
-            width: clamp(28px, 7vw, 32px);
-            height: clamp(28px, 7vw, 32px);
+            width: 32px;
+            height: 32px;
             border: none;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
@@ -722,16 +694,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            font-size: 20px;
         }
 
         .modal-body {
             color: rgba(255,255,255,0.8);
-            font-size: clamp(13px, 2.5vw, 14px);
+            font-size: 14px;
             line-height: 1.6;
         }
 
-        /* Loading Spinner */
+        /* Loading */
         .loading {
             display: none;
             position: fixed;
@@ -746,8 +718,8 @@
         }
 
         .spinner {
-            width: clamp(40px, 10vw, 50px);
-            height: clamp(40px, 10vw, 50px);
+            width: 50px;
+            height: 50px;
             border: 4px solid rgba(255,255,255,0.3);
             border-top-color: var(--primary);
             border-radius: 50%;
@@ -758,17 +730,17 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Toast Notifications */
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: clamp(20px, 5vw, 30px);
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--dark-light);
             color: white;
-            padding: clamp(12px, 3vw, 15px) clamp(20px, 4vw, 25px);
-            border-radius: clamp(8px, 2vw, 10px);
-            font-size: clamp(13px, 2.5vw, 14px);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 14px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             z-index: 3000;
             display: none;
@@ -792,91 +764,30 @@
             }
         }
 
-        /* Landscape Mode Optimizations */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .auth-box {
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-
-            .auth-header h1 {
-                font-size: 20px;
-            }
-
-            .form-group {
-                margin-bottom: 12px;
-            }
+        /* Phone Input */
+        .phone-input-group {
+            display: flex;
+            gap: 10px;
         }
 
-        /* Extra Small Devices */
-        @media (max-width: 320px) {
-            .top-bar {
-                padding: 8px 12px;
-            }
-
-            .app-logo {
-                font-size: 14px;
-            }
-
-            .tech-stack-grid {
-                grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
-            }
+        .phone-input-group select {
+            width: 100px;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
         }
 
-        /* Large Devices */
-        @media (min-width: 1024px) {
-            .sidebar {
-                transform: translateX(0) !important;
-            }
-
-            .sidebar-overlay {
-                display: none !important;
-            }
-
-            .editor-content {
-                flex-direction: row;
-            }
-
-            .code-editor,
-            .preview-pane {
-                width: 50%;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            .top-bar,
-            .sidebar,
-            .bottom-bar,
-            .modal {
-                display: none !important;
-            }
-
-            .main-app {
-                height: auto;
-            }
-        }
-
-        /* Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* High Contrast Mode */
-        @media (prefers-contrast: high) {
-            .btn, .icon-btn, .tech-btn {
-                border: 2px solid currentColor;
-            }
+        .phone-input-group input {
+            flex: 1;
         }
     </style>
 </head>
 <body>
 
-    <!-- Authentication Screen -->
+    <!-- Auth Container -->
     <div class="auth-container" id="authContainer">
         <div class="auth-box">
             <div class="auth-header">
@@ -886,7 +797,6 @@
                 </div>
             </div>
 
-            <!-- Auth Tabs -->
             <div class="auth-tabs">
                 <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
                 <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
@@ -903,10 +813,6 @@
                     <input type="password" id="loginPassword" placeholder="Enter your password">
                 </div>
                 <button class="btn btn-primary" onclick="loginWithEmail()">
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
                     Login
                 </button>
                 <div class="error-message" id="loginError"></div>
@@ -950,10 +856,6 @@
                     <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
                 </div>
                 <button class="btn btn-primary" onclick="signupWithEmail()">
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                    </svg>
                     Create Account
                 </button>
                 <div class="error-message" id="signupError"></div>
@@ -984,7 +886,7 @@
         </div>
     </div>
 
-    <!-- Phone Authentication Modal -->
+    <!-- Phone Auth Modal -->
     <div class="modal" id="phoneAuthModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1000,16 +902,12 @@
                             <option value="+44">🇬🇧 +44</option>
                             <option value="+91">🇮🇳 +91</option>
                             <option value="+234">🇳🇬 +234</option>
-                            <option value="+86">🇨🇳 +86</option>
-                            <option value="+81">🇯🇵 +81</option>
-                            <option value="+49">🇩🇪 +49</option>
-                            <option value="+33">🇫🇷 +33</option>
                         </select>
                         <input type="tel" id="phoneNumber" placeholder="Enter phone number">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="sendPhoneVerification()">
-                    Send Verification Code
+                    Send Code
                 </button>
                 <div class="error-message" id="phoneError"></div>
                 <div class="success-message" id="phoneSuccess"></div>
@@ -1017,12 +915,12 @@
         </div>
     </div>
 
-    <!-- Main Application -->
+    <!-- Main App -->
     <div class="main-app" id="mainApp">
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="top-bar-left">
-                <button class="icon-btn" id="menuBtn" onclick="toggleSidebar()">
+                <button class="icon-btn" onclick="toggleSidebar()">
                     <svg fill="currentColor" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                     </svg>
@@ -1033,12 +931,6 @@
                 </div>
             </div>
             <div class="top-bar-right">
-                <button class="icon-btn" onclick="showSettings()">
-                    <svg fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319z"/>
-                    </svg>
-                </button>
                 <button class="icon-btn" onclick="logout()">
                     <svg fill="currentColor" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
@@ -1049,7 +941,6 @@
         </div>
 
         <div class="app-content">
-            <!-- Sidebar Overlay (Mobile) -->
             <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
             <!-- Sidebar -->
@@ -1061,15 +952,15 @@
                         id="aiPrompt" 
                         placeholder="Describe what you want to build...
 
-Example: Create a todo app with dark mode and local storage"
+Example: Create a todo app with dark mode"
                     ></textarea>
                     <div class="tech-stack-grid">
                         <button class="tech-btn active" data-tech="html">HTML</button>
                         <button class="tech-btn active" data-tech="css">CSS</button>
                         <button class="tech-btn active" data-tech="js">JS</button>
                         <button class="tech-btn" data-tech="react">React</button>
-                        <button class="tech-btn" data-tech="vue">Vue</button>
                         <button class="tech-btn" data-tech="tailwind">Tailwind</button>
+                        <button class="tech-btn" data-tech="bootstrap">Bootstrap</button>
                     </div>
                     <button class="generate-btn" onclick="generateCode()">
                         🚀 Generate Code
@@ -1087,10 +978,6 @@ Example: Create a todo app with dark mode and local storage"
                             <div class="template-icon">🔢</div>
                             <div class="template-name">Calculator</div>
                         </div>
-                        <div class="template-card" onclick="loadTemplate('weather')">
-                            <div class="template-icon">🌤️</div>
-                            <div class="template-name">Weather</div>
-                        </div>
                         <div class="template-card" onclick="loadTemplate('notes')">
                             <div class="template-icon">📝</div>
                             <div class="template-name">Notes</div>
@@ -1099,10 +986,6 @@ Example: Create a todo app with dark mode and local storage"
                             <div class="template-icon">⏱️</div>
                             <div class="template-name">Timer</div>
                         </div>
-                        <div class="template-card" onclick="loadTemplate('quiz')">
-                            <div class="template-icon">🎯</div>
-                            <div class="template-name">Quiz</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1110,69 +993,43 @@ Example: Create a todo app with dark mode and local storage"
             <!-- Editor Area -->
             <div class="editor-area">
                 <div class="editor-tabs">
-                    <button class="editor-tab active" onclick="switchEditorTab('code')">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display: inline; vertical-align: middle; margin-right: 5px;">
-                            <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
-                        </svg>
+                    <button class="editor-tab active" data-view="code" onclick="switchView('code')">
                         Code
                     </button>
-                    <button class="editor-tab" onclick="switchEditorTab('preview')">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display: inline; vertical-align: middle; margin-right: 5px;">
-                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                        </svg>
+                    <button class="editor-tab" data-view="preview" onclick="switchView('preview')">
                         Preview
                     </button>
-                    <button class="editor-tab" onclick="switchEditorTab('split')">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display: inline; vertical-align: middle; margin-right: 5px;">
-                            <path d="M1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5h-13zM1 1.5A1.5 1.5 0 0 1 2.5 0h11A1.5 1.5 0 0 1 15 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5v-13zM8 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 4z"/>
-                        </svg>
+                    <button class="editor-tab" data-view="split" onclick="switchView('split')">
                         Split
                     </button>
                 </div>
 
-                <div class="editor-content" id="editorContent">
-                    <div class="code-editor" id="codeEditor" contenteditable="true">
-// Welcome to Mobile Phone Code Generator!
-// Powered by DevGodswill🕸✍️
-
-// Your AI-generated code will appear here
-// Or start typing to write your own code
-
-console.log("Ready to build amazing apps!");
-                    </div>
-                    <div class="preview-pane" id="previewPane" style="display: none;">
+                <div class="editor-content view-code-only" id="editorContent">
+                    <div class="code-editor" id="codeEditor" contenteditable="true"></div>
+                    <div class="preview-pane" id="previewPane">
                         <iframe class="preview-frame" id="previewFrame"></iframe>
                     </div>
                 </div>
 
                 <div class="bottom-bar">
-                    <button class="bottom-btn" onclick="runCode()">
-                        ▶️ Run
-                    </button>
-                    <button class="bottom-btn" onclick="formatCode()">
-                        ✨ Format
-                    </button>
-                    <button class="bottom-btn" onclick="exportCode()">
-                        💾 Export
-                    </button>
-                    <button class="bottom-btn" onclick="shareCode()">
-                        🔗 Share
-                    </button>
+                    <button class="bottom-btn" onclick="runCode()">▶️ Run</button>
+                    <button class="bottom-btn" onclick="formatCode()">✨ Format</button>
+                    <button class="bottom-btn" onclick="exportCode()">💾 Export</button>
+                    <button class="bottom-btn" onclick="shareCode()">🔗 Share</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Loading Spinner -->
+    <!-- Loading -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { 
@@ -1181,13 +1038,10 @@ console.log("Ready to build amazing apps!");
             signInWithEmailAndPassword,
             signInWithPopup,
             GoogleAuthProvider,
-            signInWithPhoneNumber,
-            RecaptchaVerifier,
             signOut,
             onAuthStateChanged
         } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
-        // Your Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCv4f2ANqT6M6p7y4G6j-kWYZswc-Hnt6s",
             authDomain: "websites-8c741.firebaseapp.com",
@@ -1198,22 +1052,17 @@ console.log("Ready to build amazing apps!");
             measurementId: "G-JNZW1M1PLK"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Make auth available globally
         window.firebaseAuth = auth;
         window.googleProvider = googleProvider;
         window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
         window.signInWithPopup = signInWithPopup;
-        window.signInWithPhoneNumber = signInWithPhoneNumber;
-        window.RecaptchaVerifier = RecaptchaVerifier;
         window.signOut = signOut;
 
-        // Check auth state
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 showMainApp();
@@ -1224,10 +1073,8 @@ console.log("Ready to build amazing apps!");
     </script>
 
     <script>
-        // Global state
-        let currentUser = null;
-        let currentCode = '';
         let selectedTechStack = ['html', 'css', 'js'];
+        let currentView = 'code';
 
         // Auth Functions
         function switchAuthTab(tab) {
@@ -1266,7 +1113,6 @@ console.log("Ready to build amazing apps!");
                 await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
                 successEl.textContent = 'Login successful!';
                 successEl.classList.add('show');
-                setTimeout(() => showMainApp(), 1000);
             } catch (error) {
                 errorEl.textContent = getErrorMessage(error.code);
                 errorEl.classList.add('show');
@@ -1306,9 +1152,8 @@ console.log("Ready to build amazing apps!");
             try {
                 showLoading(true);
                 await window.createUserWithEmailAndPassword(window.firebaseAuth, email, password);
-                successEl.textContent = 'Account created successfully!';
+                successEl.textContent = 'Account created!';
                 successEl.classList.add('show');
-                setTimeout(() => showMainApp(), 1000);
             } catch (error) {
                 errorEl.textContent = getErrorMessage(error.code);
                 errorEl.classList.add('show');
@@ -1322,7 +1167,6 @@ console.log("Ready to build amazing apps!");
                 showLoading(true);
                 await window.signInWithPopup(window.firebaseAuth, window.googleProvider);
                 showToast('✅ Logged in with Google!');
-                showMainApp();
             } catch (error) {
                 showToast('❌ ' + getErrorMessage(error.code));
             } finally {
@@ -1338,60 +1182,16 @@ console.log("Ready to build amazing apps!");
             document.getElementById('phoneAuthModal').classList.remove('show');
         }
 
-        async function sendPhoneVerification() {
-            const countryCode = document.getElementById('countryCode').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const fullPhone = countryCode + phoneNumber;
-            const errorEl = document.getElementById('phoneError');
-            const successEl = document.getElementById('phoneSuccess');
-
-            errorEl.classList.remove('show');
-            successEl.classList.remove('show');
-
-            if (!phoneNumber) {
-                errorEl.textContent = 'Please enter a phone number';
-                errorEl.classList.add('show');
-                return;
-            }
-
-            try {
-                showLoading(true);
-                // Initialize reCAPTCHA
-                if (!window.recaptchaVerifier) {
-                    window.recaptchaVerifier = new window.RecaptchaVerifier(window.firebaseAuth, 'phoneAuthModal', {
-                        'size': 'invisible',
-                        'callback': (response) => {
-                            // reCAPTCHA solved
-                        }
-                    });
-                }
-
-                const confirmationResult = await window.signInWithPhoneNumber(
-                    window.firebaseAuth, 
-                    fullPhone, 
-                    window.recaptchaVerifier
-                );
-                
-                window.confirmationResult = confirmationResult;
-                successEl.textContent = 'Verification code sent!';
-                successEl.classList.add('show');
-                
-                // Here you would show a verification code input
-                showToast('📱 Verification code sent! (Feature in development)');
-                setTimeout(() => closePhoneAuth(), 2000);
-            } catch (error) {
-                errorEl.textContent = getErrorMessage(error.code);
-                errorEl.classList.add('show');
-            } finally {
-                showLoading(false);
-            }
+        function sendPhoneVerification() {
+            showToast('📱 Phone auth coming soon!');
+            setTimeout(() => closePhoneAuth(), 2000);
         }
 
         async function logout() {
             try {
                 await window.signOut(window.firebaseAuth);
                 showAuthScreen();
-                showToast('👋 Logged out successfully');
+                showToast('👋 Logged out');
             } catch (error) {
                 showToast('❌ Error logging out');
             }
@@ -1399,21 +1199,17 @@ console.log("Ready to build amazing apps!");
 
         function getErrorMessage(errorCode) {
             const errorMessages = {
-                'auth/email-already-in-use': 'This email is already registered',
-                'auth/invalid-email': 'Invalid email address',
-                'auth/operation-not-allowed': 'Operation not allowed',
-                'auth/weak-password': 'Password is too weak',
-                'auth/user-disabled': 'This account has been disabled',
-                'auth/user-not-found': 'No account found with this email',
+                'auth/email-already-in-use': 'Email already registered',
+                'auth/invalid-email': 'Invalid email',
+                'auth/weak-password': 'Password too weak',
+                'auth/user-not-found': 'No account found',
                 'auth/wrong-password': 'Incorrect password',
-                'auth/invalid-credential': 'Invalid email or password',
-                'auth/too-many-requests': 'Too many attempts. Please try again later',
-                'auth/network-request-failed': 'Network error. Check your connection'
+                'auth/invalid-credential': 'Invalid credentials',
+                'auth/too-many-requests': 'Too many attempts',
             };
-            return errorMessages[errorCode] || 'An error occurred. Please try again';
+            return errorMessages[errorCode] || 'An error occurred';
         }
 
-        // App Functions
         function showAuthScreen() {
             document.getElementById('authContainer').style.display = 'flex';
             document.getElementById('mainApp').classList.remove('active');
@@ -1424,6 +1220,7 @@ console.log("Ready to build amazing apps!");
             document.getElementById('mainApp').classList.add('active');
         }
 
+        // App Functions
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -1434,33 +1231,27 @@ console.log("Ready to build amazing apps!");
             }
         }
 
-        function switchEditorTab(tab) {
+        function switchView(view) {
+            currentView = view;
+            const editorContent = document.getElementById('editorContent');
             const tabs = document.querySelectorAll('.editor-tab');
-            const codeEditor = document.getElementById('codeEditor');
-            const previewPane = document.getElementById('previewPane');
-
+            
             tabs.forEach(t => t.classList.remove('active'));
-            event.target.closest('.editor-tab').classList.add('active');
-
-            if (tab === 'code') {
-                codeEditor.style.display = 'block';
-                codeEditor.style.width = '100%';
-                previewPane.style.display = 'none';
-            } else if (tab === 'preview') {
-                codeEditor.style.display = 'none';
-                previewPane.style.display = 'block';
-                previewPane.style.width = '100%';
+            event.target.classList.add('active');
+            
+            editorContent.className = 'editor-content';
+            
+            if (view === 'code') {
+                editorContent.classList.add('view-code-only');
+            } else if (view === 'preview') {
+                editorContent.classList.add('view-preview-only');
                 runCode();
-            } else if (tab === 'split') {
-                codeEditor.style.display = 'block';
-                codeEditor.style.width = '50%';
-                previewPane.style.display = 'block';
-                previewPane.style.width = '50%';
+            } else if (view === 'split') {
+                editorContent.classList.add('view-split');
                 runCode();
             }
         }
 
-        // Tech stack selection
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('tech-btn')) {
                 e.target.classList.toggle('active');
@@ -1475,7 +1266,6 @@ console.log("Ready to build amazing apps!");
             }
         });
 
-        // AI Code Generation
         async function generateCode() {
             const prompt = document.getElementById('aiPrompt').value;
             
@@ -1486,7 +1276,7 @@ console.log("Ready to build amazing apps!");
 
             try {
                 showLoading(true);
-                showToast('🤖 Generating code with AI...');
+                showToast('🤖 Generating code...');
 
                 const response = await fetch('https://api.anthropic.com/v1/messages', {
                     method: 'POST',
@@ -1498,23 +1288,18 @@ console.log("Ready to build amazing apps!");
                         max_tokens: 1000,
                         messages: [{
                             role: 'user',
-                            content: `You are an expert mobile-first web developer. Create a complete, production-ready, mobile-responsive application based on this description: "${prompt}". 
+                            content: `Create a complete, mobile-responsive web app: "${prompt}". 
 
-Use these technologies: ${selectedTechStack.join(', ')}.
+Use: ${selectedTechStack.join(', ')}.
 
 Requirements:
-1. Create a SINGLE HTML file with embedded CSS and JavaScript
-2. Make it fully responsive for mobile phones (use clamp(), viewport units, media queries)
-3. Use modern, clean design with gradients and smooth animations
-4. Include proper touch interactions for mobile
-5. Add proper meta tags for mobile
-6. Use CSS variables for theming
-7. Make all text and buttons easily tappable on mobile (min 44px touch targets)
-8. Implement swipe gestures where appropriate
-9. Use -webkit prefixes for iOS compatibility
-10. Test that all features work on small screens (320px+)
+- Single HTML file with embedded CSS/JS
+- Fully mobile responsive
+- Modern design with gradients
+- Touch-friendly (44px+ buttons)
+- Clean, production-ready code
 
-Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> and include everything in one file.`
+Return ONLY the HTML code, no explanations.`
                         }]
                     })
                 });
@@ -1525,50 +1310,45 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
                     .map(item => item.text)
                     .join('\n');
 
-                // Extract code from markdown if present
                 let cleanCode = generatedCode.replace(/```html\n?/g, '').replace(/```\n?/g, '').trim();
                 
                 document.getElementById('codeEditor').textContent = cleanCode;
-                currentCode = cleanCode;
                 
-                showToast('✅ Code generated successfully!');
-                
-                // Auto-switch to split view
-                document.querySelectorAll('.editor-tab')[2].click();
+                showToast('✅ Code generated!');
+                switchView('split');
             } catch (error) {
-                console.error('Generation error:', error);
-                showToast('❌ Error generating code. Please try again.');
+                console.error(error);
+                showToast('❌ Error generating code');
             } finally {
                 showLoading(false);
             }
         }
 
-        // Template Loading
         const templates = {
             todo: `<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Todo App</title>
+    <title>Todo App</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             min-height: 100vh;
-            padding: clamp(15px, 4vw, 20px);
+            padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
             background: white;
-            border-radius: clamp(15px, 4vw, 20px);
-            padding: clamp(20px, 5vw, 30px);
+            border-radius: 20px;
+            padding: 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
         h1 {
-            font-size: clamp(24px, 6vw, 32px);
+            font-size: 28px;
             margin-bottom: 20px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
@@ -1581,20 +1361,19 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
         }
         input {
             flex: 1;
-            padding: clamp(12px, 3vw, 15px);
+            padding: 15px;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
-            font-size: clamp(14px, 3vw, 16px);
+            font-size: 16px;
         }
         button {
-            padding: clamp(12px, 3vw, 15px) clamp(20px, 4vw, 25px);
+            padding: 15px 25px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            font-size: clamp(14px, 3vw, 16px);
         }
         .todo-item {
             display: flex;
@@ -1686,7 +1465,7 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: system-ui, sans-serif;
             background: linear-gradient(135deg, #667eea, #764ba2);
             min-height: 100vh;
             display: flex;
@@ -1708,10 +1487,9 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
             padding: 20px;
             border-radius: 10px;
             text-align: right;
-            font-size: clamp(24px, 8vw, 36px);
+            font-size: 36px;
             margin-bottom: 15px;
             min-height: 70px;
-            word-wrap: break-word;
         }
         .buttons {
             display: grid;
@@ -1719,16 +1497,12 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
             gap: 10px;
         }
         button {
-            padding: clamp(15px, 4vw, 20px);
-            font-size: clamp(16px, 4vw, 20px);
+            padding: 20px;
+            font-size: 20px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.2s;
-        }
-        button:active {
-            transform: scale(0.95);
         }
         .num-btn {
             background: #f7fafc;
@@ -1774,15 +1548,10 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
         </div>
     </div>
     <script>
-        let display = document.getElementById('display');
         let currentValue = '0';
         
         function appendNumber(num) {
-            if (currentValue === '0') {
-                currentValue = num;
-            } else {
-                currentValue += num;
-            }
+            currentValue = currentValue === '0' ? num : currentValue + num;
             updateDisplay();
         }
         
@@ -1804,40 +1573,239 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
         function calculate() {
             try {
                 currentValue = eval(currentValue.replace('×', '*')).toString();
-                updateDisplay();
             } catch {
                 currentValue = 'Error';
-                updateDisplay();
-                setTimeout(() => {
-                    currentValue = '0';
+                setTimeout(() => currentValue = '0', 1000);
+            }
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            document.getElementById('display').textContent = currentValue;
+        }
+    </script>
+</body>
+</html>`,
+            notes: `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .saved {
+            color: #48bb78;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Quick Notes</h1>
+        <div class="toolbar">
+            <button onclick="saveNote()">💾 Save</button>
+            <button onclick="clearNote()">🗑️ Clear</button>
+        </div>
+        <textarea id="noteText" placeholder="Start typing your notes..."></textarea>
+        <div class="saved" id="saveStatus"></div>
+    </div>
+    <script>
+        const textarea = document.getElementById('noteText');
+        const saveStatus = document.getElementById('saveStatus');
+        
+        // Load saved note
+        textarea.value = localStorage.getItem('note') || '';
+        
+        // Auto-save
+        let saveTimeout;
+        textarea.addEventListener('input', () => {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('note', textarea.value);
+                showSaved();
+            }, 1000);
+        });
+        
+        function saveNote() {
+            localStorage.setItem('note', textarea.value);
+            showSaved();
+        }
+        
+        function clearNote() {
+            if (confirm('Clear all notes?')) {
+                textarea.value = '';
+                localStorage.removeItem('note');
+                showSaved('Cleared!');
+            }
+        }
+        
+        function showSaved(message = 'Saved!') {
+            saveStatus.textContent = message;
+            setTimeout(() => saveStatus.textContent = '', 2000);
+        }
+    </script>
+</body>
+</html>`,
+            timer: `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .timer {
+            font-size: 72px;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 30px 0;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button.reset {
+            background: #f56565;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⏱️ Timer</h1>
+        <div class="timer" id="timer">00:00</div>
+        <div class="controls">
+            <button onclick="startTimer()">▶️ Start</button>
+            <button onclick="pauseTimer()">⏸️ Pause</button>
+            <button class="reset" onclick="resetTimer()">🔄 Reset</button>
+        </div>
+    </div>
+    <script>
+        let seconds = 0;
+        let interval = null;
+        
+        function startTimer() {
+            if (!interval) {
+                interval = setInterval(() => {
+                    seconds++;
                     updateDisplay();
                 }, 1000);
             }
         }
         
+        function pauseTimer() {
+            clearInterval(interval);
+            interval = null;
+        }
+        
+        function resetTimer() {
+            pauseTimer();
+            seconds = 0;
+            updateDisplay();
+        }
+        
         function updateDisplay() {
-            display.textContent = currentValue;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            document.getElementById('timer').textContent = 
+                \`\${String(mins).padStart(2, '0')}:\${String(secs).padStart(2, '0')}\`;
         }
     </script>
 </body>
-</html>`,
-            // Add more templates as needed
+</html>`
         };
 
-        function loadTemplate(templateName) {
-            if (templates[templateName]) {
-                document.getElementById('codeEditor').textContent = templates[templateName];
-                currentCode = templates[templateName];
-                showToast(`✅ ${templateName.charAt(0).toUpperCase() + templateName.slice(1)} template loaded!`);
-                
-                // Auto-switch to split view
-                document.querySelectorAll('.editor-tab')[2].click();
+        function loadTemplate(name) {
+            if (templates[name]) {
+                document.getElementById('codeEditor').textContent = templates[name];
+                showToast(`✅ ${name.charAt(0).toUpperCase() + name.slice(1)} loaded!`);
+                switchView('split');
             } else {
                 showToast('⚠️ Template coming soon!');
             }
         }
 
-        // Code Editor Functions
         function runCode() {
             const code = document.getElementById('codeEditor').textContent;
             const preview = document.getElementById('previewFrame');
@@ -1850,7 +1818,6 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
 
         function formatCode() {
             showToast('✨ Code formatted!');
-            // Basic formatting - could be enhanced with a proper formatter
         }
 
         function exportCode() {
@@ -1859,10 +1826,10 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'mobile-app.html';
+            a.download = 'app.html';
             a.click();
             URL.revokeObjectURL(url);
-            showToast('💾 Code exported!');
+            showToast('💾 Exported!');
         }
 
         function shareCode() {
@@ -1870,30 +1837,16 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
             
             if (navigator.share) {
                 navigator.share({
-                    title: 'My Mobile App Code',
-                    text: 'Check out the code I created with Mobile Phone Code Generator!',
-                    files: [new File([code], 'app.html', { type: 'text/html' })]
-                }).then(() => {
-                    showToast('🔗 Code shared!');
-                }).catch(() => {
-                    copyToClipboard(code);
-                });
+                    title: 'My Code',
+                    text: 'Check out my code!'
+                }).then(() => showToast('🔗 Shared!'));
             } else {
-                copyToClipboard(code);
+                navigator.clipboard.writeText(code).then(() => {
+                    showToast('📋 Copied to clipboard!');
+                });
             }
         }
 
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('📋 Code copied to clipboard!');
-            });
-        }
-
-        function showSettings() {
-            showToast('⚙️ Settings coming soon!');
-        }
-
-        // Utility Functions
         function showLoading(show) {
             document.getElementById('loading').classList.toggle('show', show);
         }
@@ -1902,55 +1855,30 @@ Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> 
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Auto-save functionality
+        // Auto-save
         let saveTimeout;
         document.getElementById('codeEditor').addEventListener('input', () => {
             clearTimeout(saveTimeout);
             saveTimeout = setTimeout(() => {
-                currentCode = document.getElementById('codeEditor').textContent;
-                // Auto-save to localStorage
+                const code = document.getElementById('codeEditor').textContent;
                 try {
-                    localStorage.setItem('lastCode', currentCode);
-                } catch (e) {
-                    console.error('Failed to save code:', e);
-                }
+                    localStorage.setItem('lastCode', code);
+                } catch (e) {}
             }, 1000);
         });
 
-        // Load last saved code on startup
+        // Load last code
         window.addEventListener('load', () => {
             try {
                 const savedCode = localStorage.getItem('lastCode');
                 if (savedCode) {
                     document.getElementById('codeEditor').textContent = savedCode;
-                    currentCode = savedCode;
                 }
-            } catch (e) {
-                console.error('Failed to load saved code:', e);
-            }
-        });
-
-        // Prevent zoom on double-tap for iOS
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', (e) => {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        // Handle orientation changes
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => {
-                window.scrollTo(0, 1);
-            }, 100);
+            } catch (e) {}
         });
     </script>
 </body>
-                </html>
+</html>
