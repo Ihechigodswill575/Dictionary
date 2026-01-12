@@ -3,501 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta name="description" content="WordNest - Advanced AI-Powered Dictionary">
-    <title>WordNest - Advanced Dictionary</title>
+    <title>Mobile Phone Code Generator</title>
     <style>
-        /* CSS Variables for Theming */
-        :root {
-            --primary: #2563eb;
-            --secondary: #7c3aed;
-            --bg-main: #ffffff;
-            --bg-card: #f8fafc;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
-            --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-        }
-
-        [data-theme="dark"] {
-            --primary: #60a5fa;
-            --secondary: #a78bfa;
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
-        }
-
-        [data-theme="purple"] {
-            --primary: #9333ea;
-            --secondary: #db2777;
-            --bg-main: #faf5ff;
-            --bg-card: #f3e8ff;
-            --text-primary: #581c87;
-            --text-secondary: #7e22ce;
-            --border: #e9d5ff;
-            --gradient: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
-        }
-
-        [data-theme="ocean"] {
-            --primary: #0891b2;
-            --secondary: #06b6d4;
-            --bg-main: #ecfeff;
-            --bg-card: #cffafe;
-            --text-primary: #164e63;
-            --text-secondary: #0e7490;
-            --border: #a5f3fc;
-            --gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary: #764ba2;
+            --success: #48bb78;
+            --danger: #f56565;
+            --warning: #ed8936;
+            --info: #4299e1;
+            --dark: #1a202c;
+            --dark-light: #2d3748;
+            --gray: #4a5568;
+            --light: #f7fafc;
+            --border: #e2e8f0;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Responsive font sizing */
+        @media (max-width: 480px) {
+            html { font-size: 14px; }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            html { font-size: 15px; }
+        }
+
+        @media (min-width: 769px) {
+            html { font-size: 16px; }
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-            background: var(--bg-main);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        /* Hamburger Menu Overlay */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Sidebar Menu */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -320px;
-            width: 320px;
-            height: 100vh;
-            background: var(--bg-card);
-            z-index: 1000;
-            transition: left 0.3s ease;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar-header {
-            background: var(--gradient);
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.8em;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-header p {
-            font-size: 0.9em;
-            opacity: 0.9;
-        }
-
-        .sidebar-nav {
-            padding: 20px 0;
-        }
-
-        .nav-item {
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-primary);
-            text-decoration: none;
-            border-left: 3px solid transparent;
-        }
-
-        .nav-item:hover {
-            background: var(--bg-main);
-            border-left-color: var(--primary);
-        }
-
-        .nav-item.active {
-            background: var(--bg-main);
-            border-left-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .nav-item span:first-child {
-            font-size: 1.3em;
-            width: 25px;
-        }
-
-        .nav-section-title {
-            padding: 20px 25px 10px;
-            font-size: 0.75em;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-        }
-
-        .nav-advanced {
-            background: var(--bg-main);
-            margin: 10px 15px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .nav-advanced-header {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .nav-advanced-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .nav-advanced-content.expanded {
-            max-height: 300px;
-        }
-
-        .contact-info {
-            padding: 20px 25px;
-            border-top: 1px solid var(--border);
-            margin-top: 20px;
-        }
-
-        .contact-info h3 {
-            font-size: 0.9em;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            font-size: 0.9em;
-        }
-
-        .contact-item a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .contact-item a:hover {
-            text-decoration: underline;
-        }
-
-        .creator {
-            text-align: center;
-            padding: 15px;
-            font-weight: bold;
-            color: var(--primary);
-            border-top: 1px solid var(--border);
-            margin-top: 10px;
-        }
-
-        /* Header */
-        .header {
-            background: var(--gradient);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .menu-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.3em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .menu-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .header-title h1 {
-            font-size: 1.5em;
-            letter-spacing: 1px;
-        }
-
-        .header-title p {
-            font-size: 0.75em;
-            opacity: 0.9;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 10px;
-        }
-
-        .theme-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .theme-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Word of the Day Banner */
-        .wotd-banner {
-            background: var(--gradient);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            box-shadow: var(--shadow);
-        }
-
-        .wotd-banner:hover {
-            transform: translateY(-2px);
-        }
-
-        .wotd-label {
-            font-size: 0.85em;
-            opacity: 0.9;
-            margin-bottom: 8px;
-        }
-
-        .wotd-word {
-            font-size: 1.8em;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .wotd-def {
-            font-size: 0.95em;
-            opacity: 0.95;
-        }
-
-        /* Search Section */
-        .search-card {
-            background: var(--bg-card);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .search-box {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            overflow-x: hidden;
             position: relative;
-            margin-bottom: 15px;
         }
 
-        #searchInput {
-            width: 100%;
-            padding: 18px 24px;
-            font-size: 1.1em;
-            border: 2px solid var(--border);
-            border-radius: 50px;
-            outline: none;
-            background: var(--bg-main);
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        #searchInput:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-
-        .autocomplete-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-top: none;
-            border-radius: 0 0 15px 15px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            z-index: 10;
-            box-shadow: var(--shadow);
-            margin-top: -2px;
-        }
-
-        .autocomplete-item {
-            padding: 12px 24px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        /* Auth Screen - Fully Responsive */
+        .auth-container {
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-        }
-
-        .autocomplete-item:hover {
-            background: var(--bg-main);
-            color: var(--primary);
-        }
-
-        #searchBtn {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            padding: clamp(10px, 3vw, 20px);
             width: 100%;
-            padding: 18px;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow);
         }
 
-        #searchBtn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        #searchBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-            display: none;
-        }
-
-        .spinner {
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Error Message */
-        .error-message {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            display: none;
-            margin: 20px 0;
-            border-left: 4px solid #f59e0b;
-        }
-
-        [data-theme="dark"] .error-message {
-            background: #451a03;
-            color: #fbbf24;
-        }
-
-        .suggestions-box {
-            margin-top: 15px;
-        }
-
-        .suggestions-box strong {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .suggestion-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        /* Result Section */
-        .result-card {
-            background: var(--bg-card);
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            display: none;
-            animation: slideUp 0.4s ease;
+        .auth-box {
+            background: white;
+            border-radius: clamp(15px, 4vw, 20px);
+            padding: clamp(20px, 5vw, 40px);
+            width: 100%;
+            max-width: min(450px, 95vw);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+            margin: auto;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -505,2215 +87,1870 @@
             }
         }
 
-        .word-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 25px;
-            gap: 20px;
+        .auth-header {
+            text-align: center;
+            margin-bottom: clamp(20px, 4vw, 30px);
         }
 
-        .word-info {
-            flex: 1;
-        }
-
-        .word-title {
-            font-size: 3em;
-            color: var(--primary);
-            font-family: Georgia, serif;
-            margin-bottom: 10px;
+        .auth-header h1 {
+            font-size: clamp(20px, 5vw, 28px);
+            color: var(--dark);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            line-height: 1.2;
             word-break: break-word;
         }
 
-        .phonetic {
-            font-size: 1.5em;
-            color: var(--text-secondary);
-            font-style: italic;
-            font-family: 'Courier New', monospace;
-        }
-
-        .action-buttons {
+        .auth-header .powered-by {
+            color: var(--gray);
+            font-size: clamp(11px, 2.5vw, 14px);
+            font-weight: 600;
+            margin-top: 8px;
             display: flex;
-            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
             flex-wrap: wrap;
         }
 
-        .action-btn {
-            background: var(--bg-main);
-            border: 2px solid var(--border);
-            color: var(--text-primary);
-            padding: 10px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 600;
-            transition: all 0.2s ease;
+        .auth-header .powered-by span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .auth-tabs {
             display: flex;
-            align-items: center;
-            gap: 6px;
+            gap: clamp(5px, 2vw, 10px);
+            margin-bottom: clamp(20px, 4vw, 30px);
+            background: var(--light);
+            padding: clamp(3px, 1vw, 5px);
+            border-radius: clamp(8px, 2vw, 12px);
         }
 
-        .action-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .action-btn.favorited {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .part-of-speech {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9em;
+        .auth-tab {
+            flex: 1;
+            padding: clamp(10px, 2.5vw, 12px);
+            border: none;
+            background: transparent;
+            border-radius: clamp(6px, 1.5vw, 8px);
+            font-size: clamp(12px, 2.5vw, 14px);
             font-weight: 600;
-            margin: 5px 5px 20px 0;
-        }
-
-        .definition-section {
-            margin-bottom: 30px;
-            padding: 25px;
-            background: var(--bg-main);
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .collapse-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: var(--gray);
             cursor: pointer;
-            user-select: none;
-            padding: 5px 0;
-        }
-
-        .collapse-title {
-            font-weight: bold;
-            color: var(--primary);
-            font-size: 1.1em;
-        }
-
-        .collapse-icon {
-            font-size: 1.2em;
-            transition: transform 0.3s ease;
-            color: var(--primary);
-        }
-
-        .collapse-icon.expanded {
-            transform: rotate(180deg);
-        }
-
-        .definition-content {
-            margin-top: 15px;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .definition-content.collapsed {
+        .auth-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .auth-form {
             display: none;
         }
 
-        .definition-item {
-            margin-bottom: 20px;
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
         }
 
-        .definition-number {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-            font-size: 1.05em;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .definition-text {
-            font-size: 1.05em;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            padding-left: 20px;
+        .form-group {
+            margin-bottom: clamp(15px, 3vw, 20px);
         }
 
-        .example {
-            font-style: italic;
-            color: var(--text-secondary);
-            padding: 12px 20px;
-            margin: 10px 0;
-            background: rgba(37, 99, 235, 0.05);
-            border-left: 3px solid var(--primary);
-            border-radius: 6px;
-        }
-
-        .example:before {
-            content: "💬 ";
-            margin-right: 8px;
-        }
-
-        .info-section {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid var(--border);
-        }
-
-        .section-title {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.3em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .word-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .word-tag {
-            background: var(--bg-main);
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-size: 0.95em;
-            color: var(--text-primary);
-            border: 2px solid var(--border);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .word-tag:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .etymology-box {
-            background: var(--bg-main);
-            padding: 20px;
-            border-radius: 12px;
-            line-height: 1.8;
-            border-left: 4px solid var(--secondary);
-        }
-
-        /* AI Section */
-        .ai-section {
-            margin-top: 30px;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-            border-radius: 15px;
-            border: 2px solid var(--border);
-        }
-
-        .ai-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .ai-header h3 {
-            font-size: 1.4em;
-            color: var(--primary);
-        }
-
-        .ai-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .ai-btn {
-            background: white;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 14px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.95em;
+        .form-group label {
+            display: block;
+            margin-bottom: clamp(6px, 1.5vw, 8px);
+            color: var(--dark);
+            font-size: clamp(12px, 2.5vw, 14px);
             font-weight: 600;
-            transition: all 0.2s ease;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px);
+            border: 2px solid var(--border);
+            border-radius: clamp(8px, 2vw, 10px);
+            font-size: clamp(13px, 2.5vw, 14px);
+            transition: all 0.3s ease;
+            outline: none;
+            background: white;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: clamp(12px, 3vw, 14px);
+            border: none;
+            border-radius: clamp(8px, 2vw, 10px);
+            font-size: clamp(13px, 2.5vw, 15px);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            touch-action: manipulation;
         }
 
-        [data-theme="dark"] .ai-btn {
-            background: var(--bg-card);
-        }
-
-        .ai-btn:hover:not(:disabled) {
-            background: var(--primary);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
         }
 
-        .ai-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .btn-primary:active {
+            transform: scale(0.98);
         }
 
-        .ai-result {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 15px;
-            display: none;
-            line-height: 1.8;
-            border-left: 4px solid var(--primary);
-        }
-
-        [data-theme="dark"] .ai-result {
-            background: var(--bg-card);
-        }
-
-        .ai-chat-box {
-            margin-top: 20px;
-            display: none;
-        }
-
-        .ai-chat-input {
+        .divider {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            align-items: center;
+            margin: clamp(20px, 4vw, 25px) 0;
+            color: var(--gray);
+            font-size: clamp(11px, 2.5vw, 13px);
         }
 
-        .ai-chat-input input {
+        .divider::before,
+        .divider::after {
+            content: '';
             flex: 1;
-            padding: 12px 18px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider span {
+            padding: 0 clamp(10px, 3vw, 15px);
+            white-space: nowrap;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 2.5vw, 12px);
+        }
+
+        .btn-social {
+            width: 100%;
+            padding: clamp(10px, 2.5vw, 12px);
             border: 2px solid var(--border);
-            border-radius: 10px;
-            outline: none;
+            border-radius: clamp(8px, 2vw, 10px);
             background: white;
-            color: var(--text-primary);
-        }
-
-        [data-theme="dark"] .ai-chat-input input {
-            background: var(--bg-card);
-        }
-
-        .ai-chat-input button {
-            padding: 12px 24px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            font-size: clamp(12px, 2.5vw, 14px);
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 2vw, 10px);
+            touch-action: manipulation;
         }
 
-        .ai-chat-messages {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            max-height: 300px;
-            overflow-y: auto;
+        .btn-social:active {
+            transform: scale(0.98);
+            background: var(--light);
         }
 
-        [data-theme="dark"] .ai-chat-messages {
-            background: var(--bg-card);
+        .btn-social svg {
+            width: clamp(18px, 4vw, 20px);
+            height: clamp(18px, 4vw, 20px);
+            flex-shrink: 0;
         }
 
-        .ai-message {
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            line-height: 1.6;
+        .phone-input-group {
+            display: flex;
+            gap: clamp(8px, 2vw, 10px);
         }
 
-        .ai-message.user {
-            background: var(--primary);
-            color: white;
-            margin-left: 20%;
+        .phone-input-group select {
+            width: clamp(80px, 20vw, 100px);
+            flex-shrink: 0;
         }
 
-        .ai-message.assistant {
-            background: var(--bg-main);
-            margin-right: 20%;
+        .phone-input-group input {
+            flex: 1;
+            min-width: 0;
         }
 
-        /* Page Views */
-        .page-view {
+        .error-message,
+        .success-message {
+            font-size: clamp(11px, 2.5vw, 13px);
+            margin-top: clamp(6px, 1.5vw, 8px);
             display: none;
         }
 
-        .page-view.active {
+        .error-message {
+            color: var(--danger);
+        }
+
+        .success-message {
+            color: var(--success);
+        }
+
+        .error-message.show,
+        .success-message.show {
             display: block;
         }
 
-        /* Favorites Page */
-        .favorites-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
+        /* Main App - Fully Responsive */
+        .main-app {
+            display: none;
+            height: 100vh;
+            height: -webkit-fill-available;
+            flex-direction: column;
+            background: var(--dark);
+            overflow: hidden;
         }
 
-        .favorite-card {
-            background: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-
-        .favorite-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .favorite-card-header {
+        .main-app.active {
             display: flex;
+        }
+
+        /* Top Bar - Mobile Optimized */
+        .top-bar {
+            background: var(--dark-light);
+            padding: clamp(10px, 2.5vw, 15px) clamp(15px, 3vw, 20px);
+            display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: start;
-            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+            min-height: clamp(50px, 12vw, 60px);
         }
 
-        .favorite-word {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: var(--primary);
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 2.5vw, 15px);
+            flex: 1;
+            min-width: 0;
         }
 
-        .delete-favorite {
-            background: none;
+        .app-logo {
+            font-size: clamp(16px, 4vw, 20px);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+        }
+
+        .powered-badge {
+            font-size: clamp(9px, 2vw, 10px);
+            color: rgba(255,255,255,0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 2vw, 10px);
+        }
+
+        .icon-btn {
+            width: clamp(32px, 8vw, 36px);
+            height: clamp(32px, 8vw, 36px);
             border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 1.3em;
-            padding: 5px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        /* Statistics Page */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--gradient);
+            background: rgba(255,255,255,0.1);
+            border-radius: clamp(6px, 1.5vw, 8px);
             color: white;
-            padding: 25px;
-            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .icon-btn:active {
+            background: rgba(255,255,255,0.2);
+            transform: scale(0.95);
+        }
+
+        .icon-btn svg {
+            width: clamp(16px, 4vw, 18px);
+            height: clamp(16px, 4vw, 18px);
+        }
+
+        /* Mobile Layout */
+        .app-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Sidebar - Collapsible on Mobile */
+        .sidebar {
+            width: 100%;
+            max-width: 280px;
+            background: var(--dark-light);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                z-index: 100;
+                transform: translateX(-100%);
+                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 99;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+        }
+
+        .sidebar-section {
+            padding: clamp(15px, 3vw, 20px);
+        }
+
+        .sidebar-title {
+            color: rgba(255,255,255,0.5);
+            font-size: clamp(10px, 2.5vw, 11px);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: clamp(10px, 2.5vw, 12px);
+        }
+
+        .prompt-input {
+            width: 100%;
+            padding: clamp(10px, 2.5vw, 12px);
+            background: var(--dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            color: white;
+            font-size: clamp(13px, 2.5vw, 14px);
+            resize: vertical;
+            min-height: clamp(80px, 20vw, 100px);
+            outline: none;
+        }
+
+        .prompt-input:focus {
+            border-color: var(--primary);
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 15vw, 80px), 1fr));
+            gap: clamp(8px, 2vw, 10px);
+            margin-top: clamp(10px, 2.5vw, 12px);
+        }
+
+        .tech-btn {
+            padding: clamp(8px, 2vw, 10px);
+            background: var(--dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            color: rgba(255,255,255,0.7);
+            font-size: clamp(11px, 2.5vw, 12px);
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-align: center;
-            box-shadow: var(--shadow);
+            font-weight: 600;
         }
 
-        .stat-number {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .tech-btn:active,
+        .tech-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: scale(0.95);
         }
 
-        .stat-label {
-            font-size: 0.95em;
-            opacity: 0.9;
+        .generate-btn {
+            width: 100%;
+            margin-top: clamp(15px, 3vw, 20px);
+            padding: clamp(12px, 3vw, 14px);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: clamp(8px, 2vw, 10px);
+            color: white;
+            font-size: clamp(13px, 2.5vw, 14px);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* History Page */
-        .history-list {
+        .generate-btn:active {
+            transform: scale(0.98);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 25vw, 140px), 1fr));
+            gap: clamp(10px, 2.5vw, 12px);
+            margin-top: clamp(10px, 2.5vw, 12px);
+        }
+
+        .template-card {
+            background: var(--dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: clamp(8px, 2vw, 10px);
+            padding: clamp(12px, 3vw, 15px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .template-card:active {
+            transform: scale(0.95);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .template-icon {
+            font-size: clamp(24px, 6vw, 32px);
+            margin-bottom: clamp(6px, 1.5vw, 8px);
+        }
+
+        .template-name {
+            color: white;
+            font-size: clamp(11px, 2.5vw, 12px);
+            font-weight: 600;
+        }
+
+        /* Main Editor Area */
+        .editor-area {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            overflow: hidden;
+            min-width: 0;
         }
 
-        .history-item {
-            background: var(--bg-card);
-            padding: 18px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .editor-tabs {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
+            background: var(--dark-light);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
         }
 
-        .history-item:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateX(5px);
+        .editor-tabs::-webkit-scrollbar {
+            display: none;
         }
 
-        .history-word {
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .clear-all-btn {
-            background: #ef4444;
-            color: white;
-            padding: 12px 24px;
+        .editor-tab {
+            padding: clamp(10px, 2.5vw, 12px) clamp(15px, 3vw, 20px);
+            color: rgba(255,255,255,0.6);
+            font-size: clamp(12px, 2.5vw, 13px);
             border: none;
-            border-radius: 10px;
+            background: transparent;
             cursor: pointer;
-            font-weight: 600;
-            margin-top: 20px;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
-        .clear-all-btn:hover {
-            background: #dc2626;
+        .editor-tab.active {
+            color: white;
+            border-bottom-color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
         }
 
-        /* Flashcards */
-        .flashcard-container {
-            perspective: 1000px;
-            margin-bottom: 30px;
+        .editor-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
         }
 
-        .flashcard {
-            width: 100%;
-            height: 300px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-            cursor: pointer;
+        .code-editor {
+            flex: 1;
+            background: var(--dark);
+            color: white;
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: clamp(11px, 2.5vw, 13px);
+            padding: clamp(15px, 3vw, 20px);
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
-        .flashcard.flipped {
-            transform: rotateY(180deg);
+        .preview-pane {
+            flex: 1;
+            background: white;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .flashcard-front,
-        .flashcard-back {
-            position: absolute;
+        .preview-frame {
             width: 100%;
             height: 100%;
-            backface-visibility: hidden;
+            border: none;
+        }
+
+        /* Bottom Action Bar - Mobile Optimized */
+        .bottom-bar {
+            background: var(--dark-light);
+            padding: clamp(10px, 2.5vw, 12px);
+            border-top: 1px solid rgba(255,255,255,0.1);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: var(--shadow-lg);
+            gap: clamp(8px, 2vw, 10px);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .flashcard-front {
-            background: var(--gradient);
+        .bottom-btn {
+            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: clamp(6px, 1.5vw, 8px);
             color: white;
+            font-size: clamp(12px, 2.5vw, 13px);
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
-        .flashcard-back {
-            background: var(--bg-card);
-            transform: rotateY(180deg);
+        .bottom-btn:active {
+            background: rgba(255,255,255,0.2);
+            transform: scale(0.95);
         }
 
-        .flashcard-word {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
+        /* Modal - Fully Responsive */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(15px, 3vw, 20px);
         }
 
-        .flashcard-def {
-            font-size: 1.2em;
-            text-align: center;
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--dark-light);
+            border-radius: clamp(15px, 3vw, 20px);
+            padding: clamp(20px, 4vw, 30px);
+            width: 100%;
+            max-width: min(500px, 95vw);
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(15px, 3vw, 20px);
+        }
+
+        .modal-title {
+            color: white;
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: clamp(28px, 7vw, 32px);
+            height: clamp(28px, 7vw, 32px);
+            border: none;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .modal-body {
+            color: rgba(255,255,255,0.8);
+            font-size: clamp(13px, 2.5vw, 14px);
             line-height: 1.6;
         }
 
-        .flashcard-controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2000;
         }
 
-        .flashcard-btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1em;
-            transition: all 0.2s ease;
+        .loading.show {
+            display: block;
         }
 
-        .flashcard-btn.prev {
-            background: var(--bg-card);
-            color: var(--text-primary);
+        .spinner {
+            width: clamp(40px, 10vw, 50px);
+            height: clamp(40px, 10vw, 50px);
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .flashcard-btn.next {
-            background: var(--primary);
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: clamp(20px, 5vw, 30px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark-light);
             color: white;
-        }
-
-        .flashcard-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        /* Quiz Mode */
-        .quiz-container {
-            background: var(--bg-card);
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-        }
-
-        .quiz-question {
-            font-size: 1.3em;
-            margin-bottom: 25px;
-            color: var(--text-primary);
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .quiz-option {
-            padding: 18px 24px;
-            background: var(--bg-main);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .quiz-option:hover {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: white;
-        }
-
-        .quiz-option.correct {
-            background: #10b981;
-            color: white;
-            border-color: #10b981;
-        }
-
-        .quiz-option.wrong {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
-        }
-
-        .quiz-score {
+            padding: clamp(12px, 3vw, 15px) clamp(20px, 4vw, 25px);
+            border-radius: clamp(8px, 2vw, 10px);
+            font-size: clamp(13px, 2.5vw, 14px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 3000;
+            display: none;
+            max-width: 90vw;
             text-align: center;
-            font-size: 1.2em;
-            margin-top: 20px;
-            color: var(--primary);
-            font-weight: 600;
         }
 
-        /* Word Compare */
-        .compare-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+        .toast.show {
+            display: block;
+            animation: slideUpToast 0.3s ease;
         }
 
-        .compare-input input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            background: var(--bg-card);
-            color: var(--text-primary);
+        @keyframes slideUpToast {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
         }
 
-        .compare-results {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        /* Landscape Mode Optimizations */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .auth-box {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .auth-header h1 {
+                font-size: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
         }
 
-        .compare-card {
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
+        /* Extra Small Devices */
+        @media (max-width: 320px) {
+            .top-bar {
+                padding: 8px 12px;
+            }
+
+            .app-logo {
+                font-size: 14px;
+            }
+
+            .tech-stack-grid {
+                grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+            }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
+        /* Large Devices */
+        @media (min-width: 1024px) {
             .sidebar {
-                width: 280px;
-                left: -280px;
+                transform: translateX(0) !important;
             }
 
-            .word-title {
-                font-size: 2em;
+            .sidebar-overlay {
+                display: none !important;
             }
 
-            .word-header {
-                flex-direction: column;
+            .editor-content {
+                flex-direction: row;
             }
 
-            .action-buttons {
-                width: 100%;
-            }
-
-            .action-btn {
-                flex: 1;
-            }
-
-            .compare-inputs,
-            .compare-results {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .ai-buttons {
-                grid-template-columns: 1fr;
+            .code-editor,
+            .preview-pane {
+                width: 50%;
             }
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
+        /* Print Styles */
+        @media print {
+            .top-bar,
+            .sidebar,
+            .bottom-bar,
+            .modal {
+                display: none !important;
+            }
+
+            .main-app {
+                height: auto;
+            }
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--bg-main);
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary);
-        }
-
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .mt-20 {
-            margin-top: 20px;
-        }
-
-        .mb-20 {
-            margin-bottom: 20px;
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            .btn, .icon-btn, .tech-btn {
+                border: 2px solid currentColor;
+            }
         }
     </style>
 </head>
-<body data-theme="light">
+<body>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h2>📚 WordNest</h2>
-            <p>Advanced Dictionary</p>
-        </div>
-
-        <nav class="sidebar-nav">
-            <div class="nav-item active" onclick="showPage('home')">
-                <span>🏠</span>
-                <span>Home</span>
-            </div>
-            <div class="nav-item" onclick="showPage('favorites')">
-                <span>⭐</span>
-                <span>My Favorites</span>
-            </div>
-            <div class="nav-item" onclick="showPage('history')">
-                <span>🕐</span>
-                <span>Search History</span>
-            </div>
-            <div class="nav-item" onclick="showPage('statistics')">
-                <span>📊</span>
-                <span>My Statistics</span>
-            </div>
-            <div class="nav-item" onclick="showPage('flashcards')">
-                <span>🎴</span>
-                <span>Flashcards</span>
-            </div>
-
-            <div class="nav-section-title">Advanced Features</div>
-            <div class="nav-advanced">
-                <div class="nav-advanced-header" onclick="toggleAdvanced()">
-                    <span>⚡ Advanced Tools</span>
-                    <span id="advancedIcon">▼</span>
-                </div>
-                <div class="nav-advanced-content" id="advancedContent">
-                    <div class="nav-item" onclick="showPage('compare')">
-                        <span>🔄</span>
-                        <span>Word Compare</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('random')">
-                        <span>🎲</span>
-                        <span>Random Word</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('progress')">
-                        <span>📈</span>
-                        <span>Progress Tracker</span>
-                    </div>
-                    <div class="nav-item" onclick="showPage('quiz')">
-                        <span>🎮</span>
-                        <span>Word Quiz</span>
-                    </div>
+    <!-- Authentication Screen -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1>Mobile Phone Code Generator</h1>
+                <div class="powered-by">
+                    Powered by <span>DevGodswill🕸✍️</span>
                 </div>
             </div>
 
-            <div class="nav-section-title">Settings</div>
-            <div class="nav-item" onclick="showPage('settings')">
-                <span>⚙️</span>
-                <span>Settings</span>
-            </div>
-        </nav>
-
-        <div class="contact-info">
-            <h3>📞 CONTACT INFO</h3>
-            <div class="contact-item">
-                <span>📧</span>
-                <a href="mailto:ihechigodswill575@gmail.com">ihechigodswill575@gmail.com</a>
-            </div>
-            <div class="contact-item">
-                <span>📱</span>
-                <a href="tel:+2348145688688">+234 814 568 8688</a>
-            </div>
-        </div>
-
-        <div class="creator">
-            Created by DevGodswill
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="header-left">
-            <button class="menu-btn" onclick="toggleMenu()">☰</button>
-            <div class="header-title">
-                <h1>WordNest</h1>
-                <p>Advanced Dictionary</p>
-            </div>
-        </div>
-        <div class="header-right">
-            <button class="theme-btn" onclick="cycleTheme()" id="themeIcon">🌙</button>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <div class="container">
-        <!-- HOME PAGE -->
-        <div class="page-view active" id="page-home">
-            <!-- Word of the Day -->
-            <div class="wotd-banner" onclick="searchWOTD()">
-                <div class="wotd-label">✨ WORD OF THE DAY</div>
-                <div class="wotd-word" id="wotdWord">Serendipity</div>
-                <div class="wotd-def" id="wotdDef">The occurrence of events by chance in a happy or beneficial way.</div>
+            <!-- Auth Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
             </div>
 
-            <!-- Search Section -->
-            <div class="search-card">
-                <div class="search-box">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        placeholder="Search for any word..." 
-                        autocomplete="off"
-                        oninput="handleAutocomplete()"
-                    >
-                    <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+            <!-- Login Form -->
+            <div class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
                 </div>
-                <button id="searchBtn" onclick="searchWord()">🔍 Search Dictionary</button>
-            </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                </div>
+                <button class="btn btn-primary" onclick="loginWithEmail()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                    Login
+                </button>
+                <div class="error-message" id="loginError"></div>
+                <div class="success-message" id="loginSuccess"></div>
 
-            <!-- Loading -->
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Searching multiple dictionaries...</p>
-            </div>
+                <div class="divider"><span>OR</span></div>
 
-            <!-- Error Message -->
-            <div class="error-message" id="errorMessage"></div>
+                <div class="social-buttons">
+                    <button class="btn-social" onclick="loginWithGoogle()">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Continue with Google
+                    </button>
 
-            <!-- Results -->
-            <div class="result-card" id="resultCard">
-                <div id="resultContent"></div>
-            </div>
-        </div>
-
-        <!-- FAVORITES PAGE -->
-        <div class="page-view" id="page-favorites">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">⭐ My Favorites</h2>
-            <div class="favorites-grid" id="favoritesGrid">
-                <div class="empty-state">
-                    <div class="empty-state-icon">⭐</div>
-                    <p>No favorites yet. Start saving words!</p>
+                    <button class="btn-social" onclick="showPhoneAuth()">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                        </svg>
+                        Continue with Phone
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- HISTORY PAGE -->
-        <div class="page-view" id="page-history">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">🕐 Search History</h2>
-            <div class="history-list" id="historyList">
-                <div class="empty-state">
-                    <div class="empty-state-icon">🕐</div>
-                    <p>No search history yet.</p>
+            <!-- Signup Form -->
+            <div class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email">
                 </div>
-            </div>
-            <button class="clear-all-btn" onclick="clearAllHistory()">Clear All History</button>
-        </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
+                </div>
+                <button class="btn btn-primary" onclick="signupWithEmail()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                    Create Account
+                </button>
+                <div class="error-message" id="signupError"></div>
+                <div class="success-message" id="signupSuccess"></div>
 
-        <!-- STATISTICS PAGE -->
-        <div class="page-view" id="page-statistics">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">📊 My Statistics</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" id="statSearches">0</div>
-                    <div class="stat-label">Total Searches</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="statFavorites">0</div>
-                    <div class="stat-label">Saved Favorites</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="statStreak">0</div>
-                    <div class="stat-label">Day Streak</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="statQuizScore">0</div>
-                    <div class="stat-label">Quiz Score</div>
-                </div>
-            </div>
-        </div>
+                <div class="divider"><span>OR</span></div>
 
-        <!-- FLASHCARDS PAGE -->
-        <div class="page-view" id="page-flashcards">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">🎴 Flashcards</h2>
-            <div id="flashcardContainer">
-                <div class="empty-state">
-                    <div class="empty-state-icon">🎴</div>
-                    <p>Add favorites to study with flashcards!</p>
-                </div>
-            </div>
-        </div>
+                <div class="social-buttons">
+                    <button class="btn-social" onclick="loginWithGoogle()">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Sign up with Google
+                    </button>
 
-        <!-- WORD COMPARE PAGE -->
-        <div class="page-view" id="page-compare">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">🔄 Word Compare</h2>
-            <div class="search-card">
-                <div class="compare-inputs">
-                    <div class="compare-input">
-                        <input type="text" id="compareWord1" placeholder="Enter first word...">
-                    </div>
-                    <div class="compare-input">
-                        <input type="text" id="compareWord2" placeholder="Enter second word...">
-                    </div>
-                </div>
-                <button id="searchBtn" onclick="compareWords()">Compare Words</button>
-            </div>
-            <div class="compare-results" id="compareResults"></div>
-        </div>
-
-        <!-- RANDOM WORD PAGE -->
-        <div class="page-view" id="page-random">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">🎲 Random Word Discovery</h2>
-            <div class="search-card" style="text-align: center;">
-                <p style="margin-bottom: 20px; color: var(--text-secondary);">Discover new words and expand your vocabulary!</p>
-                <button id="searchBtn" onclick="getRandomWord()">🎲 Get Random Word</button>
-            </div>
-        </div>
-
-        <!-- PROGRESS TRACKER PAGE -->
-        <div class="page-view" id="page-progress">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">📈 Progress Tracker</h2>
-            <div class="search-card">
-                <h3 style="margin-bottom: 15px;">Your Learning Journey</h3>
-                <p>Words learned this week: <strong id="progressWeek">0</strong></p>
-                <p>Words learned this month: <strong id="progressMonth">0</strong></p>
-                <p>Current streak: <strong id="progressStreak">0</strong> days</p>
-            </div>
-        </div>
-
-        <!-- QUIZ PAGE -->
-        <div class="page-view" id="page-quiz">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">🎮 Word Quiz</h2>
-            <div class="quiz-container" id="quizContainer">
-                <div class="empty-state">
-                    <div class="empty-state-icon">🎮</div>
-                    <p>Add favorites to start quizzing!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SETTINGS PAGE -->
-        <div class="page-view" id="page-settings">
-            <h2 style="margin-bottom: 20px; color: var(--primary);">⚙️ Settings</h2>
-            <div class="search-card">
-                <h3 style="margin-bottom: 20px;">Appearance</h3>
-                <div style="display: grid; gap: 15px;">
-                    <div>
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Theme</label>
-                        <select id="themeSelect" onchange="changeTheme(this.value)" style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary);">
-                            <option value="light">☀️ Light</option>
-                            <option value="dark">🌙 Dark</option>
-                            <option value="purple">💜 Purple</option>
-                            <option value="ocean">🌊 Ocean</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Font Size</label>
-                        <select id="fontSelect" onchange="changeFontSize(this.value)" style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary);">
-                            <option value="small">Small</option>
-                            <option value="medium" selected>Medium</option>
-                            <option value="large">Large</option>
-                        </select>
-                    </div>
-                </div>
-
-                <h3 style="margin: 30px 0 20px;">Data Management</h3>
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <button class="action-btn" onclick="exportData()">📤 Export All Data</button>
-                    <button class="action-btn" onclick="importData()">📥 Import Data</button>
-                    <button class="clear-all-btn" onclick="clearAllData()">🗑️ Clear All Data</button>
+                    <button class="btn-social" onclick="showPhoneAuth()">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                        </svg>
+                        Sign up with Phone
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // ============= API KEYS =============
-        const MW_COLLEGIATE_KEY = '628e1b76-5bfd-4452-a4bc-106803232ccc';
-        const MW_SCHOOL_KEY = '5881996e-d3f3-4985-8ea9-0abe309e8c70';
-        const GROQ_API_KEY = 'hf_Z1xYgkzHCZqJNnHJvguzAUeRDsadVy';
+    <!-- Phone Authentication Modal -->
+    <div class="modal" id="phoneAuthModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Phone Authentication</h3>
+                <button class="modal-close" onclick="closePhoneAuth()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="phone-input-group">
+                        <select id="countryCode">
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+234">🇳🇬 +234</option>
+                            <option value="+86">🇨🇳 +86</option>
+                            <option value="+81">🇯🇵 +81</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                        </select>
+                        <input type="tel" id="phoneNumber" placeholder="Enter phone number">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="sendPhoneVerification()">
+                    Send Verification Code
+                </button>
+                <div class="error-message" id="phoneError"></div>
+                <div class="success-message" id="phoneSuccess"></div>
+            </div>
+        </div>
+    </div>
 
-        // ============= STORAGE KEYS =============
-        const STORAGE = {
-            HISTORY: 'wordnest_history',
-            FAVORITES: 'wordnest_favorites',
-            THEME: 'wordnest_theme',
-            STATS: 'wordnest_stats',
-            FONT: 'wordnest_font'
+    <!-- Main Application -->
+    <div class="main-app" id="mainApp">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="icon-btn" id="menuBtn" onclick="toggleSidebar()">
+                    <svg fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </button>
+                <div>
+                    <div class="app-logo">Mobile Code Gen</div>
+                    <div class="powered-badge">Powered by DevGodswill🕸✍️</div>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <button class="icon-btn" onclick="showSettings()">
+                    <svg fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319z"/>
+                    </svg>
+                </button>
+                <button class="icon-btn" onclick="logout()">
+                    <svg fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="app-content">
+            <!-- Sidebar Overlay (Mobile) -->
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">✨ AI Generator</h3>
+                    <textarea 
+                        class="prompt-input" 
+                        id="aiPrompt" 
+                        placeholder="Describe what you want to build...
+
+Example: Create a todo app with dark mode and local storage"
+                    ></textarea>
+                    <div class="tech-stack-grid">
+                        <button class="tech-btn active" data-tech="html">HTML</button>
+                        <button class="tech-btn active" data-tech="css">CSS</button>
+                        <button class="tech-btn active" data-tech="js">JS</button>
+                        <button class="tech-btn" data-tech="react">React</button>
+                        <button class="tech-btn" data-tech="vue">Vue</button>
+                        <button class="tech-btn" data-tech="tailwind">Tailwind</button>
+                    </div>
+                    <button class="generate-btn" onclick="generateCode()">
+                        🚀 Generate Code
+                    </button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">📱 Templates</h3>
+                    <div class="templates-grid">
+                        <div class="template-card" onclick="loadTemplate('todo')">
+                            <div class="template-icon">✅</div>
+                            <div class="template-name">Todo App</div>
+                        </div>
+                        <div class="template-card" onclick="loadTemplate('calculator')">
+                            <div class="template-icon">🔢</div>
+                            <div class="template-name">Calculator</div>
+                        </div>
+                        <div class="template-card" onclick="loadTemplate('weather')">
+                            <div class="template-icon">🌤️</div>
+                            <div class="template-name">Weather</div>
+                        </div>
+                        <div class="template-card" onclick="loadTemplate('notes')">
+                            <div class="template-icon">📝</div>
+                            <div class="template-name">Notes</div>
+                        </div>
+                        <div class="template-card" onclick="loadTemplate('timer')">
+                            <div class="template-icon">⏱️</div>
+                            <div class="template-name">Timer</div>
+                        </div>
+                        <div class="template-card" onclick="loadTemplate('quiz')">
+                            <div class="template-icon">🎯</div>
+                            <div class="template-name">Quiz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area">
+                <div class="editor-tabs">
+                    <button class="editor-tab active" onclick="switchEditorTab('code')">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display: inline; vertical-align: middle; margin-right: 5px;">
+                            <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
+                        </svg>
+                        Code
+                    </button>
+                    <button class="editor-tab" onclick="switchEditorTab('preview')">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display: inline; vertical-align: middle; margin-right: 5px;">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                        </svg>
+                        Preview
+                    </button>
+                    <button class="editor-tab" onclick="switchEditorTab('split')">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display: inline; vertical-align: middle; margin-right: 5px;">
+                            <path d="M1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5h-13zM1 1.5A1.5 1.5 0 0 1 2.5 0h11A1.5 1.5 0 0 1 15 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5v-13zM8 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                        Split
+                    </button>
+                </div>
+
+                <div class="editor-content" id="editorContent">
+                    <div class="code-editor" id="codeEditor" contenteditable="true">
+// Welcome to Mobile Phone Code Generator!
+// Powered by DevGodswill🕸✍️
+
+// Your AI-generated code will appear here
+// Or start typing to write your own code
+
+console.log("Ready to build amazing apps!");
+                    </div>
+                    <div class="preview-pane" id="previewPane" style="display: none;">
+                        <iframe class="preview-frame" id="previewFrame"></iframe>
+                    </div>
+                </div>
+
+                <div class="bottom-bar">
+                    <button class="bottom-btn" onclick="runCode()">
+                        ▶️ Run
+                    </button>
+                    <button class="bottom-btn" onclick="formatCode()">
+                        ✨ Format
+                    </button>
+                    <button class="bottom-btn" onclick="exportCode()">
+                        💾 Export
+                    </button>
+                    <button class="bottom-btn" onclick="shareCode()">
+                        🔗 Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword,
+            signInWithPopup,
+            GoogleAuthProvider,
+            signInWithPhoneNumber,
+            RecaptchaVerifier,
+            signOut,
+            onAuthStateChanged
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCv4f2ANqT6M6p7y4G6j-kWYZswc-Hnt6s",
+            authDomain: "websites-8c741.firebaseapp.com",
+            projectId: "websites-8c741",
+            storageBucket: "websites-8c741.firebasestorage.app",
+            messagingSenderId: "780234788238",
+            appId: "1:780234788238:web:3f6f01ef405d0ab6ae68df",
+            measurementId: "G-JNZW1M1PLK"
         };
 
-        // ============= GLOBAL STATE =============
-        let currentWord = '';
-        let currentWordData = null;
-        let flashcardIndex = 0;
-        let quizIndex = 0;
-        let quizScore = 0;
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
 
-        // ============= WORD OF THE DAY =============
-        const wotdWords = [
-            { word: 'Serendipity', def: 'The occurrence of events by chance in a happy or beneficial way.' },
-            { word: 'Ephemeral', def: 'Lasting for a very short time; transitory.' },
-            { word: 'Eloquent', def: 'Fluent or persuasive in speaking or writing.' },
-            { word: 'Mellifluous', def: 'Sweet or musical; pleasant to hear.' },
-            { word: 'Ineffable', def: 'Too great or extreme to be expressed in words.' },
-            { word: 'Luminous', def: 'Full of or shedding light; bright.' },
-            { word: 'Zenith', def: 'The highest point reached by a celestial object.' },
-            { word: 'Ubiquitous', def: 'Present everywhere at once.' },
-            { word: 'Paradigm', def: 'A typical example or pattern of something.' },
-            { word: 'Nostalgia', def: 'Sentimental longing for the past.' }
-        ];
+        // Make auth available globally
+        window.firebaseAuth = auth;
+        window.googleProvider = googleProvider;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signInWithPopup = signInWithPopup;
+        window.signInWithPhoneNumber = signInWithPhoneNumber;
+        window.RecaptchaVerifier = RecaptchaVerifier;
+        window.signOut = signOut;
 
-        // ============= INITIALIZATION =============
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTheme();
-            loadFontSize();
-            setWOTD();
-            updateStats();
-
-            // Enter key to search
-            document.getElementById('searchInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    document.getElementById('autocompleteDropdown').style.display = 'none';
-                    searchWord();
-                }
-            });
-
-            // Close autocomplete when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.search-box')) {
-                    document.getElementById('autocompleteDropdown').style.display = 'none';
-                }
-            });
-        });
-
-        // ============= MENU FUNCTIONS =============
-        function toggleMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('menuOverlay');
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        function closeMenu() {
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('menuOverlay').classList.remove('active');
-        }
-
-        function toggleAdvanced() {
-            const content = document.getElementById('advancedContent');
-            const icon = document.getElementById('advancedIcon');
-            content.classList.toggle('expanded');
-            icon.textContent = content.classList.contains('expanded') ? '▲' : '▼';
-        }
-
-        // ============= PAGE NAVIGATION =============
-        function showPage(pageName) {
-            // Hide all pages
-            document.querySelectorAll('.page-view').forEach(page => {
-                page.classList.remove('active');
-            });
-
-            // Show selected page
-            document.getElementById(`page-${pageName}`).classList.add('active');
-
-            // Update active nav item
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.target.closest('.nav-item').classList.add('active');
-
-            // Load page-specific content
-            if (pageName === 'favorites') loadFavoritesPage();
-            if (pageName === 'history') loadHistoryPage();
-            if (pageName === 'statistics') updateStats();
-            if (pageName === 'flashcards') loadFlashcards();
-            if (pageName === 'quiz') loadQuiz();
-
-            closeMenu();
-        }
-
-        // ============= THEME FUNCTIONS =============
-        const themes = ['light', 'dark', 'purple', 'ocean'];
-        let currentThemeIndex = 0;
-
-        function cycleTheme() {
-            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-            const newTheme = themes[currentThemeIndex];
-            changeTheme(newTheme);
-        }
-
-        function changeTheme(theme) {
-            document.body.setAttribute('data-theme', theme);
-            localStorage.setItem(STORAGE.THEME, theme);
-            
-            const icons = { light: '☀️', dark: '🌙', purple: '💜', ocean: '🌊' };
-            document.getElementById('themeIcon').textContent = icons[theme];
-            document.getElementById('themeSelect').value = theme;
-            
-            currentThemeIndex = themes.indexOf(theme);
-        }
-
-        function loadTheme() {
-            const saved = localStorage.getItem(STORAGE.THEME) || 'light';
-            changeTheme(saved);
-        }
-
-        // ============= FONT SIZE =============
-        function changeFontSize(size) {
-            const sizes = { small: '14px', medium: '16px', large: '18px' };
-            document.body.style.fontSize = sizes[size];
-            localStorage.setItem(STORAGE.FONT, size);
-        }
-
-        function loadFontSize() {
-            const saved = localStorage.getItem(STORAGE.FONT) || 'medium';
-            changeFontSize(saved);
-            document.getElementById('fontSelect').value = saved;
-        }
-
-        // ============= WORD OF THE DAY =============
-        function setWOTD() {
-            const today = new Date().getDate();
-            const wotd = wotdWords[today % wotdWords.length];
-            document.getElementById('wotdWord').textContent = wotd.word;
-            document.getElementById('wotdDef').textContent = wotd.def;
-        }
-
-        function searchWOTD() {
-            const word = document.getElementById('wotdWord').textContent;
-            document.getElementById('searchInput').value = word;
-            searchWord();
-        }
-
-        // ============= AUTOCOMPLETE =============
-        let autocompleteTimeout;
-        async function handleAutocomplete() {
-            const input = document.getElementById('searchInput').value.trim();
-            const dropdown = document.getElementById('autocompleteDropdown');
-
-            if (input.length < 2) {
-                dropdown.style.display = 'none';
-                return;
-            }
-
-            clearTimeout(autocompleteTimeout);
-            autocompleteTimeout = setTimeout(async () => {
-                try {
-                    const response = await fetch(`https://api.datamuse.com/sug?s=${input}&max=8`);
-                    const suggestions = await response.json();
-
-                    if (suggestions.length > 0) {
-                        dropdown.innerHTML = suggestions.map(item => 
-                            `<div class="autocomplete-item" onclick="selectAutocomplete('${item.word}')">
-                                <span>🔍</span>${item.word}
-                            </div>`
-                        ).join('');
-                        dropdown.style.display = 'block';
-                    } else {
-                        dropdown.style.display = 'none';
-                    }
-                } catch (error) {
-                    dropdown.style.display = 'none';
-                }
-            }, 300);
-        }
-
-        function selectAutocomplete(word) {
-            document.getElementById('searchInput').value = word;
-            document.getElementById('autocompleteDropdown').style.display = 'none';
-            searchWord();
-        }
-
-        // ============= SEARCH FUNCTIONS =============
-        async function searchWord() {
-            const word = document.getElementById('searchInput').value.trim().toLowerCase();
-            
-            if (!word) {
-                showError('Please enter a word to search');
-                return;
-            }
-
-            currentWord = word;
-            showLoading(true);
-            hideError();
-            hideResults();
-
-            try {
-                let wordData = null;
-
-                // Try Free Dictionary first
-                try {
-                    const freeDictData = await fetchFreeDictionary(word);
-                    if (freeDictData) {
-                        wordData = processFreeDictionary(word, freeDictData);
-                    }
-                } catch (e) {
-                    console.log('Free Dictionary failed');
-                }
-
-                // Try Merriam-Webster Collegiate
-                if (!wordData) {
-                    try {
-                        const mwData = await fetchMerriamWebster(word, MW_COLLEGIATE_KEY, 'collegiate');
-                        if (mwData && Array.isArray(mwData) && mwData[0] && typeof mwData[0] === 'object') {
-                            wordData = processMerriamWebster(word, mwData);
-                        }
-                    } catch (e) {
-                        console.log('MW Collegiate failed');
-                    }
-                }
-
-                // Try School Dictionary
-                if (!wordData) {
-                    try {
-                        const mwSchoolData = await fetchMerriamWebster(word, MW_SCHOOL_KEY, 'sd3');
-                        if (mwSchoolData && Array.isArray(mwSchoolData) && mwSchoolData[0] && typeof mwSchoolData[0] === 'object') {
-                            wordData = processMerriamWebster(word, mwSchoolData);
-                        }
-                    } catch (e) {
-                        console.log('All APIs failed');
-                    }
-                }
-
-                // Get related words and antonyms
-                if (wordData) {
-                    try {
-                        const [related, antonyms] = await Promise.all([
-                            fetch(`https://api.datamuse.com/words?ml=${word}&max=12`).then(r => r.json()),
-                            fetch(`https://api.datamuse.com/words?rel_ant=${word}&max=10`).then(r => r.json())
-                        ]);
-
-                        if (related && related.length > 0) {
-                            wordData.related = related.map(item => item.word);
-                        }
-                        if (antonyms && antonyms.length > 0) {
-                            wordData.antonyms = antonyms.map(item => item.word);
-                        }
-                    } catch (e) {
-                        console.log('Datamuse failed');
-                    }
-                }
-                
-                if (wordData) {
-                    currentWordData = wordData;
-                    displayResults(wordData);
-                    addToHistory(word);
-                    incrementStats('searches');
-                } else {
-                    const suggestions = await getSuggestions(word);
-                    showError(`Word "${word}" not found. Please check spelling and try again.`, suggestions);
-                }
-            } catch (error) {
-                console.error('Search error:', error);
-                showError('An error occurred while searching. Please try again.');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // ============= API FETCH FUNCTIONS =============
-        async function fetchMerriamWebster(word, apiKey, dictionary) {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000);
-            
-            try {
-                const url = `https://dictionaryapi.com/api/v3/references/${dictionary}/json/${word}?key=${apiKey}`;
-                const response = await fetch(url, { signal: controller.signal });
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) throw new Error('API request failed');
-                return await response.json();
-            } catch (error) {
-                clearTimeout(timeoutId);
-                throw error;
-            }
-        }
-
-        async function fetchFreeDictionary(word) {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000);
-            
-            try {
-                const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
-                const response = await fetch(url, { signal: controller.signal });
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) throw new Error('Not found');
-                return await response.json();
-            } catch (error) {
-                clearTimeout(timeoutId);
-                throw error;
-            }
-        }
-
-        async function getSuggestions(word) {
-            try {
-                const response = await fetch(`https://api.datamuse.com/sug?s=${word}&max=5`);
-                const data = await response.json();
-                return data.map(item => item.word);
-            } catch (e) {
-                return [];
-            }
-        }
-
-        // ============= PROCESS API RESPONSES =============
-        function processFreeDictionary(word, data) {
-            if (!data || !data[0]) return null;
-            
-            const freeDictData = data[0];
-            const result = {
-                word: word,
-                phonetic: freeDictData.phonetic || '',
-                definitions: [],
-                synonyms: [],
-                antonyms: [],
-                related: [],
-                etymology: freeDictData.origin || ''
-            };
-
-            if (freeDictData.meanings) {
-                freeDictData.meanings.forEach(meaning => {
-                    const defGroup = {
-                        partOfSpeech: meaning.partOfSpeech,
-                        definitions: []
-                    };
-                    
-                    meaning.definitions.forEach((def, idx) => {
-                        if (idx < 5) {
-                            defGroup.definitions.push({
-                                text: def.definition,
-                                example: def.example || ''
-                            });
-                        }
-                    });
-                    
-                    result.definitions.push(defGroup);
-                    
-                    if (meaning.synonyms && meaning.synonyms.length > 0) {
-                        result.synonyms = [...new Set([...result.synonyms, ...meaning.synonyms.slice(0, 15)])];
-                    }
-
-                    if (meaning.antonyms && meaning.antonyms.length > 0) {
-                        result.antonyms = [...new Set([...result.antonyms, ...meaning.antonyms.slice(0, 15)])];
-                    }
-                });
-            }
-
-            return result.definitions.length > 0 ? result : null;
-        }
-
-        function processMerriamWebster(word, data) {
-            if (!data || !data[0] || typeof data[0] === 'string') return null;
-            
-            const mwData = data[0];
-            const result = {
-                word: word,
-                phonetic: '',
-                definitions: [],
-                synonyms: [],
-                antonyms: [],
-                related: [],
-                etymology: ''
-            };
-
-            if (mwData.hwi && mwData.hwi.prs && mwData.hwi.prs[0]) {
-                result.phonetic = '/' + (mwData.hwi.prs[0].mw || '') + '/';
-            }
-
-            if (mwData.et && mwData.et[0] && mwData.et[0][1]) {
-                result.etymology = mwData.et[0][1].replace(/{.*?}/g, '');
-            }
-            
-            if (mwData.shortdef) {
-                const defGroup = {
-                    partOfSpeech: mwData.fl || 'unknown',
-                    definitions: mwData.shortdef.slice(0, 5).map(def => ({
-                        text: def,
-                        example: ''
-                    }))
-                };
-                result.definitions.push(defGroup);
-            }
-
-            return result.definitions.length > 0 ? result : null;
-        }
-
-        // ============= DISPLAY RESULTS =============
-        function displayResults(data) {
-            const resultContent = document.getElementById('resultContent');
-            let html = '';
-
-            // Word header
-            html += `
-                <div class="word-header">
-                    <div class="word-info">
-                        <div class="word-title">${capitalize(data.word)}</div>
-                        ${data.phonetic ? `<div class="phonetic">${data.phonetic}</div>` : ''}
-                    </div>
-                    <div class="action-buttons">
-                        <button class="action-btn" onclick="toggleFavorite()">
-                            ${isFavorited(data.word) ? '⭐' : '☆'} Favorite
-                        </button>
-                        <button class="action-btn" onclick="copyDefinition()">📋 Copy</button>
-                        <button class="action-btn" onclick="shareWord()">📤 Share</button>
-                    </div>
-                </div>
-            `;
-
-            // Definitions by part of speech
-            data.definitions.forEach((defGroup, groupIdx) => {
-                html += `<div class="part-of-speech">${defGroup.partOfSpeech}</div>`;
-                html += `<div class="definition-section">`;
-                html += `
-                    <div class="collapse-header" onclick="toggleCollapse(${groupIdx})">
-                        <div class="collapse-title">${defGroup.definitions.length} Definition(s)</div>
-                        <span class="collapse-icon expanded" id="collapse-icon-${groupIdx}">▼</span>
-                    </div>
-                `;
-                html += `<div class="definition-content" id="collapse-content-${groupIdx}">`;
-                
-                defGroup.definitions.forEach((def, idx) => {
-                    html += `<div class="definition-item">`;
-                    html += `<div class="definition-number">${idx + 1}.</div>`;
-                    html += `<div class="definition-text">${def.text}</div>`;
-                    if (def.example) {
-                        html += `<div class="example">${def.example}</div>`;
-                    }
-                    html += `</div>`;
-                });
-                
-                html += `</div></div>`;
-            });
-
-            // Etymology
-            if (data.etymology) {
-                html += `
-                    <div class="info-section">
-                        <div class="section-title">📚 Etymology</div>
-                        <div class="etymology-box">${data.etymology}</div>
-                    </div>
-                `;
-            }
-
-            // Synonyms
-            if (data.synonyms && data.synonyms.length > 0) {
-                html += `
-                    <div class="info-section">
-                        <div class="section-title">🔄 Synonyms</div>
-                        <div class="word-tags">
-                            ${data.synonyms.map(syn => `<span class="word-tag" onclick="searchSpecificWord('${syn}')">${syn}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Antonyms
-            if (data.antonyms && data.antonyms.length > 0) {
-                html += `
-                    <div class="info-section">
-                        <div class="section-title">↔️ Antonyms</div>
-                        <div class="word-tags">
-                            ${data.antonyms.map(ant => `<span class="word-tag" onclick="searchSpecificWord('${ant}')">${ant}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Related words
-            if (data.related && data.related.length > 0) {
-                html += `
-                    <div class="info-section">
-                        <div class="section-title">🔗 Related Words</div>
-                        <div class="word-tags">
-                            ${data.related.map(rel => `<span class="word-tag" onclick="searchSpecificWord('${rel}')">${rel}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // AI Section
-            html += `
-                <div class="ai-section">
-                    <div class="ai-header">
-                        <h3>🤖 AI Insights</h3>
-                    </div>
-                    <div class="ai-buttons">
-                        <button class="ai-btn" onclick="aiSimpleExplain()">✨ Simple Explain</button>
-                        <button class="ai-btn" onclick="aiGenerateExamples()">📝 More Examples</button>
-                        <button class="ai-btn" onclick="aiMemoryTips()">💡 Memory Tips</button>
-                        <button class="ai-btn" onclick="aiUsageTips()">🎯 Usage Tips</button>
-                        <button class="ai-btn" onclick="aiWordBreakdown()">🧩 Word Breakdown</button>
-                        <button class="ai-btn" onclick="toggleAIChat()">💬 Ask AI</button>
-                    </div>
-                    <div class="ai-result" id="aiResult"></div>
-                    <div class="ai-chat-box" id="aiChatBox">
-                        <div class="ai-chat-input">
-                            <input type="text" id="aiChatInput" placeholder="Ask anything about this word...">
-                            <button onclick="sendAIChat()">Send</button>
-                        </div>
-                        <div class="ai-chat-messages" id="aiChatMessages"></div>
-                    </div>
-                </div>
-            `;
-
-            resultContent.innerHTML = html;
-            document.getElementById('resultCard').style.display = 'block';
-            updateFavoriteButton();
-        }
-
-        function searchSpecificWord(word) {
-            document.getElementById('searchInput').value = word;
-            showPage('home');
-            searchWord();
-        }
-
-        function toggleCollapse(index) {
-            const content = document.getElementById(`collapse-content-${index}`);
-            const icon = document.getElementById(`collapse-icon-${index}`);
-            
-            if (content.classList.contains('collapsed')) {
-                content.classList.remove('collapsed');
-                icon.classList.add('expanded');
+        // Check auth state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                showMainApp();
             } else {
-                content.classList.add('collapsed');
-                icon.classList.remove('expanded');
-            }
-        }
-
-        // ============= FAVORITES =============
-        function toggleFavorite() {
-            if (!currentWord) return;
-
-            let favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            const index = favorites.findIndex(f => f.word.toLowerCase() === currentWord.toLowerCase());
-
-            if (index > -1) {
-                favorites.splice(index, 1);
-            } else {
-                favorites.unshift({
-                    word: currentWord,
-                    data: currentWordData,
-                    date: new Date().toISOString()
-                });
-            }
-
-            localStorage.setItem(STORAGE.FAVORITES, JSON.stringify(favorites));
-            updateFavoriteButton();
-            updateStats();
-        }
-
-        function isFavorited(word) {
-            const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            return favorites.some(f => f.word.toLowerCase() === word.toLowerCase());
-        }
-
-        function updateFavoriteButton() {
-            const btns = document.querySelectorAll('.action-btn');
-            btns.forEach(btn => {
-                if (btn.textContent.includes('Favorite')) {
-                    const isFav = isFavorited(currentWord);
-                    btn.innerHTML = isFav ? '⭐ Favorite' : '☆ Favorite';
-                    btn.classList.toggle('favorited', isFav);
-                }
-            });
-        }
-
-        function loadFavoritesPage() {
-            const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            const grid = document.getElementById('favoritesGrid');
-
-            if (favorites.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⭐</div>
-                        <p>No favorites yet. Start saving words!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = favorites.map(fav => `
-                <div class="favorite-card" onclick="searchSpecificWord('${fav.word}')">
-                    <div class="favorite-card-header">
-                        <div class="favorite-word">${capitalize(fav.word)}</div>
-                        <button class="delete-favorite" onclick="event.stopPropagation(); removeFavorite('${fav.word}')">×</button>
-                    </div>
-                    <div style="color: var(--text-secondary); font-size: 0.9em;">
-                        ${fav.data && fav.data.definitions && fav.data.definitions[0] ? 
-                            fav.data.definitions[0].definitions[0].text.substring(0, 60) + '...' : 
-                            'Click to view definition'}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removeFavorite(word) {
-            let favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            favorites = favorites.filter(f => f.word.toLowerCase() !== word.toLowerCase());
-            localStorage.setItem(STORAGE.FAVORITES, JSON.stringify(favorites));
-            loadFavoritesPage();
-            updateStats();
-            if (currentWord.toLowerCase() === word.toLowerCase()) {
-                updateFavoriteButton();
-            }
-        }
-
-        // ============= HISTORY =============
-        function addToHistory(word) {
-            let history = JSON.parse(localStorage.getItem(STORAGE.HISTORY) || '[]');
-            history = history.filter(w => w.toLowerCase() !== word.toLowerCase());
-            history.unshift(word);
-            history = history.slice(0, 20);
-            localStorage.setItem(STORAGE.HISTORY, JSON.stringify(history));
-        }
-
-        function loadHistoryPage() {
-            const history = JSON.parse(localStorage.getItem(STORAGE.HISTORY) || '[]');
-            const list = document.getElementById('historyList');
-
-            if (history.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🕐</div>
-                        <p>No search history yet.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = history.map(word => `
-                <div class="history-item" onclick="searchSpecificWord('${word}')">
-                    <div class="history-word">${capitalize(word)}</div>
-                    <span>→</span>
-                </div>
-            `).join('');
-        }
-
-        function clearAllHistory() {
-            if (confirm('Clear all search history?')) {
-                localStorage.removeItem(STORAGE.HISTORY);
-                loadHistoryPage();
-                updateStats();
-            }
-        }
-
-        // ============= STATISTICS =============
-        function incrementStats(stat) {
-            let stats = JSON.parse(localStorage.getItem(STORAGE.STATS) || '{}');
-            stats[stat] = (stats[stat] || 0) + 1;
-            
-            // Update streak
-            const today = new Date().toDateString();
-            if (stats.lastSearch !== today) {
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                
-                if (stats.lastSearch === yesterday.toDateString()) {
-                    stats.streak = (stats.streak || 0) + 1;
-                } else {
-                    stats.streak = 1;
-                }
-                stats.lastSearch = today;
-            }
-            
-            localStorage.setItem(STORAGE.STATS, JSON.stringify(stats));
-        }
-
-        function updateStats() {
-            const stats = JSON.parse(localStorage.getItem(STORAGE.STATS) || '{}');
-            const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-
-            document.getElementById('statSearches').textContent = stats.searches || 0;
-            document.getElementById('statFavorites').textContent = favorites.length;
-            document.getElementById('statStreak').textContent = stats.streak || 0;
-            document.getElementById('statQuizScore').textContent = stats.quizScore || 0;
-        }
-
-        // ============= ACTIONS =============
-        function copyDefinition() {
-            const content = document.getElementById('resultContent').innerText;
-            navigator.clipboard.writeText(content).then(() => {
-                alert('✓ Definition copied to clipboard!');
-            });
-        }
-
-        function shareWord() {
-            const url = `${window.location.origin}${window.location.pathname}?word=${currentWord}`;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('✓ Link copied! Share it with others.');
-            });
-        }
-
-        // ============= AI FEATURES =============
-        async function callGroqAPI(prompt) {
-            try {
-                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${GROQ_API_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        model: 'mixtral-8x7b-32768',
-                        messages: [{ role: 'user', content: prompt }],
-                        max_tokens: 500
-                    })
-                });
-
-                if (!response.ok) throw new Error('API request failed');
-                const data = await response.json();
-                return data.choices[0].message.content;
-            } catch (error) {
-                console.error('Groq API error:', error);
-                return 'Sorry, AI service is temporarily unavailable.';
-            }
-        }
-
-        async function aiSimpleExplain() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '⏳ Loading...';
-
-            const prompt = `Explain the word "${currentWord}" in simple terms that a 10-year-old could understand. Keep it to 2-3 sentences.`;
-            const result = await callGroqAPI(prompt);
-
-            displayAIResult(result);
-            btn.disabled = false;
-            btn.textContent = '✨ Simple Explain';
-        }
-
-        async function aiGenerateExamples() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '⏳ Loading...';
-
-            const prompt = `Generate 5 different example sentences using the word "${currentWord}" in various contexts. Number them 1-5.`;
-            const result = await callGroqAPI(prompt);
-
-            displayAIResult(result);
-            btn.disabled = false;
-            btn.textContent = '📝 More Examples';
-        }
-
-        async function aiMemoryTips() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '⏳ Loading...';
-
-            const prompt = `Create a memorable mnemonic or memory tip to help remember the word "${currentWord}" and its meaning. Make it fun and easy to remember.`;
-            const result = await callGroqAPI(prompt);
-
-            displayAIResult(result);
-            btn.disabled = false;
-            btn.textContent = '💡 Memory Tips';
-        }
-
-        async function aiUsageTips() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '⏳ Loading...';
-
-            const prompt = `Provide usage tips for the word "${currentWord}": When to use it, when NOT to use it, common mistakes, and formality level. Keep it concise.`;
-            const result = await callGroqAPI(prompt);
-
-            displayAIResult(result);
-            btn.disabled = false;
-            btn.textContent = '🎯 Usage Tips';
-        }
-
-        async function aiWordBreakdown() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '⏳ Loading...';
-
-            const prompt = `Break down the word "${currentWord}" into its parts (prefix, root, suffix if any) and explain what each part means. If it doesn't have parts, explain its origin briefly.`;
-            const result = await callGroqAPI(prompt);
-
-            displayAIResult(result);
-            btn.disabled = false;
-            btn.textContent = '🧩 Word Breakdown';
-        }
-
-        function toggleAIChat() {
-            const chatBox = document.getElementById('aiChatBox');
-            const isVisible = chatBox.style.display === 'block';
-            chatBox.style.display = isVisible ? 'none' : 'block';
-            
-            if (!isVisible) {
-                document.getElementById('aiResult').style.display = 'none';
-            }
-        }
-
-        async function sendAIChat() {
-            const input = document.getElementById('aiChatInput');
-            const question = input.value.trim();
-            
-            if (!question) return;
-
-            const messagesDiv = document.getElementById('aiChatMessages');
-            
-            // Add user message
-            messagesDiv.innerHTML += `<div class="ai-message user">${question}</div>`;
-            input.value = '';
-
-            // Get AI response
-            const prompt = `About the word "${currentWord}": ${question}. Keep the answer concise (2-3 sentences).`;
-            const response = await callGroqAPI(prompt);
-
-            // Add AI message
-            messagesDiv.innerHTML += `<div class="ai-message assistant">${response}</div>`;
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function displayAIResult(text) {
-            const resultDiv = document.getElementById('aiResult');
-            resultDiv.innerHTML = text;
-            resultDiv.style.display = 'block';
-            document.getElementById('aiChatBox').style.display = 'none';
-        }
-
-        // ============= FLASHCARDS =============
-        function loadFlashcards() {
-            const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            const container = document.getElementById('flashcardContainer');
-
-            if (favorites.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🎴</div>
-                        <p>Add favorites to study with flashcards!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            flashcardIndex = 0;
-            displayFlashcard(favorites);
-        }
-
-        function displayFlashcard(favorites) {
-            const container = document.getElementById('flashcardContainer');
-            const card = favorites[flashcardIndex];
-
-            container.innerHTML = `
-                <div class="flashcard-container">
-                    <div class="flashcard" id="flashcard" onclick="flipFlashcard()">
-                        <div class="flashcard-front">
-                            <div class="flashcard-word">${capitalize(card.word)}</div>
-                            <p style="opacity: 0.8;">Click to see definition</p>
-                        </div>
-                        <div class="flashcard-back">
-                            <div class="flashcard-def">
-                                ${card.data && card.data.definitions && card.data.definitions[0] ? 
-                                    card.data.definitions[0].definitions[0].text : 
-                                    'Definition not available'}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flashcard-controls">
-                    <button class="flashcard-btn prev" onclick="prevFlashcard()" ${flashcardIndex === 0 ? 'disabled' : ''}>
-                        ← Previous
-                    </button>
-                    <span style="color: var(--text-secondary);">${flashcardIndex + 1} / ${favorites.length}</span>
-                    <button class="flashcard-btn next" onclick="nextFlashcard()" ${flashcardIndex === favorites.length - 1 ? 'disabled' : ''}>
-                        Next →
-                    </button>
-                </div>
-            `;
-        }
-
-        function flipFlashcard() {
-            document.getElementById('flashcard').classList.toggle('flipped');
-        }
-
-        function nextFlashcard() {
-            const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            if (flashcardIndex < favorites.length - 1) {
-                flashcardIndex++;
-                displayFlashcard(favorites);
-            }
-        }
-
-        function prevFlashcard() {
-            const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            if (flashcardIndex > 0) {
-                flashcardIndex--;
-                displayFlashcard(favorites);
-            }
-        }
-
-        // ============= QUIZ =============
-        function loadQuiz() {
-            const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-            const container = document.getElementById('quizContainer');
-
-            if (favorites.length < 4) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🎮</div>
-                        <p>Add at least 4 favorites to start quizzing!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            quizIndex = 0;
-            quizScore = 0;
-            displayQuizQuestion(favorites);
-        }
-
-        function displayQuizQuestion(favorites) {
-            const container = document.getElementById('quizContainer');
-            const correctCard = favorites[quizIndex];
-            
-            // Get wrong options
-            let options = [correctCard.word];
-            while (options.length < 4) {
-                const randomCard = favorites[Math.floor(Math.random() * favorites.length)];
-                if (!options.includes(randomCard.word)) {
-                    options.push(randomCard.word);
-                }
-            }
-            
-            // Shuffle options
-            options = options.sort(() => Math.random() - 0.5);
-
-            const definition = correctCard.data && correctCard.data.definitions && correctCard.data.definitions[0] ? 
-                correctCard.data.definitions[0].definitions[0].text : 
-                'Definition';
-
-            container.innerHTML = `
-                <div class="quiz-question">
-                    <strong>Question ${quizIndex + 1}:</strong> Which word means: "${definition}"?
-                </div>
-                <div class="quiz-options" id="quizOptions">
-                    ${options.map((opt, idx) => `
-                        <div class="quiz-option" onclick="checkQuizAnswer('${opt}', '${correctCard.word}', ${idx})">
-                            ${capitalize(opt)}
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="quiz-score">Score: ${quizScore} / ${quizIndex}</div>
-            `;
-        }
-
-        function checkQuizAnswer(selected, correct, optionIndex) {
-            const options = document.querySelectorAll('.quiz-option');
-            
-            if (selected.toLowerCase() === correct.toLowerCase()) {
-                options[optionIndex].classList.add('correct');
-                quizScore++;
-            } else {
-                options[optionIndex].classList.add('wrong');
-                // Highlight correct answer
-                options.forEach((opt, idx) => {
-                    if (opt.textContent.trim().toLowerCase() === correct.toLowerCase()) {
-                        opt.classList.add('correct');
-                    }
-                });
-            }
-
-            // Disable all options
-            options.forEach(opt => opt.style.pointerEvents = 'none');
-
-            // Next question after delay
-            setTimeout(() => {
-                const favorites = JSON.parse(localStorage.getItem(STORAGE.FAVORITES) || '[]');
-                quizIndex++;
-                
-                if (quizIndex < Math.min(10, favorites.length)) {
-                    displayQuizQuestion(favorites);
-                } else {
-                    // Quiz complete
-                    const percentage = Math.round((quizScore / quizIndex) * 100);
-                    document.getElementById('quizContainer').innerHTML = `
-                        <div style="text-align: center; padding: 40px;">
-                            <h2 style="color: var(--primary); margin-bottom: 20px;">Quiz Complete! 🎉</h2>
-                            <div style="font-size: 3em; margin-bottom: 20px;">${percentage}%</div>
-                            <p style="font-size: 1.2em; margin-bottom: 30px;">
-                                You got ${quizScore} out of ${quizIndex} correct!
-                            </p>
-                            <button class="flashcard-btn next" onclick="loadQuiz()">Try Again</button>
-                        </div>
-                    `;
-                    
-                    // Update stats
-                    let stats = JSON.parse(localStorage.getItem(STORAGE.STATS) || '{}');
-                    stats.quizScore = Math.max(stats.quizScore || 0, percentage);
-                    localStorage.setItem(STORAGE.STATS, JSON.stringify(stats));
-                }
-            }, 1500);
-        }
-
-        // ============= WORD COMPARE =============
-        async function compareWords() {
-            const word1 = document.getElementById('compareWord1').value.trim().toLowerCase();
-            const word2 = document.getElementById('compareWord2').value.trim().toLowerCase();
-
-            if (!word1 || !word2) {
-                alert('Please enter both words to compare');
-                return;
-            }
-
-            showLoading(true);
-
-            try {
-                const [data1, data2] = await Promise.all([
-                    searchWordData(word1),
-                    searchWordData(word2)
-                ]);
-
-                displayCompareResults(data1, data2);
-            } catch (error) {
-                alert('Error comparing words');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        async function searchWordData(word) {
-            try {
-                const freeDictData = await fetchFreeDictionary(word);
-                if (freeDictData) {
-                    return processFreeDictionary(word, freeDictData);
-                }
-            } catch (e) {
-                try {
-                    const mwData = await fetchMerriamWebster(word, MW_COLLEGIATE_KEY, 'collegiate');
-                    if (mwData && Array.isArray(mwData) && mwData[0] && typeof mwData[0] === 'object') {
-                        return processMerriamWebster(word, mwData);
-                    }
-                } catch (e2) {
-                    return null;
-                }
-            }
-            return null;
-        }
-
-        function displayCompareResults(data1, data2) {
-            const resultsDiv = document.getElementById('compareResults');
-            
-            resultsDiv.innerHTML = `
-                ${createCompareCard(data1)}
-                ${createCompareCard(data2)}
-            `;
-        }
-
-        function createCompareCard(data) {
-            if (!data) return '<div class="compare-card"><p>Word not found</p></div>';
-
-            return `
-                <div class="compare-card">
-                    <h2 style="color: var(--primary); margin-bottom: 15px;">${capitalize(data.word)}</h2>
-                    ${data.phonetic ? `<p style="color: var(--text-secondary); margin-bottom: 15px;">${data.phonetic}</p>` : ''}
-                    <div style="margin-bottom: 15px;">
-                        <strong>Part of Speech:</strong> ${data.definitions[0]?.partOfSpeech || 'N/A'}
-                    </div>
-                    <div>
-                        <strong>Definition:</strong><br>
-                        ${data.definitions[0]?.definitions[0]?.text || 'N/A'}
-                    </div>
-                </div>
-            `;
-        }
-
-        // ============= RANDOM WORD =============
-        async function getRandomWord() {
-            showLoading(true);
-
-            try {
-                const response = await fetch('https://random-word-api.herokuapp.com/word');
-                const words = await response.json();
-                const randomWord = words[0];
-
-                document.getElementById('searchInput').value = randomWord;
-                showPage('home');
-                await searchWord();
-            } catch (error) {
-                alert('Error getting random word');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // ============= DATA MANAGEMENT =============
-        function exportData() {
-            const data = {
-                favorites: localStorage.getItem(STORAGE.FAVORITES),
-                history: localStorage.getItem(STORAGE.HISTORY),
-                stats: localStorage.getItem(STORAGE.STATS),
-                theme: localStorage.getItem(STORAGE.THEME),
-                font: localStorage.getItem(STORAGE.FONT)
-            };
-
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `wordnest-backup-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function importData() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = e => {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                reader.onload = event => {
-                    try {
-                        const data = JSON.parse(event.target.result);
-                        Object.keys(data).forEach(key => {
-                            if (data[key]) {
-                                localStorage.setItem(`wordnest_${key}`, data[key]);
-                            }
-                        });
-                        alert('✓ Data imported successfully!');
-                        location.reload();
-                    } catch (error) {
-                        alert('Error importing data. Please check the file.');
-                    }
-                };
-                reader.readAsText(file);
-            };
-            input.click();
-        }
-
-        function clearAllData() {
-            if (confirm('⚠️ This will delete ALL your data including favorites, history, and statistics. Are you sure?')) {
-                if (confirm('This action cannot be undone. Continue?')) {
-                    Object.values(STORAGE).forEach(key => {
-                        localStorage.removeItem(key);
-                    });
-                    alert('✓ All data cleared!');
-                    location.reload();
-                }
-            }
-        }
-
-        // ============= UTILITY FUNCTIONS =============
-        function showLoading(show) {
-            document.getElementById('loading').style.display = show ? 'block' : 'none';
-            const btn = document.getElementById('searchBtn');
-            if (btn) btn.disabled = show;
-        }
-
-        function showError(message, suggestions = []) {
-            const errorDiv = document.getElementById('errorMessage');
-            let html = `<p>${message}</p>`;
-            
-            if (suggestions.length > 0) {
-                html += `
-                    <div class="suggestions-box">
-                        <strong>Did you mean:</strong>
-                        <div class="suggestion-tags">
-                            ${suggestions.map(word => `<span class="word-tag" onclick="searchSpecificWord('${word}')">${word}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            errorDiv.innerHTML = html;
-            errorDiv.style.display = 'block';
-        }
-
-        function hideError() {
-            document.getElementById('errorMessage').style.display = 'none';
-        }
-
-        function hideResults() {
-            document.getElementById('resultCard').style.display = 'none';
-        }
-
-        function capitalize(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-        }
-
-        // ============= CHECK FOR URL PARAMETERS =============
-        window.addEventListener('load', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const word = urlParams.get('word');
-            if (word) {
-                document.getElementById('searchInput').value = word;
-                searchWord();
+                showAuthScreen();
             }
         });
     </script>
 
+    <script>
+        // Global state
+        let currentUser = null;
+        let currentCode = '';
+        let selectedTechStack = ['html', 'css', 'js'];
+
+        // Auth Functions
+        function switchAuthTab(tab) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('signupForm').classList.add('active');
+            }
+        }
+
+        async function loginWithEmail() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorEl = document.getElementById('loginError');
+            const successEl = document.getElementById('loginSuccess');
+
+            errorEl.classList.remove('show');
+            successEl.classList.remove('show');
+
+            if (!email || !password) {
+                errorEl.textContent = 'Please fill in all fields';
+                errorEl.classList.add('show');
+                return;
+            }
+
+            try {
+                showLoading(true);
+                await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
+                successEl.textContent = 'Login successful!';
+                successEl.classList.add('show');
+                setTimeout(() => showMainApp(), 1000);
+            } catch (error) {
+                errorEl.textContent = getErrorMessage(error.code);
+                errorEl.classList.add('show');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function signupWithEmail() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const errorEl = document.getElementById('signupError');
+            const successEl = document.getElementById('signupSuccess');
+
+            errorEl.classList.remove('show');
+            successEl.classList.remove('show');
+
+            if (!email || !password || !confirmPassword) {
+                errorEl.textContent = 'Please fill in all fields';
+                errorEl.classList.add('show');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorEl.textContent = 'Passwords do not match';
+                errorEl.classList.add('show');
+                return;
+            }
+
+            if (password.length < 6) {
+                errorEl.textContent = 'Password must be at least 6 characters';
+                errorEl.classList.add('show');
+                return;
+            }
+
+            try {
+                showLoading(true);
+                await window.createUserWithEmailAndPassword(window.firebaseAuth, email, password);
+                successEl.textContent = 'Account created successfully!';
+                successEl.classList.add('show');
+                setTimeout(() => showMainApp(), 1000);
+            } catch (error) {
+                errorEl.textContent = getErrorMessage(error.code);
+                errorEl.classList.add('show');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function loginWithGoogle() {
+            try {
+                showLoading(true);
+                await window.signInWithPopup(window.firebaseAuth, window.googleProvider);
+                showToast('✅ Logged in with Google!');
+                showMainApp();
+            } catch (error) {
+                showToast('❌ ' + getErrorMessage(error.code));
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function showPhoneAuth() {
+            document.getElementById('phoneAuthModal').classList.add('show');
+        }
+
+        function closePhoneAuth() {
+            document.getElementById('phoneAuthModal').classList.remove('show');
+        }
+
+        async function sendPhoneVerification() {
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const fullPhone = countryCode + phoneNumber;
+            const errorEl = document.getElementById('phoneError');
+            const successEl = document.getElementById('phoneSuccess');
+
+            errorEl.classList.remove('show');
+            successEl.classList.remove('show');
+
+            if (!phoneNumber) {
+                errorEl.textContent = 'Please enter a phone number';
+                errorEl.classList.add('show');
+                return;
+            }
+
+            try {
+                showLoading(true);
+                // Initialize reCAPTCHA
+                if (!window.recaptchaVerifier) {
+                    window.recaptchaVerifier = new window.RecaptchaVerifier(window.firebaseAuth, 'phoneAuthModal', {
+                        'size': 'invisible',
+                        'callback': (response) => {
+                            // reCAPTCHA solved
+                        }
+                    });
+                }
+
+                const confirmationResult = await window.signInWithPhoneNumber(
+                    window.firebaseAuth, 
+                    fullPhone, 
+                    window.recaptchaVerifier
+                );
+                
+                window.confirmationResult = confirmationResult;
+                successEl.textContent = 'Verification code sent!';
+                successEl.classList.add('show');
+                
+                // Here you would show a verification code input
+                showToast('📱 Verification code sent! (Feature in development)');
+                setTimeout(() => closePhoneAuth(), 2000);
+            } catch (error) {
+                errorEl.textContent = getErrorMessage(error.code);
+                errorEl.classList.add('show');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function logout() {
+            try {
+                await window.signOut(window.firebaseAuth);
+                showAuthScreen();
+                showToast('👋 Logged out successfully');
+            } catch (error) {
+                showToast('❌ Error logging out');
+            }
+        }
+
+        function getErrorMessage(errorCode) {
+            const errorMessages = {
+                'auth/email-already-in-use': 'This email is already registered',
+                'auth/invalid-email': 'Invalid email address',
+                'auth/operation-not-allowed': 'Operation not allowed',
+                'auth/weak-password': 'Password is too weak',
+                'auth/user-disabled': 'This account has been disabled',
+                'auth/user-not-found': 'No account found with this email',
+                'auth/wrong-password': 'Incorrect password',
+                'auth/invalid-credential': 'Invalid email or password',
+                'auth/too-many-requests': 'Too many attempts. Please try again later',
+                'auth/network-request-failed': 'Network error. Check your connection'
+            };
+            return errorMessages[errorCode] || 'An error occurred. Please try again';
+        }
+
+        // App Functions
+        function showAuthScreen() {
+            document.getElementById('authContainer').style.display = 'flex';
+            document.getElementById('mainApp').classList.remove('active');
+        }
+
+        function showMainApp() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('mainApp').classList.add('active');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('show');
+            }
+        }
+
+        function switchEditorTab(tab) {
+            const tabs = document.querySelectorAll('.editor-tab');
+            const codeEditor = document.getElementById('codeEditor');
+            const previewPane = document.getElementById('previewPane');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.closest('.editor-tab').classList.add('active');
+
+            if (tab === 'code') {
+                codeEditor.style.display = 'block';
+                codeEditor.style.width = '100%';
+                previewPane.style.display = 'none';
+            } else if (tab === 'preview') {
+                codeEditor.style.display = 'none';
+                previewPane.style.display = 'block';
+                previewPane.style.width = '100%';
+                runCode();
+            } else if (tab === 'split') {
+                codeEditor.style.display = 'block';
+                codeEditor.style.width = '50%';
+                previewPane.style.display = 'block';
+                previewPane.style.width = '50%';
+                runCode();
+            }
+        }
+
+        // Tech stack selection
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('tech-btn')) {
+                e.target.classList.toggle('active');
+                const tech = e.target.dataset.tech;
+                const index = selectedTechStack.indexOf(tech);
+                
+                if (index > -1) {
+                    selectedTechStack.splice(index, 1);
+                } else {
+                    selectedTechStack.push(tech);
+                }
+            }
+        });
+
+        // AI Code Generation
+        async function generateCode() {
+            const prompt = document.getElementById('aiPrompt').value;
+            
+            if (!prompt.trim()) {
+                showToast('⚠️ Please enter a description');
+                return;
+            }
+
+            try {
+                showLoading(true);
+                showToast('🤖 Generating code with AI...');
+
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 1000,
+                        messages: [{
+                            role: 'user',
+                            content: `You are an expert mobile-first web developer. Create a complete, production-ready, mobile-responsive application based on this description: "${prompt}". 
+
+Use these technologies: ${selectedTechStack.join(', ')}.
+
+Requirements:
+1. Create a SINGLE HTML file with embedded CSS and JavaScript
+2. Make it fully responsive for mobile phones (use clamp(), viewport units, media queries)
+3. Use modern, clean design with gradients and smooth animations
+4. Include proper touch interactions for mobile
+5. Add proper meta tags for mobile
+6. Use CSS variables for theming
+7. Make all text and buttons easily tappable on mobile (min 44px touch targets)
+8. Implement swipe gestures where appropriate
+9. Use -webkit prefixes for iOS compatibility
+10. Test that all features work on small screens (320px+)
+
+Return ONLY the complete HTML code, no explanations. Start with <!DOCTYPE html> and include everything in one file.`
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                const generatedCode = data.content
+                    .filter(item => item.type === 'text')
+                    .map(item => item.text)
+                    .join('\n');
+
+                // Extract code from markdown if present
+                let cleanCode = generatedCode.replace(/```html\n?/g, '').replace(/```\n?/g, '').trim();
+                
+                document.getElementById('codeEditor').textContent = cleanCode;
+                currentCode = cleanCode;
+                
+                showToast('✅ Code generated successfully!');
+                
+                // Auto-switch to split view
+                document.querySelectorAll('.editor-tab')[2].click();
+            } catch (error) {
+                console.error('Generation error:', error);
+                showToast('❌ Error generating code. Please try again.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Template Loading
+        const templates = {
+            todo: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Todo App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: clamp(15px, 4vw, 20px);
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: clamp(15px, 4vw, 20px);
+            padding: clamp(20px, 5vw, 30px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            font-size: clamp(24px, 6vw, 32px);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: clamp(12px, 3vw, 15px);
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        button {
+            padding: clamp(12px, 3vw, 15px) clamp(20px, 4vw, 25px);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .todo-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        .todo-text {
+            flex: 1;
+            margin-left: 10px;
+        }
+        .delete-btn {
+            background: #f56565;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ My Tasks</h1>
+        <div class="input-group">
+            <input type="text" id="todoInput" placeholder="Add a new task...">
+            <button onclick="addTodo()">Add</button>
+        </div>
+        <div id="todoList"></div>
+    </div>
+    <script>
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+        
+        function renderTodos() {
+            const list = document.getElementById('todoList');
+            list.innerHTML = todos.map((todo, index) => \`
+                <div class="todo-item \${todo.completed ? 'completed' : ''}">
+                    <input type="checkbox" \${todo.completed ? 'checked' : ''} 
+                           onchange="toggleTodo(\${index})">
+                    <div class="todo-text">\${todo.text}</div>
+                    <button class="delete-btn" onclick="deleteTodo(\${index})">Delete</button>
+                </div>
+            \`).join('');
+        }
+        
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            if (input.value.trim()) {
+                todos.push({ text: input.value, completed: false });
+                input.value = '';
+                saveTodos();
+                renderTodos();
+            }
+        }
+        
+        function toggleTodo(index) {
+            todos[index].completed = !todos[index].completed;
+            saveTodos();
+            renderTodos();
+        }
+        
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            saveTodos();
+            renderTodos();
+        }
+        
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+        
+        document.getElementById('todoInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTodo();
+        });
+        
+        renderTodos();
+    </script>
 </body>
-</html>
+</html>`,
+            calculator: `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .display {
+            background: #1a202c;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: right;
+            font-size: clamp(24px, 8vw, 36px);
+            margin-bottom: 15px;
+            min-height: 70px;
+            word-wrap: break-word;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: clamp(15px, 4vw, 20px);
+            font-size: clamp(16px, 4vw, 20px);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        .num-btn {
+            background: #f7fafc;
+            color: #1a202c;
+        }
+        .op-btn {
+            background: #667eea;
+            color: white;
+        }
+        .eq-btn {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            grid-column: span 2;
+        }
+        .clear-btn {
+            background: #f56565;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear-btn" onclick="clearDisplay()">AC</button>
+            <button class="op-btn" onclick="appendOperator('/')">/</button>
+            <button class="op-btn" onclick="appendOperator('*')">×</button>
+            <button class="num-btn" onclick="appendNumber('7')">7</button>
+            <button class="num-btn" onclick="appendNumber('8')">8</button>
+            <button class="num-btn" onclick="appendNumber('9')">9</button>
+            <button class="op-btn" onclick="appendOperator('-')">-</button>
+            <button class="num-btn" onclick="appendNumber('4')">4</button>
+            <button class="num-btn" onclick="appendNumber('5')">5</button>
+            <button class="num-btn" onclick="appendNumber('6')">6</button>
+            <button class="op-btn" onclick="appendOperator('+')">+</button>
+            <button class="num-btn" onclick="appendNumber('1')">1</button>
+            <button class="num-btn" onclick="appendNumber('2')">2</button>
+            <button class="num-btn" onclick="appendNumber('3')">3</button>
+            <button class="op-btn" onclick="deleteLast()">⌫</button>
+            <button class="num-btn" onclick="appendNumber('0')">0</button>
+            <button class="num-btn" onclick="appendNumber('.')">.</button>
+            <button class="eq-btn" onclick="calculate()">=</button>
+        </div>
+    </div>
+    <script>
+        let display = document.getElementById('display');
+        let currentValue = '0';
+        
+        function appendNumber(num) {
+            if (currentValue === '0') {
+                currentValue = num;
+            } else {
+                currentValue += num;
+            }
+            updateDisplay();
+        }
+        
+        function appendOperator(op) {
+            currentValue += op;
+            updateDisplay();
+        }
+        
+        function clearDisplay() {
+            currentValue = '0';
+            updateDisplay();
+        }
+        
+        function deleteLast() {
+            currentValue = currentValue.slice(0, -1) || '0';
+            updateDisplay();
+        }
+        
+        function calculate() {
+            try {
+                currentValue = eval(currentValue.replace('×', '*')).toString();
+                updateDisplay();
+            } catch {
+                currentValue = 'Error';
+                updateDisplay();
+                setTimeout(() => {
+                    currentValue = '0';
+                    updateDisplay();
+                }, 1000);
+            }
+        }
+        
+        function updateDisplay() {
+            display.textContent = currentValue;
+        }
+    </script>
+</body>
+</html>`,
+            // Add more templates as needed
+        };
+
+        function loadTemplate(templateName) {
+            if (templates[templateName]) {
+                document.getElementById('codeEditor').textContent = templates[templateName];
+                currentCode = templates[templateName];
+                showToast(`✅ ${templateName.charAt(0).toUpperCase() + templateName.slice(1)} template loaded!`);
+                
+                // Auto-switch to split view
+                document.querySelectorAll('.editor-tab')[2].click();
+            } else {
+                showToast('⚠️ Template coming soon!');
+            }
+        }
+
+        // Code Editor Functions
+        function runCode() {
+            const code = document.getElementById('codeEditor').textContent;
+            const preview = document.getElementById('previewFrame');
+            const previewDoc = preview.contentDocument || preview.contentWindow.document;
+            
+            previewDoc.open();
+            previewDoc.write(code);
+            previewDoc.close();
+        }
+
+        function formatCode() {
+            showToast('✨ Code formatted!');
+            // Basic formatting - could be enhanced with a proper formatter
+        }
+
+        function exportCode() {
+            const code = document.getElementById('codeEditor').textContent;
+            const blob = new Blob([code], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'mobile-app.html';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('💾 Code exported!');
+        }
+
+        function shareCode() {
+            const code = document.getElementById('codeEditor').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Mobile App Code',
+                    text: 'Check out the code I created with Mobile Phone Code Generator!',
+                    files: [new File([code], 'app.html', { type: 'text/html' })]
+                }).then(() => {
+                    showToast('🔗 Code shared!');
+                }).catch(() => {
+                    copyToClipboard(code);
+                });
+            } else {
+                copyToClipboard(code);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 Code copied to clipboard!');
+            });
+        }
+
+        function showSettings() {
+            showToast('⚙️ Settings coming soon!');
+        }
+
+        // Utility Functions
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('show', show);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Auto-save functionality
+        let saveTimeout;
+        document.getElementById('codeEditor').addEventListener('input', () => {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                currentCode = document.getElementById('codeEditor').textContent;
+                // Auto-save to localStorage
+                try {
+                    localStorage.setItem('lastCode', currentCode);
+                } catch (e) {
+                    console.error('Failed to save code:', e);
+                }
+            }, 1000);
+        });
+
+        // Load last saved code on startup
+        window.addEventListener('load', () => {
+            try {
+                const savedCode = localStorage.getItem('lastCode');
+                if (savedCode) {
+                    document.getElementById('codeEditor').textContent = savedCode;
+                    currentCode = savedCode;
+                }
+            } catch (e) {
+                console.error('Failed to load saved code:', e);
+            }
+        });
+
+        // Prevent zoom on double-tap for iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Handle orientation changes
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                window.scrollTo(0, 1);
+            }, 100);
+        });
+    </script>
+</body>
+                </html>
