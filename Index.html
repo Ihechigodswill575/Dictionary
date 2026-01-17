@@ -2,104 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>AI Code Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetOdds - Live Betting Odds</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        :root[data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f7f7f8;
-            --bg-tertiary: #ececf1;
-            --text-primary: #2e3338;
-            --text-secondary: #6e6e80;
-            --border-color: #d9d9e3;
-            --accent-color: #10a37f;
-            --message-bg: #f7f7f8;
-            --message-user-bg: #10a37f;
-            --message-user-text: #ffffff;
-        }
-
-        :root[data-theme="dark"] {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2a2a2a;
-            --bg-tertiary: #3a3a3a;
-            --text-primary: #ececec;
-            --text-secondary: #b4b4b4;
-            --border-color: #404040;
-            --accent-color: #10a37f;
-            --message-bg: #2a2a2a;
-            --message-user-bg: #10a37f;
-            --message-user-text: #ffffff;
-        }
-
-        :root[data-theme="purple"] {
-            --bg-primary: #1a0a2e;
-            --bg-secondary: #2d1b4e;
-            --bg-tertiary: #3e2c6e;
-            --text-primary: #e0d5ff;
-            --text-secondary: #b4a5d5;
-            --border-color: #4a3570;
-            --accent-color: #9d4edd;
-            --message-bg: #2d1b4e;
-            --message-user-bg: #9d4edd;
-            --message-user-text: #ffffff;
-        }
-
-        :root[data-theme="blue"] {
-            --bg-primary: #0a192f;
-            --bg-secondary: #112240;
-            --bg-tertiary: #1d3557;
-            --text-primary: #ccd6f6;
-            --text-secondary: #8892b0;
-            --border-color: #233554;
-            --accent-color: #64ffda;
-            --message-bg: #112240;
-            --message-user-bg: #64ffda;
-            --message-user-text: #0a192f;
-        }
-
-        :root[data-theme="red"] {
-            --bg-primary: #1a0000;
-            --bg-secondary: #2d0a0a;
-            --bg-tertiary: #401515;
-            --text-primary: #ffcccc;
-            --text-secondary: #cc9999;
-            --border-color: #4d1f1f;
-            --accent-color: #ff4444;
-            --message-bg: #2d0a0a;
-            --message-user-bg: #ff4444;
-            --message-user-text: #ffffff;
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --accent: #00fff5;
+            --success: #39ff14;
+            --text: #ffffff;
+            --text-secondary: #a0aec0;
+            --danger: #ff4444;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow: hidden;
-            height: 100vh;
-            transition: all 0.3s ease;
+            color: var(--text);
+            overflow-x: hidden;
         }
 
-        /* Welcome Animation */
-        .welcome-screen {
+        body.light-theme {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --text: #1f2937;
+            --text-secondary: #6b7280;
+        }
+
+        body.neon-theme {
+            --bg-primary: #000000;
+            --bg-secondary: #1a001a;
+            --accent: #ff00ff;
+            --success: #00ff00;
+            --text: #ffffff;
+        }
+
+        #welcomeScreen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-primary);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             z-index: 10000;
             animation: fadeOut 1s ease 3s forwards;
         }
@@ -111,1743 +67,1925 @@
             }
         }
 
-        .welcome-content {
-            text-align: center;
-            color: white;
-        }
-
-        .logo-animation {
-            font-size: 80px;
-            margin-bottom: 30px;
-            animation: bounce 2s ease infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .welcome-title {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            animation: slideInLeft 1s ease;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .welcome-subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            animation: slideInRight 1s ease;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .built-by {
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 20px;
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            animation: pulse 2s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .loading-dots {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            background: white;
-            border-radius: 50%;
-            animation: dotBounce 1.4s ease-in-out infinite;
-        }
-
-        .dot:nth-child(1) { animation-delay: 0s; }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes dotBounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        /* Auth Container */
-        .auth-container {
-            display: none;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .auth-container.active {
-            display: flex;
-        }
-
-        .auth-box {
-            background: var(--bg-primary);
-            border-radius: 20px;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .auth-header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .logo-container {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--accent), var(--success), #ff00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            animation: gradientShift 3s ease infinite;
         }
 
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            background: var(--bg-secondary);
-            padding: 5px;
-            border-radius: 12px;
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(60deg); }
         }
 
-        .auth-tab {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .powered-by {
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, #00fff5, #ff00ff, #00ff00, #00fff5);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 2s linear infinite, glitch 3s ease-in-out infinite;
+            text-shadow: 0 0 20px var(--accent);
         }
 
-        .auth-tab.active {
-            background: var(--accent-color);
-            color: white;
+        @keyframes textShine {
+            to { background-position: 200% center; }
         }
 
-        .auth-form {
-            display: none;
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
         }
 
-        .auth-form.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .form-group input {
+        .particles {
+            position: absolute;
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 14px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .form-group input:focus {
-            border-color: var(--accent-color);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 25px 0;
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-color);
-        }
-
-        .divider span {
-            padding: 0 15px;
-        }
-
-        .btn-google {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            background: var(--bg-primary);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: var(--text-primary);
-        }
-
-        .error-message {
-            color: #f56565;
-            font-size: 13px;
-            margin-top: 8px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        /* Main App */
-        .main-app {
-            display: none;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        .main-app.active {
-            display: flex;
-        }
-
-        /* Header */
-        .app-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .menu-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: transparent;
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-
-        .menu-btn:active {
-            background: var(--bg-tertiary);
-        }
-
-        .app-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: -280px;
-            top: 0;
-            width: 280px;
-            height: 100vh;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
-            transition: left 0.3s ease;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-        }
-
-        .sidebar-overlay.show {
-            display: block;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sidebar-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .new-chat-btn {
-            padding: 10px 20px;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin: 15px;
-            width: calc(100% - 30px);
-        }
-
-        .chat-history {
-            padding: 10px;
-        }
-
-        .chat-item {
-            padding: 12px;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-            color: var(--text-primary);
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-item:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .chat-item.active {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .delete-chat-btn {
-            background: transparent;
-            border: none;
-            color: inherit;
-            cursor: pointer;
-            padding: 5px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .chat-item:hover .delete-chat-btn {
-            opacity: 1;
-        }
-
-        .theme-section {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .theme-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--text-secondary);
-        }
-
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .theme-btn {
-            padding: 10px;
-            border: 2px solid var(--border-color);
-            background: var(--bg-primary);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
-            transition: all 0.2s;
-        }
-
-        .theme-btn.active {
-            border-color: var(--accent-color);
-            background: var(--accent-color);
-            color: white;
-        }
-
-        /* Chat Container */
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            height: 100%;
             overflow: hidden;
         }
 
-        .messages-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            scroll-behavior: smooth;
-        }
-
-        .message {
-            margin-bottom: 20px;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message-content {
-            padding: 15px 20px;
-            border-radius: 15px;
-            max-width: 85%;
-            word-wrap: break-word;
-        }
-
-        .message.user {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .message.user .message-content {
-            background: var(--message-user-bg);
-            color: var(--message-user-text);
-            border-bottom-right-radius: 5px;
-        }
-
-        .message.assistant .message-content {
-            background: var(--message-bg);
-            color: var(--text-primary);
-            border-bottom-left-radius: 5px;
-        }
-
-        .message-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .code-block {
-            background: var(--bg-tertiary);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-
-        .code-block pre {
-            margin: 0;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .copy-btn {
+        .particle {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        /* Input Area */
-        .input-container {
-            padding: 20px;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-        }
-
-        .input-wrapper {
-            display: flex;
-            gap: 10px;
-            background: var(--bg-primary);
-            border: 2px solid var(--border-color);
-            border-radius: 25px;
-            padding: 5px;
-            transition: border-color 0.3s;
-        }
-
-        .input-wrapper:focus-within {
-            border-color: var(--accent-color);
-        }
-
-        .message-input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 10px 15px;
-            font-size: 15px;
-            color: var(--text-primary);
-            outline: none;
-            resize: none;
-            max-height: 150px;
-            font-family: inherit;
-        }
-
-        .send-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: var(--accent-color);
-            color: white;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
             border-radius: 50%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        header {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .hamburger {
+            width: 30px;
+            height: 25px;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: var(--text);
+            transition: 0.3s;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background: var(--bg-secondary);
+            transition: 0.3s;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            font-size: 1.5rem;
         }
 
-        .send-btn:active {
-            transform: scale(0.95);
+        .menu-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-left: 3px solid transparent;
         }
 
-        .send-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--accent);
         }
 
-        /* Settings Modal */
-        .modal {
-            display: none;
+        .badge {
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-primary);
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .modal-title {
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .close-btn {
-            width: 35px;
-            height: 35px;
-            border: none;
-            background: var(--bg-tertiary);
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: var(--text-primary);
-        }
-
-        .settings-section {
-            margin-bottom: 25px;
-        }
-
-        .settings-section h3 {
-            font-size: 16px;
-            margin-bottom: 15px;
-            color: var(--text-secondary);
-        }
-
-        .api-select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-size: 14px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-size: 14px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            z-index: 3000;
+            background: rgba(0, 0, 0, 0.7);
             display: none;
+            z-index: 999;
         }
 
-        .toast.show {
+        .overlay.active {
             display: block;
-            animation: slideUpToast 0.3s ease;
         }
 
-        @keyframes slideUpToast {
-            from {
-                opacity: 0;
-                transform: translate(-50%, 20px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        /* Loading */
-        .typing-indicator {
+        .auth-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
             display: none;
-            align-items: center;
-            gap: 5px;
-            padding: 15px;
+            z-index: 1001;
         }
 
-        .typing-indicator.show {
-            display: flex;
+        .auth-modal.active {
+            display: block;
         }
 
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--text-secondary);
-            border-radius: 50%;
-            animation: typingBounce 1.4s ease-in-out infinite;
+        .auth-modal h2 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
         }
 
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typingBounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
+        .form-group {
+            margin-bottom: 1rem;
         }
 
-        .api-note {
-            font-size: 12px;
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             color: var(--text-secondary);
-            margin-top: 10px;
-            line-height: 1.5;
         }
 
-        .api-note a {
-            color: var(--accent-color);
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-primary);
+            color: var(--text);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .auth-switch a {
+            color: var(--accent);
+            cursor: pointer;
             text-decoration: none;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .auth-box {
-                padding: 30px 20px;
-            }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
-            .message-content {
-                max-width: 90%;
+        .filters {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .cache-info {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cache-info .refresh-btn {
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .match-card {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 245, 0.2);
+        }
+
+        .match-header {
+            padding: 1rem;
+            background: rgba(0, 255, 245, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .live-badge {
+            background: var(--danger);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .match-teams {
+            padding: 1.5rem 1rem;
+        }
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .match-odds {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bookmaker {
+            margin-bottom: 1rem;
+        }
+
+        .bookmaker-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .odds-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .odd-btn {
+            flex: 1;
+            padding: 0.6rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .odd-btn:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .odd-btn.best {
+            border: 2px solid var(--success);
+            animation: glow 2s ease infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--success); }
+            50% { box-shadow: 0 0 20px var(--success); }
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-modal {
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .comments-section {
+            margin-top: 2rem;
+        }
+
+        .comment-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .comment-input textarea {
+            flex: 1;
+            padding: 0.8rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .comment {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        .verified-badge {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .comment-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .comment-text {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .comment-action {
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: 0.3s;
+        }
+
+        .comment-action:hover {
+            color: var(--accent);
+        }
+
+        .like-btn.liked {
+            color: var(--danger);
+        }
+
+        .replies {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        .settings-panel {
+            display: none;
+        }
+
+        .settings-panel.active {
+            display: block;
+        }
+
+        .setting-group {
+            margin-bottom: 2rem;
+        }
+
+        .setting-group h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .theme-option {
+            padding: 1rem 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .theme-option.active {
+            border-color: var(--accent);
+            background: rgba(0, 255, 245, 0.1);
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .user-list {
+            background: var(--bg-primary);
+            border-radius: 10px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .verify-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .ban-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border-radius: 5px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
             }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .notification.active {
+            display: block;
+        }
+
+        .inbox-panel {
+            display: none;
+        }
+
+        .inbox-panel.active {
+            display: block;
+        }
+
+        .notification-item {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .notification-item:hover {
+            background: rgba(0, 255, 245, 0.1);
+        }
+
+        .notification-item.unread {
+            border-left: 3px solid var(--accent);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .matches-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-selector {
+                flex-direction: column;
+            }
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: 0.3s;
+        }
+
+        .favorite-btn.active {
+            color: var(--danger);
+        }
+
+        .match-card {
+            position: relative;
         }
     </style>
 </head>
 <body>
+    <div id="welcomeScreen">
+        <div class="particles" id="particles"></div>
+        <div class="logo-container">BetOdds</div>
+        <div class="powered-by">Powered by Devgodswill</div>
+    </div>
 
-    <!-- Welcome Screen -->
-    <div class="welcome-screen">
-        <div class="welcome-content">
-            <div class="logo-animation">🤖</div>
-            <h1 class="welcome-title">AI Code Generator</h1>
-            <p class="welcome-subtitle">Your intelligent coding assistant</p>
-            <div class="loading-dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <header>
+        <div class="logo">⚽ BetOdds</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="user-info" id="userInfo">
+                <div class="avatar" id="userAvatar">👤</div>
+                <div>
+                    <div id="userName">Guest</div>
+                    <div style="font-size: 0.9rem; color: var(--text-secondary);">Not logged in</div>
+                </div>
             </div>
-            <div class="built-by">Built by Dev-Godswill 🕸✍️</div>
+        </div>
+        <div class="menu-item" id="inboxMenu">
+            📬 Inbox
+            <span class="badge" id="notifBadge" style="display: none;">0</span>
+        </div>
+        <div class="menu-item" id="favoritesMenu">⭐ Favorites</div>
+        <div class="menu-item" id="settingsMenu">⚙️ Settings</div>
+        <div class="menu-item" id="profileMenu">👤 Profile</div>
+        <div class="menu-item" id="adminMenu" style="display: none;">🛡️ Admin Panel</div>
+        <div class="menu-item" id="loginMenu">🔐 Login</div>
+        <div class="menu-item" id="logoutMenu" style="display: none;">🚪 Logout</div>
+    </div>
+
+    <div class="auth-modal" id="authModal">
+        <h2 id="authTitle">Login</h2>
+        <form id="authForm">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="authUsername" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="authPassword" required>
+            </div>
+            <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                <label>Confirm Password</label>
+                <input type="password" id="authConfirmPassword">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+        </form>
+        <div class="auth-switch">
+            <span id="authSwitchText">Don't have an account? <a id="authSwitchLink">Sign Up</a></span>
         </div>
     </div>
 
-    <!-- Auth Container -->
-    <div class="auth-container" id="authContainer">
-        <div class="auth-box">
-            <div class="auth-header">
-                <h1>Welcome Back</h1>
-                <p style="color: var(--text-secondary); font-size: 14px;">Sign in to continue</p>
+    <div class="container">
+        <div id="mainContent">
+            <div class="cache-info">
+                <span id="cacheStatus">Cache: Not loaded</span>
+                <button class="refresh-btn" id="forceRefresh">🔄 Force Refresh</button>
             </div>
 
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
-                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            <div class="filters">
+                <button class="filter-btn active" data-sport="all">All Sports</button>
+                <button class="filter-btn" data-sport="soccer">⚽ Soccer</button>
+                <button class="filter-btn" data-sport="basketball">🏀 Basketball</button>
+                <button class="filter-btn" data-sport="americanfootball">🏈 NFL</button>
+                <button class="filter-btn" data-sport="baseball">⚾ MLB</button>
+                <button class="filter-btn" data-sport="tennis">🎾 Tennis</button>
+                <button class="filter-btn" data-sport="icehockey">🏒 Hockey</button>
             </div>
 
-            <!-- Login Form -->
-            <div class="auth-form active" id="loginForm">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password">
-                </div>
-                <button class="btn btn-primary" onclick="loginWithEmail()">Login</button>
-                <div class="error-message" id="loginError"></div>
-
-                <div class="divider"><span>OR</span></div>
-
-                <button class="btn-google" onclick="loginWithGoogle()">
-                    <svg width="20" height="20" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    Continue with Google
-                </button>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Loading matches...</p>
             </div>
 
-            <!-- Signup Form -->
-            <div class="auth-form" id="signupForm">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password">
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
-                </div>
-                <button class="btn btn-primary" onclick="signupWithEmail()">Create Account</button>
-                <div class="error-message" id="signupError"></div>
+            <div class="matches-grid" id="matchesGrid"></div>
+        </div>
 
-                <div class="divider"><span>OR</span></div>
-
-                <button class="btn-google" onclick="loginWithGoogle()">
-                    <svg width="20" height="20" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    Sign up with Google
-                </button>
+        <div id="settingsContent" class="settings-panel">
+            <h2 style="margin-bottom: 2rem;">Settings</h2>
+            <div class="setting-group">
+                <h3>Theme</h3>
+                <div class="theme-selector">
+                    <div class="theme-option active" data-theme="dark">🌙 Dark</div>
+                    <div class="theme-option" data-theme="light">☀️ Light</div>
+                    <div class="theme-option" data-theme="neon">✨ Neon</div>
+                </div>
             </div>
+        </div>
+
+        <div id="adminContent" class="admin-panel">
+            <h2 style="margin-bottom: 2rem;">🛡️ Admin Panel</h2>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="verifiedUsers">0</div>
+                    <div class="stat-label">Verified Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalComments">0</div>
+                    <div class="stat-label">Total Comments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalFavorites">0</div>
+                    <div class="stat-label">Total Favorites</div>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <h3>User Management</h3>
+                <input type="text" class="search-box" id="userSearch" placeholder="🔍 Search users...">
+                <div class="user-list" id="userList"></div>
+            </div>
+
+            <div class="setting-group">
+                <h3>Comment Moderation</h3>
+                <div class="user-list" id="commentsList"></div>
+            </div>
+        </div>
+
+        <div id="inboxContent" class="inbox-panel">
+            <h2 style="margin-bottom: 2rem;">📬 Inbox</h2>
+            <div id="notificationsList"></div>
+        </div>
+
+        <div id="favoritesContent" class="settings-panel">
+            <h2 style="margin-bottom: 2rem;">⭐ Favorites</h2>
+            <div class="matches-grid" id="favoritesGrid"></div>
         </div>
     </div>
 
-    <!-- Main App -->
-    <div class="main-app" id="mainApp">
-        <!-- Header -->
-        <div class="app-header">
-            <div class="header-left">
-                <button class="menu-btn" onclick="toggleSidebar()">
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                </button>
-                <div class="app-title">AI Code Generator</div>
-            </div>
-            <div class="header-right">
-                <button class="menu-btn" onclick="openSettings()">
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319z"/>
-                    </svg>
-                </button>
-                <button class="menu-btn" onclick="logout()">
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Sidebar Overlay -->
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-title">Conversations</div>
-                <button class="menu-btn" onclick="toggleSidebar()">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                </button>
-            </div>
-
-            <button class="new-chat-btn" onclick="startNewChat()">+ New Chat</button>
-
-            <div class="chat-history" id="chatHistory">
-                <!-- Chat history will be loaded here -->
-            </div>
-
-            <div class="theme-section">
-                <div class="theme-title">THEMES</div>
-                <div class="theme-grid">
-                    <button class="theme-btn active" data-theme="light" onclick="changeTheme('light')">☀️ Light</button>
-                    <button class="theme-btn" data-theme="dark" onclick="changeTheme('dark')">🌙 Dark</button>
-                    <button class="theme-btn" data-theme="purple" onclick="changeTheme('purple')">💜 Purple</button>
-                    <button class="theme-btn" data-theme="blue" onclick="changeTheme('blue')">🌊 Blue</button>
-                    <button class="theme-btn" data-theme="red" onclick="changeTheme('red')">❤️ Red</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chat Container -->
-        <div class="chat-container">
-            <div class="messages-container" id="messagesContainer">
-                <!-- Messages will appear here -->
-            </div>
-
-            <div class="typing-indicator" id="typingIndicator">
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-            </div>
-
-            <div class="input-container">
-                <div class="input-wrapper">
-                    <textarea 
-                        class="message-input" 
-                        id="messageInput" 
-                        placeholder="Ask me to generate code..."
-                        rows="1"
-                        onkeydown="handleKeyPress(event)"
-                    ></textarea>
-                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Settings Modal -->
-    <div class="modal" id="settingsModal">
+    <div class="modal" id="matchModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Settings</h2>
-                <button class="close-btn" onclick="closeSettings()">×</button>
+                <h2 id="modalMatchTitle">Match Details</h2>
+                <span class="close-modal" id="closeModal">&times;</span>
             </div>
-
-            <div class="settings-section">
-                <h3>AI Provider</h3>
-                <select class="api-select" id="aiProvider" onchange="handleProviderChange()">
-                    <option value="groq">Groq (Free & Fast) ⚡</option>
-                    <option value="gemini">Google Gemini (Free) 🆓</option>
-                    <option value="huggingface">Hugging Face (Free) 🤗</option>
-                    <option value="claude">Claude API (Paid)</option>
-                    <option value="openai">OpenAI GPT (Paid)</option>
-                </select>
-            </div>
-
-            <!-- Groq API Key Section -->
-            <div class="settings-section" id="groqKeySection">
-                <h3>Groq API Key</h3>
-                <div class="form-group">
-                    <input type="password" id="groqKey" placeholder="gsk_...">
-                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="saveGroqKey()">Save Key</button>
+            <div class="modal-body">
+                <div id="modalMatchDetails"></div>
+                
+                <div class="comments-section">
+                    <h3>Comments</h3>
+                    <div class="comment-input" id="commentInputSection" style="display: none;">
+                        <textarea id="commentText" placeholder="Write a comment... Use @ to mention users"></textarea>
+                        <button class="btn btn-primary" id="postComment">Post</button>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; color: var(--text-secondary);" id="loginToComment">
+                        Please login to comment
+                    </div>
+                    <div id="commentsContainer"></div>
                 </div>
-                <p class="api-note">
-                    Get your FREE API key from <a href="https://console.groq.com/" target="_blank">console.groq.com</a>
-                </p>
-            </div>
-
-            <!-- Gemini API Key Section -->
-            <div class="settings-section" id="geminiKeySection" style="display: none;">
-                <h3>Google Gemini API Key</h3>
-                <div class="form-group">
-                    <input type="password" id="geminiKey" placeholder="AIza...">
-                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="saveGeminiKey()">Save Key</button>
-                </div>
-                <p class="api-note">
-                    Get your FREE API key from <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>
-                </p>
-            </div>
-
-            <!-- Hugging Face API Key Section -->
-            <div class="settings-section" id="huggingfaceKeySection" style="display: none;">
-                <h3>Hugging Face API Key</h3>
-                <div class="form-group">
-                    <input type="password" id="huggingfaceKey" placeholder="hf_...">
-                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="saveHuggingFaceKey()">Save Key</button>
-                </div>
-                <p class="api-note">
-                    Get your FREE API key from <a href="https://huggingface.co/settings/tokens" target="_blank">Hugging Face Settings</a>
-                </p>
-            </div>
-
-            <!-- Claude API Key Section -->
-            <div class="settings-section" id="claudeKeySection" style="display: none;">
-                <h3>Claude API Key</h3>
-                <div class="form-group">
-                    <input type="password" id="claudeKey" placeholder="sk-ant-...">
-                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="saveClaudeKey()">Save Key</button>
-                </div>
-                <p class="api-note">
-                    Get your API key from <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> (Paid)
-                </p>
-            </div>
-
-            <!-- OpenAI API Key Section -->
-            <div class="settings-section" id="openaiKeySection" style="display: none;">
-                <h3>OpenAI API Key</h3>
-                <div class="form-group">
-                    <input type="password" id="openaiKey" placeholder="sk-...">
-                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="saveOpenAIKey()">Save Key</button>
-                </div>
-                <p class="api-note">
-                    Get your API key from <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> (Paid)
-                </p>
-            </div>
-
-            <div class="settings-section">
-                <h3>Current User</h3>
-                <p id="userEmail" style="color: var(--text-secondary); font-size: 14px;"></p>
             </div>
         </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
+    <div class="notification" id="notification"></div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { 
-            getAuth, 
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword,
-            signInWithPopup,
-            GoogleAuthProvider,
-            signOut,
-            onAuthStateChanged
-        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import {
-            getFirestore,
-            collection,
-            doc,
-            setDoc,
-            getDoc,
-            getDocs,
-            deleteDoc,
-            query,
-            orderBy,
-            serverTimestamp
-        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase, ref, set, get, update, push, onValue, query, orderByChild, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCv4f2ANqT6M6p7y4G6j-kWYZswc-Hnt6s",
-            authDomain: "websites-8c741.firebaseapp.com",
-            projectId: "websites-8c741",
-            storageBucket: "websites-8c741.firebasestorage.app",
-            messagingSenderId: "780234788238",
-            appId: "1:780234788238:web:3f6f01ef405d0ab6ae68df",
-            measurementId: "G-JNZW1M1PLK"
+            apiKey: "AIzaSyBzUELxbbaL6Wb_M1uNhjwlZHVTorN9XJs",
+            authDomain: "my-whatsapp-2c1af.firebaseapp.com",
+            databaseURL: "https://my-whatsapp-2c1af-default-rtdb.firebaseio.com",
+            projectId: "my-whatsapp-2c1af",
+            storageBucket: "my-whatsapp-2c1af.firebasestorage.app",
+            messagingSenderId: "1089455460888",
+            appId: "1:1089455460888:web:d0c8dea185ba6769ebe96d"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
-        const googleProvider = new GoogleAuthProvider();
+        const db = getDatabase(app);
 
-        window.firebaseAuth = auth;
-        window.firebaseDb = db;
-        window.googleProvider = googleProvider;
-        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-        window.signInWithPopup = signInWithPopup;
-        window.signOut = signOut;
-        window.collection = collection;
-        window.doc = doc;
-        window.setDoc = setDoc;
-        window.getDoc = getDoc;
-        window.getDocs = getDocs;
-        window.deleteDoc = deleteDoc;
-        window.query = query;
-        window.orderBy = orderBy;
-        window.serverTimestamp = serverTimestamp;
+        const ODDS_API_KEYS = [
+            'e79c0209fb2deefec518750510b153bc',
+            'fe916e46d7855c55b59a1cad7c79271f',
+            'c93c8681d9b8f0c26aaf53fd300c5a33'
+        ];
 
+        let currentKeyIndex = 0;
+        let currentUser = null;
+        let currentMatchId = null;
+        let allMatches = [];
+        let userFavorites = [];
+
+        const ADMIN_USERNAME = 'devgodswill';
+        const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
+
+        // UI Elements
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const authModal = document.getElementById('authModal');
+        const authForm = document.getElementById('authForm');
+        const authTitle = document.getElementById('authTitle');
+        const authSwitchLink = document.getElementById('authSwitchLink');
+        const authSwitchText = document.getElementById('authSwitchText');
+        const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+        const matchesGrid = document.getElementById('matchesGrid');
+        const loading = document.getElementById('loading');
+        const matchModal = document.getElementById('matchModal');
+        const notification = document.getElementById('notification');
+        const cacheStatus = document.getElementById('cacheStatus');
+        const forceRefreshBtn = document.getElementById('forceRefresh');
+
+        // Initialize particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Cache Management Functions
+        function getCachedData(key) {
+            const cached = localStorage.getItem(key);
+            if (!cached) return null;
+            
+            const data = JSON.parse(cached);
+            const now = Date.now();
+            
+            if (now - data.timestamp > CACHE_DURATION) {
+                localStorage.removeItem(key);
+                return null;
+            }
+            
+            return data.value;
+        }
+
+        function setCachedData(key, value) {
+            const data = {
+                value: value,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function clearCache() {
+            const keys = Object.keys(localStorage);
+            keys.forEach(key => {
+                if (key.startsWith('odds_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            showNotification('Cache cleared!');
+            updateCacheStatus();
+        }
+
+        function updateCacheStatus() {
+            const cachedKeys = Object.keys(localStorage).filter(k => k.startsWith('odds_'));
+            if (cachedKeys.length === 0) {
+                cacheStatus.textContent = 'Cache: Empty';
+                return;
+            }
+            
+            const firstKey = cachedKeys[0];
+            const cached = localStorage.getItem(firstKey);
+            if (cached) {
+                const data = JSON.parse(cached);
+                const age = Date.now() - data.timestamp;
+                const minutes = Math.floor(age / 60000);
+                const remaining = 30 - minutes;
+                
+                if (remaining > 0) {
+                    cacheStatus.textContent = `Cache: Fresh (expires in ${remaining} min)`;
+                } else {
+                    cacheStatus.textContent = 'Cache: Expired';
+                }
+            }
+        }
+
+        // Force refresh button
+        forceRefreshBtn.addEventListener('click', () => {
+            clearCache();
+            fetchAllSports(true);
+        });
+
+        // Toggle sidebar
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            authModal.classList.remove('active');
+            matchModal.classList.remove('active');
+        });
+
+        // Auth toggle
+        let isLogin = true;
+        authSwitchLink.addEventListener('click', () => {
+            isLogin = !isLogin;
+            if (isLogin) {
+                authTitle.textContent = 'Login';
+                confirmPasswordGroup.style.display = 'none';
+                authSwitchText.innerHTML = 'Don\'t have an account? <a id="authSwitchLink">Sign Up</a>';
+                authForm.querySelector('button').textContent = 'Login';
+            } else {
+                authTitle.textContent = 'Sign Up';
+                confirmPasswordGroup.style.display = 'block';
+                authSwitchText.innerHTML = 'Already have an account? <a id="authSwitchLink">Login</a>';
+                authForm.querySelector('button').textContent = 'Sign Up';
+            }
+            document.getElementById('authSwitchLink').addEventListener('click', arguments.callee);
+        });
+
+        // Login menu
+        document.getElementById('loginMenu').addEventListener('click', () => {
+            authModal.classList.add('active');
+            overlay.classList.add('active');
+            sidebar.classList.remove('active');
+        });
+
+        // Close modal
+        document.getElementById('closeModal').addEventListener('click', () => {
+            matchModal.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Auth form submission
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('authUsername').value;
+            const password = document.getElementById('authPassword').value;
+            const confirmPassword = document.getElementById('authConfirmPassword').value;
+
+            if (!isLogin && password !== confirmPassword) {
+                showNotification('Passwords do not match!');
+                return;
+            }
+
+            const email = username + '@betodds.app';
+
+            try {
+                if (isLogin) {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    showNotification('Login successful!');
+                } else {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const userId = userCredential.user.uid;
+                    
+                    await set(ref(db, 'users/' + userId), {
+                        username: username,
+                        email: email,
+                        createdAt: Date.now(),
+                        verified: false,
+                        favorites: []
+                    });
+                    
+                    showNotification('Account created successfully!');
+                }
+                authModal.classList.remove('active');
+                overlay.classList.remove('active');
+            } catch (error) {
+                showNotification('Error: ' + error.message);
+            }
+        });
+
+        // Auth state observer
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                window.currentUser = user;
-                setTimeout(() => {
-                    showMainApp();
-                    loadChatHistory();
-                    document.getElementById('userEmail').textContent = user.email;
-                }, 3000);
+                const userRef = ref(db, 'users/' + user.uid);
+                const snapshot = await get(userRef);
+                const userData = snapshot.val();
+                
+                currentUser = {
+                    uid: user.uid,
+                    username: userData.username,
+                    verified: userData.verified || false
+                };
+
+                document.getElementById('userName').textContent = userData.username;
+                document.getElementById('userAvatar').textContent = userData.username.charAt(0).toUpperCase();
+                document.getElementById('loginMenu').style.display = 'none';
+                document.getElementById('logoutMenu').style.display = 'block';
+                
+                if (userData.username === ADMIN_USERNAME) {
+                    document.getElementById('adminMenu').style.display = 'block';
+                }
+
+                loadUserFavorites();
+                loadNotifications();
+                
+                document.getElementById('commentInputSection').style.display = 'flex';
+                document.getElementById('loginToComment').style.display = 'none';
             } else {
-                setTimeout(() => {
-                    showAuthScreen();
-                }, 3000);
+                currentUser = null;
+                document.getElementById('userName').textContent = 'Guest';
+                document.getElementById('userAvatar').textContent = '👤';
+                document.getElementById('loginMenu').style.display = 'block';
+                document.getElementById('logoutMenu').style.display = 'none';
+                document.getElementById('adminMenu').style.display = 'none';
+                
+                document.getElementById('commentInputSection').style.display = 'none';
+                document.getElementById('loginToComment').style.display = 'block';
             }
         });
-    </script>
 
-    <script>
-        let currentChatId = null;
-        let currentMessages = [];
-        let currentTheme = 'light';
-        let currentProvider = 'groq';
+        // Logout
+        document.getElementById('logoutMenu').addEventListener('click', async () => {
+            await signOut(auth);
+            showNotification('Logged out successfully');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
 
-        // Auth Functions
-        function switchAuthTab(tab) {
-            const tabs = document.querySelectorAll('.auth-tab');
-            const forms = document.querySelectorAll('.auth-form');
+        // Menu navigation
+        document.getElementById('settingsMenu').addEventListener('click', () => {
+            showPanel('settingsContent');
+        });
+
+        document.getElementById('adminMenu').addEventListener('click', () => {
+            showPanel('adminContent');
+            loadAdminData();
+        });
+
+        document.getElementById('inboxMenu').addEventListener('click', () => {
+            showPanel('inboxContent');
+            loadNotifications();
+        });
+
+        document.getElementById('favoritesMenu').addEventListener('click', () => {
+            showPanel('favoritesContent');
+            loadFavorites();
+        });
+
+        function showPanel(panelId) {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('settingsContent').classList.remove('active');
+            document.getElementById('adminContent').classList.remove('active');
+            document.getElementById('inboxContent').classList.remove('active');
+            document.getElementById('favoritesContent').classList.remove('active');
             
-            tabs.forEach(t => t.classList.remove('active'));
-            forms.forEach(f => f.classList.remove('active'));
-            
-            if (tab === 'login') {
-                tabs[0].classList.add('active');
-                document.getElementById('loginForm').classList.add('active');
+            if (panelId === 'mainContent') {
+                document.getElementById('mainContent').style.display = 'block';
             } else {
-                tabs[1].classList.add('active');
-                document.getElementById('signupForm').classList.add('active');
+                document.getElementById(panelId).classList.add('active');
             }
-        }
-
-        async function loginWithEmail() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            const errorEl = document.getElementById('loginError');
-
-            errorEl.classList.remove('show');
-
-            if (!email || !password) {
-                errorEl.textContent = 'Please fill in all fields';
-                errorEl.classList.add('show');
-                return;
-            }
-
-            try {
-                await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
-            } catch (error) {
-                errorEl.textContent = getErrorMessage(error.code);
-                errorEl.classList.add('show');
-            }
-        }
-
-        async function signupWithEmail() {
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
-            const errorEl = document.getElementById('signupError');
-
-            errorEl.classList.remove('show');
-
-            if (!email || !password || !confirmPassword) {
-                errorEl.textContent = 'Please fill in all fields';
-                errorEl.classList.add('show');
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                errorEl.textContent = 'Passwords do not match';
-                errorEl.classList.add('show');
-                return;
-            }
-
-            if (password.length < 6) {
-                errorEl.textContent = 'Password must be at least 6 characters';
-                errorEl.classList.add('show');
-                return;
-            }
-
-            try {
-                await window.createUserWithEmailAndPassword(window.firebaseAuth, email, password);
-            } catch (error) {
-                errorEl.textContent = getErrorMessage(error.code);
-                errorEl.classList.add('show');
-            }
-        }
-
-        async function loginWithGoogle() {
-            try {
-                await window.signInWithPopup(window.firebaseAuth, window.googleProvider);
-            } catch (error) {
-                showToast('❌ ' + getErrorMessage(error.code));
-            }
-        }
-
-        async function logout() {
-            try {
-                await window.signOut(window.firebaseAuth);
-                showAuthScreen();
-                showToast('👋 Logged out');
-            } catch (error) {
-                showToast('❌ Error logging out');
-            }
-        }
-
-        function getErrorMessage(errorCode) {
-            const errorMessages = {
-                'auth/email-already-in-use': 'Email already registered',
-                'auth/invalid-email': 'Invalid email',
-                'auth/weak-password': 'Password too weak',
-                'auth/user-not-found': 'No account found',
-                'auth/wrong-password': 'Incorrect password',
-                'auth/invalid-credential': 'Invalid credentials',
-                'auth/too-many-requests': 'Too many attempts',
-            };
-            return errorMessages[errorCode] || 'An error occurred';
-        }
-
-        function showAuthScreen() {
-            document.getElementById('authContainer').classList.add('active');
-            document.getElementById('mainApp').classList.remove('active');
-        }
-
-        function showMainApp() {
-            document.getElementById('authContainer').classList.remove('active');
-            document.getElementById('mainApp').classList.add('active');
-        }
-
-        // App Functions
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
             
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
         }
 
-        function changeTheme(theme) {
-            currentTheme = theme;
-            document.documentElement.setAttribute('data-theme', theme);
-            
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.classList.remove('active');
+        // Theme selector
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                const theme = this.dataset.theme;
+                document.body.className = theme === 'dark' ? '' : theme + '-theme';
+                localStorage.setItem('theme', theme);
             });
-            document.querySelector(`[data-theme="${theme}"]`).classList.add('active');
-            
-            localStorage.setItem('theme', theme);
-            showToast(`Theme changed to ${theme}`);
-        }
+        });
 
         // Load saved theme
-        window.addEventListener('load', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            changeTheme(savedTheme);
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme !== 'dark') {
+            document.body.className = savedTheme + '-theme';
+            document.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
+            document.querySelector('[data-theme="dark"]').classList.remove('active');
+        }
+
+        // Fetch odds with API key rotation and caching
+        async function fetchOdds(sport = 'upcoming', forceRefresh = false) {
+            const cacheKey = 'odds_' + sport;
+            
+            if (!forceRefresh) {
+                const cached = getCachedData(cacheKey);
+                if (cached) {
+                    console.log('Using cached data for', sport);
+                    return cached;
+                }
+            }
+
+            const apiKey = ODDS_API_KEYS[currentKeyIndex];
+            const url = `https://api.the-odds-api.com/v4/sports/${sport}/odds/?apiKey=${apiKey}&regions=us,uk,eu&markets=h2h&oddsFormat=decimal`;
+
+            try {
+                const response = await fetch(url);
+                if (response.status === 429) {
+                    currentKeyIndex = (currentKeyIndex + 1) % ODDS_API_KEYS.length;
+                    showNotification('Switching API key...');
+                    return fetchOdds(sport, forceRefresh);
+                }
+                const data = await response.json();
+                
+                setCachedData(cacheKey, data);
+                updateCacheStatus();
+                
+                return data;
+            } catch (error) {
+                console.error('Error fetching odds:', error);
+                return [];
+            }
+        }
+
+        // Fetch all sports with caching
+        async function fetchAllSports(forceRefresh = false) {
+            loading.style.display = 'block';
+            matchesGrid.innerHTML = '';
+            
+            const sports = ['soccer_epl', 'basketball_nba', 'americanfootball_nfl', 'baseball_mlb', 'tennis_atp', 'icehockey_nhl'];
+            let allData = [];
+            
+            for (const sport of sports) {
+                const data = await fetchOdds(sport, forceRefresh);
+                allData = allData.concat(data);
+            }
+            
+            allMatches = allData;
+            displayMatches(allData);
+            loading.style.display = 'none';
+            updateCacheStatus();
+        }
+
+        // Display matches
+        function displayMatches(matches) {
+            matchesGrid.innerHTML = '';
+            
+            if (matches.length === 0) {
+                matchesGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1/-1;">No matches available</p>';
+                return;
+            }
+
+            matches.forEach(match => {
+                const card = createMatchCard(match);
+                matchesGrid.appendChild(card);
+            });
+        }
+
+        // Create match card
+        function createMatchCard(match) {
+            const card = document.createElement('div');
+            card.className = 'match-card';
+            
+            const isLive = new Date(match.commence_time) < new Date();
+            const isFavorite = userFavorites.includes(match.id);
+            
+            let bestOdds = { home: 0, away: 0, bookmaker: '' };
+            if (match.bookmakers && match.bookmakers.length > 0) {
+                match.bookmakers.forEach(bookmaker => {
+                    const outcomes = bookmaker.markets[0].outcomes;
+                    const homeOdd = outcomes.find(o => o.name === match.home_team)?.price || 0;
+                    const awayOdd = outcomes.find(o => o.name === match.away_team)?.price || 0;
+                    
+                    if (homeOdd > bestOdds.home) {
+                        bestOdds.home = homeOdd;
+                    }
+                    if (awayOdd > bestOdds.away) {
+                        bestOdds.away = awayOdd;
+                    }
+                });
+            }
+
+            card.innerHTML = `
+                <div class="match-header">
+                    <span>${match.sport_title}</span>
+                    ${isLive ? '<span class="live-badge">LIVE</span>' : ''}
+                </div>
+                <span class="favorite-btn ${isFavorite ? 'active' : ''}" data-match-id="${match.id}">
+                    ${isFavorite ? '❤️' : '🤍'}
+                </span>
+                <div class="match-teams">
+                    <div class="team">
+                        <span>${match.home_team}</span>
+                        ${isLive ? '<span style="color: var(--success);">1 - 0</span>' : ''}
+                    </div>
+                    <div class="team">
+                        <span>${match.away_team}</span>
+                        ${isLive ? '<span>0</span>' : ''}
+                    </div>
+                    <div style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        🕐 ${new Date(match.commence_time).toLocaleString()}
+                    </div>
+                </div>
+                <div class="match-odds">
+                    ${match.bookmakers && match.bookmakers.length > 0 ? renderBookmakers(match.bookmakers, match, bestOdds) : '<p style="color: var(--text-secondary); text-align: center;">No odds available</p>'}
+                </div>
+            `;
+
+            card.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('favorite-btn') && !e.target.classList.contains('odd-btn')) {
+                    openMatchModal(match);
+                }
+            });
+
+            const favoriteBtn = card.querySelector('.favorite-btn');
+            favoriteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(match.id);
+            });
+
+            return card;
+        }
+
+        // Render bookmakers
+        function renderBookmakers(bookmakers, match, bestOdds) {
+            let html = '';
+            bookmakers.slice(0, 3).forEach(bookmaker => {
+                const outcomes = bookmaker.markets[0].outcomes;
+                const homeOdd = outcomes.find(o => o.name === match.home_team)?.price || 'N/A';
+                const awayOdd = outcomes.find(o => o.name === match.away_team)?.price || 'N/A';
+                const drawOdd = outcomes.find(o => o.name === 'Draw')?.price;
+
+                html += `
+                    <div class="bookmaker">
+                        <div class="bookmaker-name">${bookmaker.title}</div>
+                        <div class="odds-row">
+                            <div class="odd-btn ${homeOdd === bestOdds.home ? 'best' : ''}">${homeOdd}</div>
+                            ${drawOdd ? `<div class="odd-btn">${drawOdd}</div>` : ''}
+                            <div class="odd-btn ${awayOdd === bestOdds.away ? 'best' : ''}">${awayOdd}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            return html;
+        }
+
+        // Toggle favorite
+        async function toggleFavorite(matchId) {
+            if (!currentUser) {
+                showNotification('Please login to add favorites');
+                return;
+            }
+
+            const userRef = ref(db, 'users/' + currentUser.uid + '/favorites');
+            const snapshot = await get(userRef);
+            let favorites = snapshot.val() || [];
+
+            if (favorites.includes(matchId)) {
+                favorites = favorites.filter(id => id !== matchId);
+                showNotification('Removed from favorites');
+            } else {
+                favorites.push(matchId);
+                showNotification('Added to favorites');
+            }
+
+            await set(userRef, favorites);
+            userFavorites = favorites;
+            
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                if (btn.dataset.matchId === matchId) {
+                    if (favorites.includes(matchId)) {
+                        btn.classList.add('active');
+                        btn.textContent = '❤️';
+                    } else {
+                        btn.classList.remove('active');
+                        btn.textContent = '🤍';
+                    }
+                }
+            });
+        }
+
+        // Load user favorites
+        async function loadUserFavorites() {
+            if (!currentUser) return;
+            const userRef = ref(db, 'users/' + currentUser.uid + '/favorites');
+            const snapshot = await get(userRef);
+            userFavorites = snapshot.val() || [];
+        }
+
+        // Load favorites view
+        function loadFavorites() {
+            const favoritesGrid = document.getElementById('favoritesGrid');
+            const favoriteMatches = allMatches.filter(m => userFavorites.includes(m.id));
+            
+            favoritesGrid.innerHTML = '';
+            if (favoriteMatches.length === 0) {
+                favoritesGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1/-1;">No favorites yet</p>';
+                return;
+            }
+
+            favoriteMatches.forEach(match => {
+                const card = createMatchCard(match);
+                favoritesGrid.appendChild(card);
+            });
+        }
+
+        // Open match modal
+        async function openMatchModal(match) {
+            currentMatchId = match.id;
+            matchModal.classList.add('active');
+            overlay.classList.add('active');
+            
+            document.getElementById('modalMatchTitle').textContent = `${match.home_team} vs ${match.away_team}`;
+            
+            let detailsHtml = `
+                <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 5px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--accent); margin-bottom: 1rem;">Match Information</h3>
+                    <p><strong>Sport:</strong> ${match.sport_title}</p>
+                    <p><strong>Start Time:</strong> ${new Date(match.commence_time).toLocaleString()}</p>
+                    <p><strong>Teams:</strong> ${match.home_team} vs ${match.away_team}</p>
+                </div>
+                
+                <h3 style="margin-bottom: 1rem;">All Bookmakers</h3>
+                ${match.bookmakers ? match.bookmakers.map(bookmaker => {
+                    const outcomes = bookmaker.markets[0].outcomes;
+                    return `
+                        <div class="bookmaker" style="margin-bottom: 1rem;">
+                            <div class="bookmaker-name" style="font-size: 1.1rem; margin-bottom: 0.5rem;">${bookmaker.title}</div>
+                            <div class="odds-row">
+                                ${outcomes.map(outcome => `
+                                    <div class="odd-btn">
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">${outcome.name}</div>
+                                        <div style="font-size: 1.2rem; font-weight: bold;">${outcome.price}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('') : '<p>No odds available</p>'}
+            `;
+            
+            document.getElementById('modalMatchDetails').innerHTML = detailsHtml;
+            
+            loadComments(match.id);
+        }
+
+        // Load comments
+        async function loadComments(matchId) {
+            const commentsRef = ref(db, 'comments/' + matchId);
+            onValue(commentsRef, async (snapshot) => {
+                const comments = snapshot.val();
+                const container = document.getElementById('commentsContainer');
+                container.innerHTML = '';
+
+                if (!comments) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No comments yet. Be the first to comment!</p>';
+                    return;
+                }
+
+                for (const commentId in comments) {
+                    const comment = comments[commentId];
+                    const commentEl = await createCommentElement(comment, commentId, matchId);
+                    container.appendChild(commentEl);
+                }
+            });
+        }
+
+        // Create comment element
+        async function createCommentElement(comment, commentId, matchId) {
+            const div = document.createElement('div');
+            div.className = 'comment';
+            
+            const userRef = ref(db, 'users/' + comment.userId);
+            const userSnapshot = await get(userRef);
+            const userData = userSnapshot.val();
+            
+            const isLiked = comment.likes && currentUser && comment.likes.includes(currentUser.uid);
+            const likeCount = comment.likes ? comment.likes.length : 0;
+            
+            const timeAgo = getTimeAgo(comment.timestamp);
+            
+            div.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-author">
+                        ${comment.username}
+                        ${userData && userData.verified ? '<span class="verified-badge">✓</span>' : ''}
+                    </div>
+                    <div class="comment-time">${timeAgo}</div>
+                </div>
+                <div class="comment-text">${comment.text}</div>
+                <div class="comment-actions">
+                    <span class="comment-action like-btn ${isLiked ? 'liked' : ''}" data-comment-id="${commentId}">
+                        ❤️ ${likeCount}
+                    </span>
+                    <span class="comment-action reply-btn" data-comment-id="${commentId}">💬 Reply</span>
+                    ${currentUser && (currentUser.uid === comment.userId || currentUser.username === ADMIN_USERNAME) ? `<span class="comment-action delete-btn" data-comment-id="${commentId}">🗑️ Delete</span>` : ''}
+                </div>
+                <div class="replies" id="replies-${commentId}"></div>
+            `;
+
+            div.querySelector('.like-btn').addEventListener('click', () => {
+                likeComment(matchId, commentId);
+            });
+
+            div.querySelector('.reply-btn').addEventListener('click', () => {
+                replyToComment(matchId, commentId, comment.username);
+            });
+
+            const deleteBtn = div.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', async () => {
+                    if (confirm('Delete this comment?')) {
+                        await remove(ref(db, `comments/${matchId}/${commentId}`));
+                        showNotification('Comment deleted');
+                    }
+                });
+            }
+
+            if (comment.replies) {
+                const repliesContainer = div.querySelector(`#replies-${commentId}`);
+                for (const replyId in comment.replies) {
+                    const reply = comment.replies[replyId];
+                    const replyEl = await createCommentElement(reply, replyId, matchId);
+                    repliesContainer.appendChild(replyEl);
+                }
+            }
+
+            return div;
+        }
+
+        // Post comment
+        document.getElementById('postComment').addEventListener('click', async () => {
+            if (!currentUser) {
+                showNotification('Please login to comment');
+                return;
+            }
+
+            const text = document.getElementById('commentText').value.trim();
+            if (!text) return;
+
+            const commentRef = push(ref(db, 'comments/' + currentMatchId));
+            await set(commentRef, {
+                userId: currentUser.uid,
+                username: currentUser.username,
+                text: text,
+                timestamp: Date.now(),
+                likes: []
+            });
+
+            document.getElementById('commentText').value = '';
+            showNotification('Comment posted!');
+
+            const mentions = text.match(/@(\w+)/g);
+            if (mentions) {
+                mentions.forEach(async (mention) => {
+                    const username = mention.substring(1);
+                    const usersRef = ref(db, 'users');
+                    const snapshot = await get(usersRef);
+                    const users = snapshot.val();
+                    
+                    for (const userId in users) {
+                        if (users[userId].username === username) {
+                            const notifRef = push(ref(db, 'notifications/' + userId));
+                            await set(notifRef, {
+                                type: 'mention',
+                                from: currentUser.username,
+                                matchId: currentMatchId,
+                                timestamp: Date.now(),
+                                read: false
+                            });
+                        }
+                    }
+                });
+            }
         });
 
-        function openSettings() {
-            document.getElementById('settingsModal').classList.add('show');
-            loadSettings();
+        // Like comment
+        async function likeComment(matchId, commentId) {
+            if (!currentUser) {
+                showNotification('Please login to like');
+                return;
+            }
+
+            const commentRef = ref(db, `comments/${matchId}/${commentId}/likes`);
+            const snapshot = await get(commentRef);
+            let likes = snapshot.val() || [];
+
+            if (likes.includes(currentUser.uid)) {
+                likes = likes.filter(id => id !== currentUser.uid);
+            } else {
+                likes.push(currentUser.uid);
+            }
+
+            await set(commentRef, likes);
         }
 
-        function closeSettings() {
-            document.getElementById('settingsModal').classList.remove('show');
+        // Reply to comment
+        function replyToComment(matchId, commentId, username) {
+            const textarea = document.getElementById('commentText');
+            textarea.value = `@${username} `;
+            textarea.focus();
         }
 
-        function handleProviderChange() {
-            const provider = document.getElementById('aiProvider').value;
-            currentProvider = provider;
+        // Get time ago
+        function getTimeAgo(timestamp) {
+            const seconds = Math.floor((Date.now() - timestamp) / 1000);
             
-            // Hide all key sections
-            document.getElementById('groqKeySection').style.display = 'none';
-            document.getElementById('geminiKeySection').style.display = 'none';
-            document.getElementById('huggingfaceKeySection').style.display = 'none';
-            document.getElementById('claudeKeySection').style.display = 'none';
-            document.getElementById('openaiKeySection').style.display = 'none';
-            
-            // Show relevant key section
-            if (provider === 'groq') {
-                document.getElementById('groqKeySection').style.display = 'block';
-            } else if (provider === 'gemini') {
-                document.getElementById('geminiKeySection').style.display = 'block';
-            } else if (provider === 'huggingface') {
-                document.getElementById('huggingfaceKeySection').style.display = 'block';
-            } else if (provider === 'claude') {
-                document.getElementById('claudeKeySection').style.display = 'block';
-            } else if (provider === 'openai') {
-                document.getElementById('openaiKeySection').style.display = 'block';
-            }
-            
-            localStorage.setItem('aiProvider', provider);
+            if (seconds < 60) return seconds + ' seconds ago';
+            if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ago';
+            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
+            return Math.floor(seconds / 86400) + ' days ago';
         }
 
-        function loadSettings() {
-            const savedProvider = localStorage.getItem('aiProvider') || 'groq';
-            document.getElementById('aiProvider').value = savedProvider;
-            currentProvider = savedProvider;
-            handleProviderChange();
-            
-            // Load saved API keys
-            const groqKey = localStorage.getItem('groqKey');
-            const geminiKey = localStorage.getItem('geminiKey');
-            const huggingfaceKey = localStorage.getItem('huggingfaceKey');
-            const claudeKey = localStorage.getItem('claudeKey');
-            const openaiKey = localStorage.getItem('openaiKey');
-            
-            if (groqKey) document.getElementById('groqKey').value = groqKey;
-            if (geminiKey) document.getElementById('geminiKey').value = geminiKey;
-            if (huggingfaceKey) document.getElementById('huggingfaceKey').value = huggingfaceKey;
-            if (claudeKey) document.getElementById('claudeKey').value = claudeKey;
-            if (openaiKey) document.getElementById('openaiKey').value = openaiKey;
-        }
+        // Load notifications
+        async function loadNotifications() {
+            if (!currentUser) return;
 
-        function saveGroqKey() {
-            const key = document.getElementById('groqKey').value;
-            if (key) {
-                localStorage.setItem('groqKey', key);
-                showToast('✅ Groq key saved');
-            }
-        }
-
-        function saveGeminiKey() {
-            const key = document.getElementById('geminiKey').value;
-            if (key) {
-                localStorage.setItem('geminiKey', key);
-                showToast('✅ Gemini key saved');
-            }
-        }
-
-        function saveHuggingFaceKey() {
-            const key = document.getElementById('huggingfaceKey').value;
-            if (key) {
-                localStorage.setItem('huggingfaceKey', key);
-                showToast('✅ Hugging Face key saved');
-            }
-        }
-
-        function saveClaudeKey() {
-            const key = document.getElementById('claudeKey').value;
-            if (key) {
-                localStorage.setItem('claudeKey', key);
-                showToast('✅ Claude key saved');
-            }
-        }
-
-        function saveOpenAIKey() {
-            const key = document.getElementById('openaiKey').value;
-            if (key) {
-                localStorage.setItem('openaiKey', key);
-                showToast('✅ OpenAI key saved');
-            }
-        }
-
-        async function startNewChat() {
-            currentChatId = 'chat_' + Date.now();
-            currentMessages = [];
-            document.getElementById('messagesContainer').innerHTML = '';
-            toggleSidebar();
-            showToast('✨ New chat started');
-        }
-
-        async function loadChatHistory() {
-            if (!window.currentUser) return;
-
-            const chatHistory = document.getElementById('chatHistory');
-            chatHistory.innerHTML = '';
-
-            try {
-                const q = window.query(
-                    window.collection(window.firebaseDb, `users/${window.currentUser.uid}/chats`),
-                    window.orderBy('timestamp', 'desc')
-                );
+            const notifRef = ref(db, 'notifications/' + currentUser.uid);
+            onValue(notifRef, (snapshot) => {
+                const notifications = snapshot.val();
+                const container = document.getElementById('notificationsList');
+                const badge = document.getElementById('notifBadge');
                 
-                const querySnapshot = await window.getDocs(q);
+                container.innerHTML = '';
                 
-                querySnapshot.forEach((doc) => {
-                    const chat = doc.data();
-                    const chatItem = document.createElement('div');
-                    chatItem.className = 'chat-item';
-                    chatItem.innerHTML = `
-                        <span>${chat.title || 'New Chat'}</span>
-                        <button class="delete-chat-btn" onclick="deleteChat('${doc.id}')">🗑️</button>
-                    `;
-                    chatItem.onclick = (e) => {
-                        if (!e.target.classList.contains('delete-chat-btn')) {
-                            loadChat(doc.id, chat);
-                        }
-                    };
-                    chatHistory.appendChild(chatItem);
-                });
-            } catch (error) {
-                console.error('Error loading chat history:', error);
-            }
-        }
-
-        async function loadChat(chatId, chatData) {
-            currentChatId = chatId;
-            currentMessages = chatData.messages || [];
-            
-            const messagesContainer = document.getElementById('messagesContainer');
-            messagesContainer.innerHTML = '';
-            
-            currentMessages.forEach(msg => {
-                addMessageToUI(msg.role, msg.content);
-            });
-            
-            toggleSidebar();
-        }
-
-        async function deleteChat(chatId) {
-            if (!confirm('Delete this chat?')) return;
-
-            try {
-                await window.deleteDoc(window.doc(window.firebaseDb, `users/${window.currentUser.uid}/chats/${chatId}`));
-                loadChatHistory();
-                showToast('🗑️ Chat deleted');
-            } catch (error) {
-                console.error('Error deleting chat:', error);
-                showToast('❌ Error deleting chat');
-            }
-        }
-
-        async function saveChat() {
-            if (!window.currentUser || !currentChatId || currentMessages.length === 0) return;
-
-            try {
-                const title = currentMessages[0].content.substring(0, 50);
-                await window.setDoc(window.doc(window.firebaseDb, `users/${window.currentUser.uid}/chats/${currentChatId}`), {
-                    title: title,
-                    messages: currentMessages,
-                    timestamp: window.serverTimestamp()
-                });
-                
-                loadChatHistory();
-            } catch (error) {
-                console.error('Error saving chat:', error);
-            }
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendMessage();
-            }
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-
-            if (!currentChatId) {
-                currentChatId = 'chat_' + Date.now();
-            }
-
-            input.value = '';
-            input.style.height = 'auto';
-            
-            const sendBtn = document.getElementById('sendBtn');
-            const typingIndicator = document.getElementById('typingIndicator');
-            
-            sendBtn.disabled = true;
-            
-            currentMessages.push({ role: 'user', content: message });
-            addMessageToUI('user', message);
-            
-            typingIndicator.classList.add('show');
-            
-            try {
-                let response;
-                
-                if (currentProvider === 'groq') {
-                    response = await callGroqAPI(message);
-                } else if (currentProvider === 'gemini') {
-                    response = await callGeminiAPI(message);
-                } else if (currentProvider === 'huggingface') {
-                    response = await callHuggingFaceAPI(message);
-                } else if (currentProvider === 'claude') {
-                    response = await callClaudeAPI(message);
-                } else if (currentProvider === 'openai') {
-                    response = await callOpenAIAPI(message);
+                if (!notifications) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No notifications</p>';
+                    badge.style.display = 'none';
+                    return;
                 }
-                
-                currentMessages.push({ role: 'assistant', content: response });
-                addMessageToUI('assistant', response);
-                
-                await saveChat();
-                
-            } catch (error) {
-                console.error('Error:', error);
-                addMessageToUI('assistant', '❌ Error: ' + error.message);
-                showToast('❌ Error: ' + error.message);
-                
-            } finally {
-                typingIndicator.classList.remove('show');
-                sendBtn.disabled = false;
-            }
-        }
 
-        // API Functions
-        async function callGroqAPI(message) {
-            const apiKey = localStorage.getItem('groqKey');
-            
-            if (!apiKey) {
-                throw new Error('Please add your Groq API key in Settings');
-            }
-
-            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'llama-3.3-70b-versatile',
-                    messages: [{ role: 'user', content: message }],
-                    max_tokens: 2000
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'Groq API error');
-            }
-
-            const data = await response.json();
-            return data.choices[0].message.content;
-        }
-
-        async function callGeminiAPI(message) {
-            constapiKey = localStorage.getItem('geminiKey');
-            
-            if (!apiKey) {
-                throw new Error('Please add your Gemini API key in Settings');
-            }
-
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: message }]
-                    }]
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'Gemini API error');
-            }
-
-            const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
-        }
-
-        async function callHuggingFaceAPI(message) {
-            const apiKey = localStorage.getItem('huggingfaceKey');
-            
-            if (!apiKey) {
-                throw new Error('Please add your Hugging Face API key in Settings');
-            }
-
-            const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    inputs: message,
-                    parameters: {
-                        max_new_tokens: 2000,
-                        temperature: 0.7,
-                        return_full_text: false
+                let unreadCount = 0;
+                for (const notifId in notifications) {
+                    const notif = notifications[notifId];
+                    if (!notif.read) unreadCount++;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'notification-item' + (!notif.read ? ' unread' : '');
+                    
+                    let message = '';
+                    if (notif.type === 'mention') {
+                        message = `${notif.from} mentioned you in a comment`;
+                    } else if (notif.type === 'reply') {
+                        message = `${notif.from} replied to your comment`;
                     }
-                })
-            });
+                    
+                    div.innerHTML = `
+                        <div>${message}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                            ${getTimeAgo(notif.timestamp)}
+                        </div>
+                    `;
+                    
+                    div.addEventListener('click', async () => {
+                        await update(ref(db, `notifications/${currentUser.uid}/${notifId}`), { read: true });
+                    });
+                    
+                    container.appendChild(div);
+                }
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Hugging Face API error');
-            }
-
-            const data = await response.json();
-            
-            // Handle different response formats
-            if (Array.isArray(data) && data.length > 0) {
-                return data[0].generated_text || data[0].text || JSON.stringify(data[0]);
-            } else if (data.generated_text) {
-                return data.generated_text;
-            } else {
-                throw new Error('Unexpected response format from Hugging Face');
-            }
-        }
-
-        async function callClaudeAPI(message) {
-            const apiKey = localStorage.getItem('claudeKey');
-            
-            if (!apiKey) {
-                throw new Error('Please add your Claude API key in Settings');
-            }
-
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': apiKey,
-                    'anthropic-version': '2023-06-01'
-                },
-                body: JSON.stringify({
-                    model: 'claude-sonnet-4-20250514',
-                    max_tokens: 2000,
-                    messages: [{
-                        role: 'user',
-                        content: message
-                    }]
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'Claude API error');
-            }
-
-            const data = await response.json();
-            return data.content[0].text;
-        }
-
-        async function callOpenAIAPI(message) {
-            const apiKey = localStorage.getItem('openaiKey');
-            
-            if (!apiKey) {
-                throw new Error('Please add your OpenAI API key in Settings');
-            }
-
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-4o-mini',
-                    messages: [{ role: 'user', content: message }],
-                    max_tokens: 2000
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'OpenAI API error');
-            }
-
-            const data = await response.json();
-            return data.choices[0].message.content;
-        }
-
-        function addMessageToUI(role, content) {
-            const messagesContainer = document.getElementById('messagesContainer');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${role}`;
-            
-            const hasCode = content.includes('```');
-            
-            if (hasCode) {
-                const parts = content.split('```');
-                let html = '<div class="message-content">';
-                
-                parts.forEach((part, index) => {
-                    if (index % 2 === 0) {
-                        // Regular text
-                        if (part.trim()) {
-                            html += `<p>${escapeHtml(part).replace(/\n/g, '<br>')}</p>`;
-                        }
-                    } else {
-                        // Code block
-                        const lines = part.split('\n');
-                        const lang = lines[0].trim();
-                        const code = lines.slice(1).join('\n');
-                        html += `
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                                <pre><code>${escapeHtml(code)}</code></pre>
-                            </div>
-                        `;
-                    }
-                });
-                
-                html += '</div>';
-                messageDiv.innerHTML = html;
-            } else {
-                messageDiv.innerHTML = `<div class="message-content">${escapeHtml(content).replace(/\n/g, '<br>')}</div>`;
-            }
-            
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function copyCode(btn) {
-            const codeBlock = btn.nextElementSibling;
-            const code = codeBlock.textContent;
-            
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = btn.textContent;
-                btn.textContent = '✓ Copied!';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-                showToast('❌ Failed to copy code');
+                if (unreadCount > 0) {
+                    badge.textContent = unreadCount;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
             });
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('active');
             setTimeout(() => {
-                toast.classList.remove('show');
+                notification.classList.remove('active');
             }, 3000);
         }
 
-        // Auto-resize textarea
-        document.getElementById('messageInput').addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
+        // Admin functions
+        async function loadAdminData() {
+            const usersRef = ref(db, 'users');
+            const commentsRef = ref(db, 'comments');
+            
+            const usersSnapshot = await get(usersRef);
+            const commentsSnapshot = await get(commentsRef);
+            
+            const users = usersSnapshot.val() || {};
+            const comments = commentsSnapshot.val() || {};
+            
+            let verifiedCount = 0;
+            let totalComments = 0;
+            let totalFavorites = 0;
+            
+            for (const userId in users) {
+                if (users[userId].verified) verifiedCount++;
+                if (users[userId].favorites) totalFavorites += users[userId].favorites.length;
+            }
+            
+            for (const matchId in comments) {
+                totalComments += Object.keys(comments[matchId]).length;
+            }
+            
+            document.getElementById('totalUsers').textContent = Object.keys(users).length;
+            document.getElementById('verifiedUsers').textContent = verifiedCount;
+            document.getElementById('totalComments').textContent = totalComments;
+            document.getElementById('totalFavorites').textContent = totalFavorites;
+            
+            displayUserList(users);
+            displayCommentsList(comments);
+        }
+
+        // Display user list
+        function displayUserList(users) {
+            const container = document.getElementById('userList');
+            container.innerHTML = '';
+            
+            for (const userId in users) {
+                const user = users[userId];
+                const div = document.createElement('div');
+                div.className = 'user-item';
+                
+                div.innerHTML = `
+                    <div>
+                        <strong>${user.username}</strong> ${user.verified ? '<span class="verified-badge">✓</span>' : ''}
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                            ${user.email}
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        ${user.verified ? 
+                            `<button class="action-btn verify-btn" onclick="unverifyUser('${userId}')">✗ Unverify</button>` :
+                            `<button class="action-btn verify-btn" onclick="verifyUser('${userId}')">✓ Verify</button>`
+                        }
+                        <button class="action-btn ban-btn" onclick="banUser('${userId}', '${user.username}')">🚫 Ban</button>
+                    </div>
+                `;
+                
+                container.appendChild(div);
+            }
+        }
+
+        // Verify user
+        window.verifyUser = async function(userId) {
+            await update(ref(db, 'users/' + userId), { verified: true });
+            showNotification('User verified');
+            loadAdminData();
+        };
+
+        // Unverify user
+        window.unverifyUser = async function(userId) {
+            await update(ref(db, 'users/' + userId), { verified: false });
+            showNotification('Verification removed');
+            loadAdminData();
+        };
+
+        // Ban user
+        window.banUser = async function(userId, username) {
+            if (username === ADMIN_USERNAME) {
+                showNotification('Cannot ban admin user!');
+                return;
+            }
+            if (confirm('Ban this user? This will delete their account.')) {
+                await remove(ref(db, 'users/' + userId));
+                showNotification('User banned');
+                loadAdminData();
+            }
+        };
+
+        // Display comments list
+        function displayCommentsList(comments) {
+            const container = document.getElementById('commentsList');
+            container.innerHTML = '';
+            
+            for (const matchId in comments) {
+                for (const commentId in comments[matchId]) {
+                    const comment = comments[matchId][commentId];
+                    const div = document.createElement('div');
+                    div.className = 'user-item';
+                    
+                    div.innerHTML = `
+                        <div>
+                            <strong>${comment.username}</strong>
+                            <div style="margin-top: 0.5rem;">${comment.text}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                ${getTimeAgo(comment.timestamp)}
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn ban-btn" onclick="deleteComment('${matchId}', '${commentId}')">🗑️ Delete</button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(div);
+                }
+            }
+        }
+
+        // Delete comment (admin)
+        window.deleteComment = async function(matchId, commentId) {
+            if (confirm('Delete this comment?')) {
+                await remove(ref(db, `comments/${matchId}/${commentId}`));
+                showNotification('Comment deleted');
+                loadAdminData();
+            }
+        };
+
+        // User search
+        document.getElementById('userSearch').addEventListener('input', async (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const usersRef = ref(db, 'users');
+            const snapshot = await get(usersRef);
+            const users = snapshot.val() || {};
+            
+            const filtered = {};
+            for (const userId in users) {
+                if (users[userId].username.toLowerCase().includes(searchTerm)) {
+                    filtered[userId] = users[userId];
+                }
+            }
+            
+            displayUserList(filtered);
         });
 
-        // Initialize on load
-        window.addEventListener('load', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            changeTheme(savedTheme);
-            
-            const savedProvider = localStorage.getItem('aiProvider') || 'groq';
-            currentProvider = savedProvider;
+        // Sport filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const sport = this.dataset.sport;
+                if (sport === 'all') {
+                    displayMatches(allMatches);
+                } else {
+                    const filtered = allMatches.filter(m => m.sport_key.includes(sport));
+                    displayMatches(filtered);
+                }
+            });
         });
+
+        // Initialize app
+        fetchAllSports();
+        
+        // Auto-refresh every 30 minutes (only if cache expired)
+        setInterval(() => {
+            const cachedKeys = Object.keys(localStorage).filter(k => k.startsWith('odds_'));
+            if (cachedKeys.length > 0) {
+                const firstKey = cachedKeys[0];
+                const cached = localStorage.getItem(firstKey);
+                if (cached) {
+                    const data = JSON.parse(cached);
+                    const age = Date.now() - data.timestamp;
+                    
+                    if (age > CACHE_DURATION) {
+                        console.log('Cache expired, refreshing...');
+                        fetchAllSports(true);
+                    }
+                }
+            }
+            updateCacheStatus();
+        }, 60000); // Check every minute
+
+        // Update cache status every minute
+        setInterval(updateCacheStatus, 60000);
+
     </script>
 </body>
 </html>
