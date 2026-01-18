@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetOdds - Live Betting Odds</title>
+    <title>EditByGodswill - Online Design Platform</title>
     <style>
         * {
             margin: 0;
@@ -11,53 +11,97 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg-primary: #0a0e27;
-            --bg-secondary: #1a1f3a;
-            --accent: #00fff5;
-            --success: #39ff14;
-            --text: #ffffff;
-            --text-secondary: #a0aec0;
-            --danger: #ff4444;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text);
             overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        body.light-theme {
-            --bg-primary: #f5f7fa;
-            --bg-secondary: #ffffff;
-            --accent: #3b82f6;
-            --success: #10b981;
-            --text: #1f2937;
-            --text-secondary: #6b7280;
-        }
-
-        body.neon-theme {
-            --bg-primary: #000000;
-            --bg-secondary: #1a001a;
-            --accent: #ff00ff;
-            --success: #00ff00;
-            --text: #ffffff;
-        }
-
-        #welcomeScreen {
+        /* Opening Animation */
+        #intro-animation {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-primary);
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            animation: fadeOut 1s ease 3s forwards;
+            animation: fadeOut 1s ease 4s forwards;
+        }
+
+        .burst-dot {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            animation: burstExpand 0.8s ease forwards;
+        }
+
+        @keyframes burstExpand {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(15);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(30);
+                opacity: 0;
+            }
+        }
+
+        .flying-element {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0;
+            animation: flyIn 1.5s ease 0.8s forwards;
+        }
+
+        .flying-element:nth-child(2) { animation-delay: 0.9s; }
+        .flying-element:nth-child(3) { animation-delay: 1s; }
+        .flying-element:nth-child(4) { animation-delay: 1.1s; }
+        .flying-element:nth-child(5) { animation-delay: 1.2s; }
+
+        @keyframes flyIn {
+            0% {
+                transform: translate(var(--x), var(--y)) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0, 0) scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        .logo-text {
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            animation: logoAppear 1s ease 2.5s forwards, logoShrink 0.8s ease 3.5s forwards;
+            text-align: center;
+        }
+
+        @keyframes logoAppear {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes logoShrink {
+            to {
+                transform: scale(0.5);
+                opacity: 0;
+            }
         }
 
         @keyframes fadeOut {
@@ -67,1925 +111,651 @@
             }
         }
 
-        .logo-container {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, var(--accent), var(--success), #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 3s ease infinite;
+        /* Main Container */
+        #main-app {
+            opacity: 0;
+            animation: fadeIn 1s ease 4.5s forwards;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(60deg); }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            transform: translateY(-3px);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Editor Container */
+        .editor-container {
+            display: flex;
+            height: calc(100vh - 80px);
+            background: #f5f5f5;
+        }
+
+        /* Left Sidebar - Tools */
+        .left-sidebar {
+            width: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 0;
+            gap: 1.5rem;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: toolFloat 3s ease-in-out infinite;
+        }
+
+        .tool-icon:nth-child(1) { animation-delay: 0s; }
+        .tool-icon:nth-child(2) { animation-delay: 0.2s; }
+        .tool-icon:nth-child(3) { animation-delay: 0.4s; }
+        .tool-icon:nth-child(4) { animation-delay: 0.6s; }
+        .tool-icon:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes toolFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .tool-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Right Panel - Properties */
+        .right-panel {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+            overflow-y: auto;
+        }
+
+        .panel-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .panel-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        /* Canvas Area */
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(200, 200, 200, 0.1) 0px,
+                    rgba(200, 200, 200, 0.1) 1px,
+                    transparent 1px,
+                    transparent 20px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(200, 200, 200, 0.1) 0px,
+                    rgba(200, 200, 200, 0.1) 1px,
+                    transparent 1px,
+                    transparent 20px
+                );
+        }
+
+        #canvas {
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top Toolbar */
+        .top-toolbar {
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            gap: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .toolbar-btn {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .toolbar-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .toolbar-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Templates Section */
+        .templates-section {
+            position: absolute;
+            left: 100px;
+            top: 0;
+            height: 100%;
+            width: 250px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .templates-section.active {
+            transform: translateX(0);
+        }
+
+        .template-card {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .template-card:hover::before {
+            left: 100%;
+        }
+
+        .template-card:hover {
+            transform: perspective(500px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Layer Panel */
+        .layer-item {
+            padding: 0.8rem;
+            background: #f8f8f8;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .layer-item:hover {
+            background: #e8e8ff;
+            border-left-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        /* Brand Kit Section */
+        .brand-kit {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-colors {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.2) rotate(5deg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
         }
 
         .powered-by {
-            font-size: 1.2rem;
-            background: linear-gradient(90deg, #00fff5, #ff00ff, #00ff00, #00fff5);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textShine 2s linear infinite, glitch 3s ease-in-out infinite;
-            text-shadow: 0 0 20px var(--accent);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
         }
 
-        @keyframes textShine {
-            to { background-position: 200% center; }
+        .powered-by span {
+            color: #667eea;
+            font-weight: bold;
         }
 
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-2px, -2px); }
-            80% { transform: translate(2px, 2px); }
-        }
-
+        /* Particle Background */
         .particles {
-            position: absolute;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .particle {
             position: absolute;
             width: 4px;
             height: 4px;
-            background: var(--accent);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
-            animation: float 4s ease-in-out infinite;
+            animation: particleFloat 20s linear infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
-        }
-
-        header {
-            background: var(--bg-secondary);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .hamburger {
-            width: 30px;
-            height: 25px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 3px;
-            background: var(--text);
-            transition: 0.3s;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: -300px;
-            top: 0;
-            width: 300px;
-            height: 100%;
-            background: var(--bg-secondary);
-            transition: 0.3s;
-            z-index: 1000;
-            overflow-y: auto;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar-header {
-            padding: 2rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .menu-item {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border-left: 3px solid transparent;
-        }
-
-        .menu-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-left-color: var(--accent);
-        }
-
-        .badge {
-            background: var(--danger);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            margin-left: auto;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            z-index: 999;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        .auth-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 400px;
-            width: 90%;
-            display: none;
-            z-index: 1001;
-        }
-
-        .auth-modal.active {
-            display: block;
-        }
-
-        .auth-modal h2 {
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: var(--bg-primary);
-            color: var(--text);
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: var(--bg-primary);
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--accent);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .auth-switch {
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .auth-switch a {
-            color: var(--accent);
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .filters {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.6rem 1.2rem;
-            background: var(--bg-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .filter-btn.active {
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
-
-        .cache-info {
-            background: var(--bg-primary);
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cache-info .refresh-btn {
-            padding: 0.5rem 1rem;
-            background: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .matches-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .match-card {
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .match-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 245, 0.2);
-        }
-
-        .match-header {
-            padding: 1rem;
-            background: rgba(0, 255, 245, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .live-badge {
-            background: var(--danger);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            animation: pulse 2s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .match-teams {
-            padding: 1.5rem 1rem;
-        }
-
-        .team {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .match-odds {
-            padding: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .bookmaker {
-            margin-bottom: 1rem;
-        }
-
-        .bookmaker-name {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .odds-row {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .odd-btn {
-            flex: 1;
-            padding: 0.6rem;
-            background: var(--bg-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-        }
-
-        .odd-btn:hover {
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
-
-        .odd-btn.best {
-            border: 2px solid var(--success);
-            animation: glow 2s ease infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px var(--success); }
-            50% { box-shadow: 0 0 20px var(--success); }
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            z-index: 2000;
-            overflow-y: auto;
-        }
-
-        .modal.active {
-            display: block;
-        }
-
-        .modal-content {
-            max-width: 900px;
-            margin: 2rem auto;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            position: relative;
-        }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .close-modal {
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .comments-section {
-            margin-top: 2rem;
-        }
-
-        .comment-input {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .comment-input textarea {
-            flex: 1;
-            padding: 0.8rem;
-            background: var(--bg-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border-radius: 5px;
-            resize: vertical;
-            min-height: 60px;
-        }
-
-        .comment {
-            background: var(--bg-primary);
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .comment-author {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: bold;
-        }
-
-        .verified-badge {
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        .comment-time {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .comment-text {
-            margin-bottom: 0.8rem;
-            line-height: 1.5;
-        }
-
-        .comment-actions {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .comment-action {
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: 0.3s;
-        }
-
-        .comment-action:hover {
-            color: var(--accent);
-        }
-
-        .like-btn.liked {
-            color: var(--danger);
-        }
-
-        .replies {
-            margin-left: 2rem;
-            margin-top: 1rem;
-        }
-
-        .settings-panel {
-            display: none;
-        }
-
-        .settings-panel.active {
-            display: block;
-        }
-
-        .setting-group {
-            margin-bottom: 2rem;
-        }
-
-        .setting-group h3 {
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .theme-selector {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .theme-option {
-            padding: 1rem 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .theme-option.active {
-            border-color: var(--accent);
-            background: rgba(0, 255, 245, 0.1);
-        }
-
-        .admin-panel {
-            display: none;
-        }
-
-        .admin-panel.active {
-            display: block;
-        }
-
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-primary);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .user-list {
-            background: var(--bg-primary);
-            border-radius: 10px;
-            padding: 1rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .user-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .user-item:last-child {
-            border-bottom: none;
-        }
-
-        .user-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .action-btn {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8rem;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .verify-btn {
-            background: var(--success);
-            color: white;
-        }
-
-        .ban-btn {
-            background: var(--danger);
-            color: white;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-            background: var(--bg-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border-radius: 5px;
-        }
-
-        .notification {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: var(--bg-secondary);
-            padding: 1rem 1.5rem;
-            border-radius: 5px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 3000;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
             }
-            to {
-                transform: translateX(0);
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
             }
         }
 
-        .notification.active {
-            display: block;
-        }
-
-        .inbox-panel {
-            display: none;
-        }
-
-        .inbox-panel.active {
-            display: block;
-        }
-
-        .notification-item {
-            background: var(--bg-primary);
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .notification-item:hover {
-            background: rgba(0, 255, 245, 0.1);
-        }
-
-        .notification-item.unread {
-            border-left: 3px solid var(--accent);
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid var(--accent);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .matches-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .filters {
+            .editor-container {
                 flex-direction: column;
             }
-            
-            .admin-stats {
+
+            .left-sidebar {
+                width: 100%;
+                flex-direction: row;
+                height: 70px;
+                padding: 0 1rem;
+            }
+
+            .right-panel {
+                width: 100%;
+                height: 300px;
+            }
+
+            .footer-content {
                 grid-template-columns: 1fr;
             }
-            
-            .theme-selector {
+
+            .footer-bottom {
                 flex-direction: column;
+                text-align: center;
             }
-        }
-
-        .favorite-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: 0.3s;
-        }
-
-        .favorite-btn.active {
-            color: var(--danger);
-        }
-
-        .match-card {
-            position: relative;
         }
     </style>
 </head>
 <body>
-    <div id="welcomeScreen">
-        <div class="particles" id="particles"></div>
-        <div class="logo-container">BetOdds</div>
-        <div class="powered-by">Powered by Devgodswill</div>
+    <!-- Intro Animation -->
+    <div id="intro-animation">
+        <div class="burst-dot"></div>
+        <div class="flying-element" style="--x: -300px; --y: -200px;">📝</div>
+        <div class="flying-element" style="--x: 300px; --y: -200px;">🎨</div>
+        <div class="flying-element" style="--x: -300px; --y: 200px;">🖼️</div>
+        <div class="flying-element" style="--x: 300px; --y: 200px;">✨</div>
+        <div class="flying-element" style="--x: 0px; --y: -300px;">🎭</div>
+        <div class="logo-text">EditByGodswill</div>
     </div>
 
-    <div class="overlay" id="overlay"></div>
-
-    <header>
-        <div class="logo">⚽ BetOdds</div>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </header>
-
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="user-info" id="userInfo">
-                <div class="avatar" id="userAvatar">👤</div>
-                <div>
-                    <div id="userName">Guest</div>
-                    <div style="font-size: 0.9rem; color: var(--text-secondary);">Not logged in</div>
-                </div>
-            </div>
-        </div>
-        <div class="menu-item" id="inboxMenu">
-            📬 Inbox
-            <span class="badge" id="notifBadge" style="display: none;">0</span>
-        </div>
-        <div class="menu-item" id="favoritesMenu">⭐ Favorites</div>
-        <div class="menu-item" id="settingsMenu">⚙️ Settings</div>
-        <div class="menu-item" id="profileMenu">👤 Profile</div>
-        <div class="menu-item" id="adminMenu" style="display: none;">🛡️ Admin Panel</div>
-        <div class="menu-item" id="loginMenu">🔐 Login</div>
-        <div class="menu-item" id="logoutMenu" style="display: none;">🚪 Logout</div>
+    <!-- Particles Background -->
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
     </div>
 
-    <div class="auth-modal" id="authModal">
-        <h2 id="authTitle">Login</h2>
-        <form id="authForm">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="authUsername" required>
+    <!-- Main App -->
+    <div id="main-app">
+        <!-- Header -->
+        <header>
+            <div class="logo">EditByGodswill</div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#templates">Templates</a>
+                <a href="#brand-kit">Brand Kit</a>
+                <a href="#export">Export</a>
+            </nav>
+        </header>
+
+        <!-- Editor Container -->
+        <div class="editor-container">
+            <!-- Left Sidebar - Tools -->
+            <div class="left-sidebar">
+                <div class="tool-icon" title="Text">T</div>
+                <div class="tool-icon" title="Shapes">◆</div>
+                <div class="tool-icon" title="Images">🖼</div>
+                <div class="tool-icon" title="Colors">🎨</div>
+                <div class="tool-icon" title="Templates">📋</div>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="authPassword" required>
+
+            <!-- Templates Section (Hidden by default) -->
+            <div class="templates-section">
+                <h3 style="color: #667eea; margin-bottom: 1rem;">Templates</h3>
+                <div class="template-card"></div>
+                <div class="template-card"></div>
+                <div class="template-card"></div>
+                <div class="template-card"></div>
             </div>
-            <div class="form-group" id="confirmPasswordGroup" style="display: none;">
-                <label>Confirm Password</label>
-                <input type="password" id="authConfirmPassword">
+
+            <!-- Canvas Area -->
+            <div class="canvas-area">
+                <!-- Top Toolbar -->
+                <div class="top-toolbar">
+                    <button class="toolbar-btn">Undo</button>
+                    <button class="toolbar-btn">Redo</button>
+                    <button class="toolbar-btn">Zoom +</button>
+                    <button class="toolbar-btn">Zoom -</button>
+                    <button class="toolbar-btn">Export</button>
+                </div>
+
+                <!-- Main Canvas -->
+                <canvas id="canvas" width="800" height="600"></canvas>
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
-        </form>
-        <div class="auth-switch">
-            <span id="authSwitchText">Don't have an account? <a id="authSwitchLink">Sign Up</a></span>
+
+            <!-- Right Panel - Properties -->
+            <div class="right-panel">
+                <!-- Layers Panel -->
+                <div class="panel-section">
+                    <h3>Layers</h3>
+                    <div class="layer-item">Background</div>
+                    <div class="layer-item">Text Layer 1</div>
+                    <div class="layer-item">Shape Layer 1</div>
+                </div>
+
+                <!-- Properties Panel -->
+                <div class="panel-section">
+                    <h3>Properties</h3>
+                    <p style="color: #666; font-size: 0.9rem;">Select an element to edit</p>
+                </div>
+
+                <!-- Brand Kit -->
+                <div class="panel-section brand-kit">
+                    <h3>Brand Kit</h3>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">Your brand colors</p>
+                    <div class="brand-colors">
+                        <div class="color-swatch" style="background: #667eea;"></div>
+                        <div class="color-swatch" style="background: #764ba2;"></div>
+                        <div class="color-swatch" style="background: #f093fb;"></div>
+                        <div class="color-swatch" style="background: #4facfe;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About EditByGodswill</h4>
+                    <p>A powerful online design platform for creating stunning graphics, social media posts, flyers, and more.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p><a href="#templates">Templates</a></p>
+                    <p><a href="#brand-kit">Brand Kit</a></p>
+                    <p><a href="#tutorials">Tutorials</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <p><a href="#terms">Terms and Conditions</a></p>
+                    <p><a href="#privacy">Privacy Policy</a></p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">All content created on this platform is protected. Unauthorized copying, distribution, or reproduction is strictly prohibited.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: support@editbygodswill.com</p>
+                    <p>Help Center</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2026 EditByGodswill. All rights reserved.
+                </div>
+                <div class="powered-by">
+                    Built and Powered by <span>Devgodswill</span>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <div class="container">
-        <div id="mainContent">
-            <div class="cache-info">
-                <span id="cacheStatus">Cache: Not loaded</span>
-                <button class="refresh-btn" id="forceRefresh">🔄 Force Refresh</button>
-            </div>
-
-            <div class="filters">
-                <button class="filter-btn active" data-sport="all">All Sports</button>
-                <button class="filter-btn" data-sport="soccer">⚽ Soccer</button>
-                <button class="filter-btn" data-sport="basketball">🏀 Basketball</button>
-                <button class="filter-btn" data-sport="americanfootball">🏈 NFL</button>
-                <button class="filter-btn" data-sport="baseball">⚾ MLB</button>
-                <button class="filter-btn" data-sport="tennis">🎾 Tennis</button>
-                <button class="filter-btn" data-sport="icehockey">🏒 Hockey</button>
-            </div>
-
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Loading matches...</p>
-            </div>
-
-            <div class="matches-grid" id="matchesGrid"></div>
-        </div>
-
-        <div id="settingsContent" class="settings-panel">
-            <h2 style="margin-bottom: 2rem;">Settings</h2>
-            <div class="setting-group">
-                <h3>Theme</h3>
-                <div class="theme-selector">
-                    <div class="theme-option active" data-theme="dark">🌙 Dark</div>
-                    <div class="theme-option" data-theme="light">☀️ Light</div>
-                    <div class="theme-option" data-theme="neon">✨ Neon</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="adminContent" class="admin-panel">
-            <h2 style="margin-bottom: 2rem;">🛡️ Admin Panel</h2>
-            
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalUsers">0</div>
-                    <div class="stat-label">Total Users</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="verifiedUsers">0</div>
-                    <div class="stat-label">Verified Users</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalComments">0</div>
-                    <div class="stat-label">Total Comments</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalFavorites">0</div>
-                    <div class="stat-label">Total Favorites</div>
-                </div>
-            </div>
-
-            <div class="setting-group">
-                <h3>User Management</h3>
-                <input type="text" class="search-box" id="userSearch" placeholder="🔍 Search users...">
-                <div class="user-list" id="userList"></div>
-            </div>
-
-            <div class="setting-group">
-                <h3>Comment Moderation</h3>
-                <div class="user-list" id="commentsList"></div>
-            </div>
-        </div>
-
-        <div id="inboxContent" class="inbox-panel">
-            <h2 style="margin-bottom: 2rem;">📬 Inbox</h2>
-            <div id="notificationsList"></div>
-        </div>
-
-        <div id="favoritesContent" class="settings-panel">
-            <h2 style="margin-bottom: 2rem;">⭐ Favorites</h2>
-            <div class="matches-grid" id="favoritesGrid"></div>
-        </div>
-    </div>
-
-    <div class="modal" id="matchModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalMatchTitle">Match Details</h2>
-                <span class="close-modal" id="closeModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div id="modalMatchDetails"></div>
-                
-                <div class="comments-section">
-                    <h3>Comments</h3>
-                    <div class="comment-input" id="commentInputSection" style="display: none;">
-                        <textarea id="commentText" placeholder="Write a comment... Use @ to mention users"></textarea>
-                        <button class="btn btn-primary" id="postComment">Post</button>
-                    </div>
-                    <div style="text-align: center; padding: 1rem; color: var(--text-secondary);" id="loginToComment">
-                        Please login to comment
-                    </div>
-                    <div id="commentsContainer"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="notification" id="notification"></div>
-
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getDatabase, ref, set, get, update, push, onValue, query, orderByChild, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBzUELxbbaL6Wb_M1uNhjwlZHVTorN9XJs",
-            authDomain: "my-whatsapp-2c1af.firebaseapp.com",
-            databaseURL: "https://my-whatsapp-2c1af-default-rtdb.firebaseio.com",
-            projectId: "my-whatsapp-2c1af",
-            storageBucket: "my-whatsapp-2c1af.firebasestorage.app",
-            messagingSenderId: "1089455460888",
-            appId: "1:1089455460888:web:d0c8dea185ba6769ebe96d"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-
-        const ODDS_API_KEYS = [
-            'e79c0209fb2deefec518750510b153bc',
-            'fe916e46d7855c55b59a1cad7c79271f',
-            'c93c8681d9b8f0c26aaf53fd300c5a33'
-        ];
-
-        let currentKeyIndex = 0;
-        let currentUser = null;
-        let currentMatchId = null;
-        let allMatches = [];
-        let userFavorites = [];
-
-        const ADMIN_USERNAME = 'devgodswill';
-        const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
-
-        // UI Elements
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const authModal = document.getElementById('authModal');
-        const authForm = document.getElementById('authForm');
-        const authTitle = document.getElementById('authTitle');
-        const authSwitchLink = document.getElementById('authSwitchLink');
-        const authSwitchText = document.getElementById('authSwitchText');
-        const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
-        const matchesGrid = document.getElementById('matchesGrid');
-        const loading = document.getElementById('loading');
-        const matchModal = document.getElementById('matchModal');
-        const notification = document.getElementById('notification');
-        const cacheStatus = document.getElementById('cacheStatus');
-        const forceRefreshBtn = document.getElementById('forceRefresh');
-
-        // Initialize particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 4 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Cache Management Functions
-        function getCachedData(key) {
-            const cached = localStorage.getItem(key);
-            if (!cached) return null;
-            
-            const data = JSON.parse(cached);
-            const now = Date.now();
-            
-            if (now - data.timestamp > CACHE_DURATION) {
-                localStorage.removeItem(key);
-                return null;
-            }
-            
-            return data.value;
-        }
-
-        function setCachedData(key, value) {
-            const data = {
-                value: value,
-                timestamp: Date.now()
-            };
-            localStorage.setItem(key, JSON.stringify(data));
-        }
-
-        function clearCache() {
-            const keys = Object.keys(localStorage);
-            keys.forEach(key => {
-                if (key.startsWith('odds_')) {
-                    localStorage.removeItem(key);
-                }
-            });
-            showNotification('Cache cleared!');
-            updateCacheStatus();
-        }
-
-        function updateCacheStatus() {
-            const cachedKeys = Object.keys(localStorage).filter(k => k.startsWith('odds_'));
-            if (cachedKeys.length === 0) {
-                cacheStatus.textContent = 'Cache: Empty';
-                return;
-            }
-            
-            const firstKey = cachedKeys[0];
-            const cached = localStorage.getItem(firstKey);
-            if (cached) {
-                const data = JSON.parse(cached);
-                const age = Date.now() - data.timestamp;
-                const minutes = Math.floor(age / 60000);
-                const remaining = 30 - minutes;
-                
-                if (remaining > 0) {
-                    cacheStatus.textContent = `Cache: Fresh (expires in ${remaining} min)`;
-                } else {
-                    cacheStatus.textContent = 'Cache: Expired';
-                }
-            }
-        }
-
-        // Force refresh button
-        forceRefreshBtn.addEventListener('click', () => {
-            clearCache();
-            fetchAllSports(true);
-        });
-
-        // Toggle sidebar
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        });
-
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            authModal.classList.remove('active');
-            matchModal.classList.remove('active');
-        });
-
-        // Auth toggle
-        let isLogin = true;
-        authSwitchLink.addEventListener('click', () => {
-            isLogin = !isLogin;
-            if (isLogin) {
-                authTitle.textContent = 'Login';
-                confirmPasswordGroup.style.display = 'none';
-                authSwitchText.innerHTML = 'Don\'t have an account? <a id="authSwitchLink">Sign Up</a>';
-                authForm.querySelector('button').textContent = 'Login';
-            } else {
-                authTitle.textContent = 'Sign Up';
-                confirmPasswordGroup.style.display = 'block';
-                authSwitchText.innerHTML = 'Already have an account? <a id="authSwitchLink">Login</a>';
-                authForm.querySelector('button').textContent = 'Sign Up';
-            }
-            document.getElementById('authSwitchLink').addEventListener('click', arguments.callee);
-        });
-
-        // Login menu
-        document.getElementById('loginMenu').addEventListener('click', () => {
-            authModal.classList.add('active');
-            overlay.classList.add('active');
-            sidebar.classList.remove('active');
-        });
-
-        // Close modal
-        document.getElementById('closeModal').addEventListener('click', () => {
-            matchModal.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        // Auth form submission
-        authForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('authUsername').value;
-            const password = document.getElementById('authPassword').value;
-            const confirmPassword = document.getElementById('authConfirmPassword').value;
-
-            if (!isLogin && password !== confirmPassword) {
-                showNotification('Passwords do not match!');
-                return;
-            }
-
-            const email = username + '@betodds.app';
-
-            try {
-                if (isLogin) {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    showNotification('Login successful!');
-                } else {
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const userId = userCredential.user.uid;
-                    
-                    await set(ref(db, 'users/' + userId), {
-                        username: username,
-                        email: email,
-                        createdAt: Date.now(),
-                        verified: false,
-                        favorites: []
-                    });
-                    
-                    showNotification('Account created successfully!');
-                }
-                authModal.classList.remove('active');
-                overlay.classList.remove('active');
-            } catch (error) {
-                showNotification('Error: ' + error.message);
-            }
-        });
-
-        // Auth state observer
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const userRef = ref(db, 'users/' + user.uid);
-                const snapshot = await get(userRef);
-                const userData = snapshot.val();
-                
-                currentUser = {
-                    uid: user.uid,
-                    username: userData.username,
-                    verified: userData.verified || false
-                };
-
-                document.getElementById('userName').textContent = userData.username;
-                document.getElementById('userAvatar').textContent = userData.username.charAt(0).toUpperCase();
-                document.getElementById('loginMenu').style.display = 'none';
-                document.getElementById('logoutMenu').style.display = 'block';
-                
-                if (userData.username === ADMIN_USERNAME) {
-                    document.getElementById('adminMenu').style.display = 'block';
-                }
-
-                loadUserFavorites();
-                loadNotifications();
-                
-                document.getElementById('commentInputSection').style.display = 'flex';
-                document.getElementById('loginToComment').style.display = 'none';
-            } else {
-                currentUser = null;
-                document.getElementById('userName').textContent = 'Guest';
-                document.getElementById('userAvatar').textContent = '👤';
-                document.getElementById('loginMenu').style.display = 'block';
-                document.getElementById('logoutMenu').style.display = 'none';
-                document.getElementById('adminMenu').style.display = 'none';
-                
-                document.getElementById('commentInputSection').style.display = 'none';
-                document.getElementById('loginToComment').style.display = 'block';
-            }
-        });
-
-        // Logout
-        document.getElementById('logoutMenu').addEventListener('click', async () => {
-            await signOut(auth);
-            showNotification('Logged out successfully');
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        // Menu navigation
-        document.getElementById('settingsMenu').addEventListener('click', () => {
-            showPanel('settingsContent');
-        });
-
-        document.getElementById('adminMenu').addEventListener('click', () => {
-            showPanel('adminContent');
-            loadAdminData();
-        });
-
-        document.getElementById('inboxMenu').addEventListener('click', () => {
-            showPanel('inboxContent');
-            loadNotifications();
-        });
-
-        document.getElementById('favoritesMenu').addEventListener('click', () => {
-            showPanel('favoritesContent');
-            loadFavorites();
-        });
-
-        function showPanel(panelId) {
-            document.getElementById('mainContent').style.display = 'none';
-            document.getElementById('settingsContent').classList.remove('active');
-            document.getElementById('adminContent').classList.remove('active');
-            document.getElementById('inboxContent').classList.remove('active');
-            document.getElementById('favoritesContent').classList.remove('active');
-            
-            if (panelId === 'mainContent') {
-                document.getElementById('mainContent').style.display = 'block';
-            } else {
-                document.getElementById(panelId).classList.add('active');
-            }
-            
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        }
-
-        // Theme selector
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-                
-                const theme = this.dataset.theme;
-                document.body.className = theme === 'dark' ? '' : theme + '-theme';
-                localStorage.setItem('theme', theme);
-            });
-        });
-
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        if (savedTheme !== 'dark') {
-            document.body.className = savedTheme + '-theme';
-            document.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
-            document.querySelector('[data-theme="dark"]').classList.remove('active');
-        }
-
-        // Fetch odds with API key rotation and caching
-        async function fetchOdds(sport = 'upcoming', forceRefresh = false) {
-            const cacheKey = 'odds_' + sport;
-            
-            if (!forceRefresh) {
-                const cached = getCachedData(cacheKey);
-                if (cached) {
-                    console.log('Using cached data for', sport);
-                    return cached;
-                }
-            }
-
-            const apiKey = ODDS_API_KEYS[currentKeyIndex];
-            const url = `https://api.the-odds-api.com/v4/sports/${sport}/odds/?apiKey=${apiKey}&regions=us,uk,eu&markets=h2h&oddsFormat=decimal`;
-
-            try {
-                const response = await fetch(url);
-                if (response.status === 429) {
-                    currentKeyIndex = (currentKeyIndex + 1) % ODDS_API_KEYS.length;
-                    showNotification('Switching API key...');
-                    return fetchOdds(sport, forceRefresh);
-                }
-                const data = await response.json();
-                
-                setCachedData(cacheKey, data);
-                updateCacheStatus();
-                
-                return data;
-            } catch (error) {
-                console.error('Error fetching odds:', error);
-                return [];
-            }
-        }
-
-        // Fetch all sports with caching
-        async function fetchAllSports(forceRefresh = false) {
-            loading.style.display = 'block';
-            matchesGrid.innerHTML = '';
-            
-            const sports = ['soccer_epl', 'basketball_nba', 'americanfootball_nfl', 'baseball_mlb', 'tennis_atp', 'icehockey_nhl'];
-            let allData = [];
-            
-            for (const sport of sports) {
-                const data = await fetchOdds(sport, forceRefresh);
-                allData = allData.concat(data);
-            }
-            
-            allMatches = allData;
-            displayMatches(allData);
-            loading.style.display = 'none';
-            updateCacheStatus();
-        }
-
-        // Display matches
-        function displayMatches(matches) {
-            matchesGrid.innerHTML = '';
-            
-            if (matches.length === 0) {
-                matchesGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1/-1;">No matches available</p>';
-                return;
-            }
-
-            matches.forEach(match => {
-                const card = createMatchCard(match);
-                matchesGrid.appendChild(card);
-            });
-        }
-
-        // Create match card
-        function createMatchCard(match) {
-            const card = document.createElement('div');
-            card.className = 'match-card';
-            
-            const isLive = new Date(match.commence_time) < new Date();
-            const isFavorite = userFavorites.includes(match.id);
-            
-            let bestOdds = { home: 0, away: 0, bookmaker: '' };
-            if (match.bookmakers && match.bookmakers.length > 0) {
-                match.bookmakers.forEach(bookmaker => {
-                    const outcomes = bookmaker.markets[0].outcomes;
-                    const homeOdd = outcomes.find(o => o.name === match.home_team)?.price || 0;
-                    const awayOdd = outcomes.find(o => o.name === match.away_team)?.price || 0;
-                    
-                    if (homeOdd > bestOdds.home) {
-                        bestOdds.home = homeOdd;
-                    }
-                    if (awayOdd > bestOdds.away) {
-                        bestOdds.away = awayOdd;
-                    }
-                });
-            }
-
-            card.innerHTML = `
-                <div class="match-header">
-                    <span>${match.sport_title}</span>
-                    ${isLive ? '<span class="live-badge">LIVE</span>' : ''}
-                </div>
-                <span class="favorite-btn ${isFavorite ? 'active' : ''}" data-match-id="${match.id}">
-                    ${isFavorite ? '❤️' : '🤍'}
-                </span>
-                <div class="match-teams">
-                    <div class="team">
-                        <span>${match.home_team}</span>
-                        ${isLive ? '<span style="color: var(--success);">1 - 0</span>' : ''}
-                    </div>
-                    <div class="team">
-                        <span>${match.away_team}</span>
-                        ${isLive ? '<span>0</span>' : ''}
-                    </div>
-                    <div style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
-                        🕐 ${new Date(match.commence_time).toLocaleString()}
-                    </div>
-                </div>
-                <div class="match-odds">
-                    ${match.bookmakers && match.bookmakers.length > 0 ? renderBookmakers(match.bookmakers, match, bestOdds) : '<p style="color: var(--text-secondary); text-align: center;">No odds available</p>'}
-                </div>
-            `;
-
-            card.addEventListener('click', (e) => {
-                if (!e.target.classList.contains('favorite-btn') && !e.target.classList.contains('odd-btn')) {
-                    openMatchModal(match);
-                }
-            });
-
-            const favoriteBtn = card.querySelector('.favorite-btn');
-            favoriteBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleFavorite(match.id);
-            });
-
-            return card;
-        }
-
-        // Render bookmakers
-        function renderBookmakers(bookmakers, match, bestOdds) {
-            let html = '';
-            bookmakers.slice(0, 3).forEach(bookmaker => {
-                const outcomes = bookmaker.markets[0].outcomes;
-                const homeOdd = outcomes.find(o => o.name === match.home_team)?.price || 'N/A';
-                const awayOdd = outcomes.find(o => o.name === match.away_team)?.price || 'N/A';
-                const drawOdd = outcomes.find(o => o.name === 'Draw')?.price;
-
-                html += `
-                    <div class="bookmaker">
-                        <div class="bookmaker-name">${bookmaker.title}</div>
-                        <div class="odds-row">
-                            <div class="odd-btn ${homeOdd === bestOdds.home ? 'best' : ''}">${homeOdd}</div>
-                            ${drawOdd ? `<div class="odd-btn">${drawOdd}</div>` : ''}
-                            <div class="odd-btn ${awayOdd === bestOdds.away ? 'best' : ''}">${awayOdd}</div>
-                        </div>
-                    </div>
-                `;
-            });
-            return html;
-        }
-
-        // Toggle favorite
-        async function toggleFavorite(matchId) {
-            if (!currentUser) {
-                showNotification('Please login to add favorites');
-                return;
-            }
-
-            const userRef = ref(db, 'users/' + currentUser.uid + '/favorites');
-            const snapshot = await get(userRef);
-            let favorites = snapshot.val() || [];
-
-            if (favorites.includes(matchId)) {
-                favorites = favorites.filter(id => id !== matchId);
-                showNotification('Removed from favorites');
-            } else {
-                favorites.push(matchId);
-                showNotification('Added to favorites');
-            }
-
-            await set(userRef, favorites);
-            userFavorites = favorites;
-            
-            document.querySelectorAll('.favorite-btn').forEach(btn => {
-                if (btn.dataset.matchId === matchId) {
-                    if (favorites.includes(matchId)) {
-                        btn.classList.add('active');
-                        btn.textContent = '❤️';
-                    } else {
-                        btn.classList.remove('active');
-                        btn.textContent = '🤍';
-                    }
-                }
-            });
-        }
-
-        // Load user favorites
-        async function loadUserFavorites() {
-            if (!currentUser) return;
-            const userRef = ref(db, 'users/' + currentUser.uid + '/favorites');
-            const snapshot = await get(userRef);
-            userFavorites = snapshot.val() || [];
-        }
-
-        // Load favorites view
-        function loadFavorites() {
-            const favoritesGrid = document.getElementById('favoritesGrid');
-            const favoriteMatches = allMatches.filter(m => userFavorites.includes(m.id));
-            
-            favoritesGrid.innerHTML = '';
-            if (favoriteMatches.length === 0) {
-                favoritesGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1/-1;">No favorites yet</p>';
-                return;
-            }
-
-            favoriteMatches.forEach(match => {
-                const card = createMatchCard(match);
-                favoritesGrid.appendChild(card);
-            });
-        }
-
-        // Open match modal
-        async function openMatchModal(match) {
-            currentMatchId = match.id;
-            matchModal.classList.add('active');
-            overlay.classList.add('active');
-            
-            document.getElementById('modalMatchTitle').textContent = `${match.home_team} vs ${match.away_team}`;
-            
-            let detailsHtml = `
-                <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 5px; margin-bottom: 2rem;">
-                    <h3 style="color: var(--accent); margin-bottom: 1rem;">Match Information</h3>
-                    <p><strong>Sport:</strong> ${match.sport_title}</p>
-                    <p><strong>Start Time:</strong> ${new Date(match.commence_time).toLocaleString()}</p>
-                    <p><strong>Teams:</strong> ${match.home_team} vs ${match.away_team}</p>
-                </div>
-                
-                <h3 style="margin-bottom: 1rem;">All Bookmakers</h3>
-                ${match.bookmakers ? match.bookmakers.map(bookmaker => {
-                    const outcomes = bookmaker.markets[0].outcomes;
-                    return `
-                        <div class="bookmaker" style="margin-bottom: 1rem;">
-                            <div class="bookmaker-name" style="font-size: 1.1rem; margin-bottom: 0.5rem;">${bookmaker.title}</div>
-                            <div class="odds-row">
-                                ${outcomes.map(outcome => `
-                                    <div class="odd-btn">
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">${outcome.name}</div>
-                                        <div style="font-size: 1.2rem; font-weight: bold;">${outcome.price}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }).join('') : '<p>No odds available</p>'}
-            `;
-            
-            document.getElementById('modalMatchDetails').innerHTML = detailsHtml;
-            
-            loadComments(match.id);
-        }
-
-        // Load comments
-        async function loadComments(matchId) {
-            const commentsRef = ref(db, 'comments/' + matchId);
-            onValue(commentsRef, async (snapshot) => {
-                const comments = snapshot.val();
-                const container = document.getElementById('commentsContainer');
-                container.innerHTML = '';
-
-                if (!comments) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No comments yet. Be the first to comment!</p>';
-                    return;
-                }
-
-                for (const commentId in comments) {
-                    const comment = comments[commentId];
-                    const commentEl = await createCommentElement(comment, commentId, matchId);
-                    container.appendChild(commentEl);
-                }
-            });
-        }
-
-        // Create comment element
-        async function createCommentElement(comment, commentId, matchId) {
-            const div = document.createElement('div');
-            div.className = 'comment';
-            
-            const userRef = ref(db, 'users/' + comment.userId);
-            const userSnapshot = await get(userRef);
-            const userData = userSnapshot.val();
-            
-            const isLiked = comment.likes && currentUser && comment.likes.includes(currentUser.uid);
-            const likeCount = comment.likes ? comment.likes.length : 0;
-            
-            const timeAgo = getTimeAgo(comment.timestamp);
-            
-            div.innerHTML = `
-                <div class="comment-header">
-                    <div class="comment-author">
-                        ${comment.username}
-                        ${userData && userData.verified ? '<span class="verified-badge">✓</span>' : ''}
-                    </div>
-                    <div class="comment-time">${timeAgo}</div>
-                </div>
-                <div class="comment-text">${comment.text}</div>
-                <div class="comment-actions">
-                    <span class="comment-action like-btn ${isLiked ? 'liked' : ''}" data-comment-id="${commentId}">
-                        ❤️ ${likeCount}
-                    </span>
-                    <span class="comment-action reply-btn" data-comment-id="${commentId}">💬 Reply</span>
-                    ${currentUser && (currentUser.uid === comment.userId || currentUser.username === ADMIN_USERNAME) ? `<span class="comment-action delete-btn" data-comment-id="${commentId}">🗑️ Delete</span>` : ''}
-                </div>
-                <div class="replies" id="replies-${commentId}"></div>
-            `;
-
-            div.querySelector('.like-btn').addEventListener('click', () => {
-                likeComment(matchId, commentId);
-            });
-
-            div.querySelector('.reply-btn').addEventListener('click', () => {
-                replyToComment(matchId, commentId, comment.username);
-            });
-
-            const deleteBtn = div.querySelector('.delete-btn');
-            if (deleteBtn) {
-                deleteBtn.addEventListener('click', async () => {
-                    if (confirm('Delete this comment?')) {
-                        await remove(ref(db, `comments/${matchId}/${commentId}`));
-                        showNotification('Comment deleted');
-                    }
-                });
-            }
-
-            if (comment.replies) {
-                const repliesContainer = div.querySelector(`#replies-${commentId}`);
-                for (const replyId in comment.replies) {
-                    const reply = comment.replies[replyId];
-                    const replyEl = await createCommentElement(reply, replyId, matchId);
-                    repliesContainer.appendChild(replyEl);
-                }
-            }
-
-            return div;
-        }
-
-        // Post comment
-        document.getElementById('postComment').addEventListener('click', async () => {
-            if (!currentUser) {
-                showNotification('Please login to comment');
-                return;
-            }
-
-            const text = document.getElementById('commentText').value.trim();
-            if (!text) return;
-
-            const commentRef = push(ref(db, 'comments/' + currentMatchId));
-            await set(commentRef, {
-                userId: currentUser.uid,
-                username: currentUser.username,
-                text: text,
-                timestamp: Date.now(),
-                likes: []
-            });
-
-            document.getElementById('commentText').value = '';
-            showNotification('Comment posted!');
-
-            const mentions = text.match(/@(\w+)/g);
-            if (mentions) {
-                mentions.forEach(async (mention) => {
-                    const username = mention.substring(1);
-                    const usersRef = ref(db, 'users');
-                    const snapshot = await get(usersRef);
-                    const users = snapshot.val();
-                    
-                    for (const userId in users) {
-                        if (users[userId].username === username) {
-                            const notifRef = push(ref(db, 'notifications/' + userId));
-                            await set(notifRef, {
-                                type: 'mention',
-                                from: currentUser.username,
-                                matchId: currentMatchId,
-                                timestamp: Date.now(),
-                                read: false
-                            });
-                        }
-                    }
-                });
-            }
-        });
-
-        // Like comment
-        async function likeComment(matchId, commentId) {
-            if (!currentUser) {
-                showNotification('Please login to like');
-                return;
-            }
-
-            const commentRef = ref(db, `comments/${matchId}/${commentId}/likes`);
-            const snapshot = await get(commentRef);
-            let likes = snapshot.val() || [];
-
-            if (likes.includes(currentUser.uid)) {
-                likes = likes.filter(id => id !== currentUser.uid);
-            } else {
-                likes.push(currentUser.uid);
-            }
-
-            await set(commentRef, likes);
-        }
-
-        // Reply to comment
-        function replyToComment(matchId, commentId, username) {
-            const textarea = document.getElementById('commentText');
-            textarea.value = `@${username} `;
-            textarea.focus();
-        }
-
-        // Get time ago
-        function getTimeAgo(timestamp) {
-            const seconds = Math.floor((Date.now() - timestamp) / 1000);
-            
-            if (seconds < 60) return seconds + ' seconds ago';
-            if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ago';
-            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
-            return Math.floor(seconds / 86400) + ' days ago';
-        }
-
-        // Load notifications
-        async function loadNotifications() {
-            if (!currentUser) return;
-
-            const notifRef = ref(db, 'notifications/' + currentUser.uid);
-            onValue(notifRef, (snapshot) => {
-                const notifications = snapshot.val();
-                const container = document.getElementById('notificationsList');
-                const badge = document.getElementById('notifBadge');
-                
-                container.innerHTML = '';
-                
-                if (!notifications) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No notifications</p>';
-                    badge.style.display = 'none';
-                    return;
-                }
-
-                let unreadCount = 0;
-                for (const notifId in notifications) {
-                    const notif = notifications[notifId];
-                    if (!notif.read) unreadCount++;
-                    
-                    const div = document.createElement('div');
-                    div.className = 'notification-item' + (!notif.read ? ' unread' : '');
-                    
-                    let message = '';
-                    if (notif.type === 'mention') {
-                        message = `${notif.from} mentioned you in a comment`;
-                    } else if (notif.type === 'reply') {
-                        message = `${notif.from} replied to your comment`;
-                    }
-                    
-                    div.innerHTML = `
-                        <div>${message}</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">
-                            ${getTimeAgo(notif.timestamp)}
-                        </div>
-                    `;
-                    
-                    div.addEventListener('click', async () => {
-                        await update(ref(db, `notifications/${currentUser.uid}/${notifId}`), { read: true });
-                    });
-                    
-                    container.appendChild(div);
-                }
-
-                if (unreadCount > 0) {
-                    badge.textContent = unreadCount;
-                    badge.style.display = 'inline-block';
-                } else {
-                    badge.style.display = 'none';
-                }
-            });
-        }
-
-        // Show notification
-        function showNotification(message) {
-            notification.textContent = message;
-            notification.classList.add('active');
-            setTimeout(() => {
-                notification.classList.remove('active');
-            }, 3000);
-        }
-
-        // Admin functions
-        async function loadAdminData() {
-            const usersRef = ref(db, 'users');
-            const commentsRef = ref(db, 'comments');
-            
-            const usersSnapshot = await get(usersRef);
-            const commentsSnapshot = await get(commentsRef);
-            
-            const users = usersSnapshot.val() || {};
-            const comments = commentsSnapshot.val() || {};
-            
-            let verifiedCount = 0;
-            let totalComments = 0;
-            let totalFavorites = 0;
-            
-            for (const userId in users) {
-                if (users[userId].verified) verifiedCount++;
-                if (users[userId].favorites) totalFavorites += users[userId].favorites.length;
-            }
-            
-            for (const matchId in comments) {
-                totalComments += Object.keys(comments[matchId]).length;
-            }
-            
-            document.getElementById('totalUsers').textContent = Object.keys(users).length;
-            document.getElementById('verifiedUsers').textContent = verifiedCount;
-            document.getElementById('totalComments').textContent = totalComments;
-            document.getElementById('totalFavorites').textContent = totalFavorites;
-            
-            displayUserList(users);
-            displayCommentsList(comments);
-        }
-
-        // Display user list
-        function displayUserList(users) {
-            const container = document.getElementById('userList');
-            container.innerHTML = '';
-            
-            for (const userId in users) {
-                const user = users[userId];
-                const div = document.createElement('div');
-                div.className = 'user-item';
-                
-                div.innerHTML = `
-                    <div>
-                        <strong>${user.username}</strong> ${user.verified ? '<span class="verified-badge">✓</span>' : ''}
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">
-                            ${user.email}
-                        </div>
-                    </div>
-                    <div class="user-actions">
-                        ${user.verified ? 
-                            `<button class="action-btn verify-btn" onclick="unverifyUser('${userId}')">✗ Unverify</button>` :
-                            `<button class="action-btn verify-btn" onclick="verifyUser('${userId}')">✓ Verify</button>`
-                        }
-                        <button class="action-btn ban-btn" onclick="banUser('${userId}', '${user.username}')">🚫 Ban</button>
-                    </div>
-                `;
-                
-                container.appendChild(div);
-            }
-        }
-
-        // Verify user
-        window.verifyUser = async function(userId) {
-            await update(ref(db, 'users/' + userId), { verified: true });
-            showNotification('User verified');
-            loadAdminData();
-        };
-
-        // Unverify user
-        window.unverifyUser = async function(userId) {
-            await update(ref(db, 'users/' + userId), { verified: false });
-            showNotification('Verification removed');
-            loadAdminData();
-        };
-
-        // Ban user
-        window.banUser = async function(userId, username) {
-            if (username === ADMIN_USERNAME) {
-                showNotification('Cannot ban admin user!');
-                return;
-            }
-            if (confirm('Ban this user? This will delete their account.')) {
-                await remove(ref(db, 'users/' + userId));
-                showNotification('User banned');
-                loadAdminData();
-            }
-        };
-
-        // Display comments list
-        function displayCommentsList(comments) {
-            const container = document.getElementById('commentsList');
-            container.innerHTML = '';
-            
-            for (const matchId in comments) {
-                for (const commentId in comments[matchId]) {
-                    const comment = comments[matchId][commentId];
-                    const div = document.createElement('div');
-                    div.className = 'user-item';
-                    
-                    div.innerHTML = `
-                        <div>
-                            <strong>${comment.username}</strong>
-                            <div style="margin-top: 0.5rem;">${comment.text}</div>
-                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">
-                                ${getTimeAgo(comment.timestamp)}
-                            </div>
-                        </div>
-                        <div class="user-actions">
-                            <button class="action-btn ban-btn" onclick="deleteComment('${matchId}', '${commentId}')">🗑️ Delete</button>
-                        </div>
-                    `;
-                    
-                    container.appendChild(div);
-                }
-            }
-        }
-
-        // Delete comment (admin)
-        window.deleteComment = async function(matchId, commentId) {
-            if (confirm('Delete this comment?')) {
-                await remove(ref(db, `comments/${matchId}/${commentId}`));
-                showNotification('Comment deleted');
-                loadAdminData();
-            }
-        };
-
-        // User search
-        document.getElementById('userSearch').addEventListener('input', async (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const usersRef = ref(db, 'users');
-            const snapshot = await get(usersRef);
-            const users = snapshot.val() || {};
-            
-            const filtered = {};
-            for (const userId in users) {
-                if (users[userId].username.toLowerCase().includes(searchTerm)) {
-                    filtered[userId] = users[userId];
-                }
-            }
-            
-            displayUserList(filtered);
-        });
-
-        // Sport filters
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                const sport = this.dataset.sport;
-                if (sport === 'all') {
-                    displayMatches(allMatches);
-                } else {
-                    const filtered = allMatches.filter(m => m.sport_key.includes(sport));
-                    displayMatches(filtered);
-                }
-            });
-        });
-
-        // Initialize app
-        fetchAllSports();
+    <script>
+        // Canvas initialization
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw initial canvas state
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Add welcome text
+        ctx.fillStyle = '#667eea';
+        ctx.font = 'bold 32px Segoe UI';
+        ctx.textAlign = 'center';
+        ctx.fillText('Welcome to EditByGodswill', canvas.width / 2, canvas.height / 2 - 20);
         
-        // Auto-refresh every 30 minutes (only if cache expired)
-        setInterval(() => {
-            const cachedKeys = Object.keys(localStorage).filter(k => k.startsWith('odds_'));
-            if (cachedKeys.length > 0) {
-                const firstKey = cachedKeys[0];
-                const cached = localStorage.getItem(firstKey);
-                if (cached) {
-                    const data = JSON.parse(cached);
-                    const age = Date.now() - data.timestamp;
-                    
-                    if (age > CACHE_DURATION) {
-                        console.log('Cache expired, refreshing...');
-                        fetchAllSports(true);
-                    }
+        ctx.fillStyle = '#999';
+        ctx.font = '18px Segoe UI';
+        ctx.fillText('Start creating amazing designs', canvas.width / 2, canvas.height / 2 + 20);
+
+        // Template toggle
+        const templateBtn = document.querySelectorAll('.tool-icon')[4];
+        const templatesSection = document.querySelector('.templates-section');
+        
+        templateBtn.addEventListener('click', () => {
+            templatesSection.classList.toggle('active');
+        });
+
+        // Tool interactions with ripple effect
+        document.querySelectorAll('.tool-icon, .toolbar-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.width = ripple.style.height = '100px';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.pointerEvents = 'none';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
                 }
             }
-            updateCacheStatus();
-        }, 60000); // Check every minute
-
-        // Update cache status every minute
-        setInterval(updateCacheStatus, 60000);
-
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
