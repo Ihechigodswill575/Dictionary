@@ -1399,95 +1399,196 @@
         </div>
     </div>
 
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, push, set, onValue, remove, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBzUELxbbaL6Wb_M1uNhjwlZHVTorN9XJs",
+            authDomain: "my-whatsapp-2c1af.firebaseapp.com",
+            databaseURL: "https://my-whatsapp-2c1af-default-rtdb.firebaseio.com",
+            projectId: "my-whatsapp-2c1af",
+            storageBucket: "my-whatsapp-2c1af.firebasestorage.app",
+            messagingSenderId: "1089455460888",
+            appId: "1:1089455460888:web:15bd0820546c813febe96d"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const storage = getStorage(app);
+
+        // Make Firebase accessible globally
+        window.database = database;
+        window.storage = storage;
+        window.firebaseRef = ref;
+        window.firebasePush = push;
+        window.firebaseSet = set;
+        window.firebaseOnValue = onValue;
+        window.firebaseRemove = remove;
+        window.firebaseUpdate = update;
+        window.storageRef = storageRef;
+        window.uploadBytes = uploadBytes;
+        window.getDownloadURL = getDownloadURL;
+
+        // Initialize data loading
+        window.addEventListener('load', () => {
+            loadProjectsFromFirebase();
+            loadBlogFromFirebase();
+            loadBookingsFromFirebase();
+        });
+    </script>
+
     <script>
-        // Cloudinary Configuration
-        const CLOUDINARY_NAME = 'dzxckgbzp';
-        const CLOUDINARY_API_KEY = '166123442148894';
-        const CLOUDINARY_UPLOAD_PRESET = 'ml_default'; // You'll need to set this up in Cloudinary
-
-        // Data Storage (In production, this would be stored in a database)
-        let projects = [
-            {
-                id: 1,
-                title: 'E-Commerce Platform',
-                description: 'Full-stack online store with payment integration and inventory management',
-                image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=400&fit=crop',
-                tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-                url: 'https://example.com'
-            },
-            {
-                id: 2,
-                title: 'Portfolio Website',
-                description: 'Modern portfolio for creative professional with stunning animations',
-                image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop',
-                tech: ['HTML', 'CSS', 'JavaScript'],
-                url: 'https://example.com'
-            },
-            {
-                id: 3,
-                title: 'Restaurant App',
-                description: 'Mobile-responsive restaurant ordering system with real-time updates',
-                image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop',
-                tech: ['React Native', 'Firebase'],
-                url: 'https://example.com'
-            },
-            {
-                id: 4,
-                title: 'Real Estate Platform',
-                description: 'Property listing website with advanced search and filtering',
-                image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop',
-                tech: ['Vue.js', 'Laravel', 'MySQL'],
-                url: 'https://example.com'
-            },
-            {
-                id: 5,
-                title: 'Social Media Dashboard',
-                description: 'Analytics dashboard for managing multiple social media accounts',
-                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
-                tech: ['React', 'D3.js', 'Express'],
-                url: 'https://example.com'
-            },
-            {
-                id: 6,
-                title: 'Fitness Tracking App',
-                description: 'Comprehensive fitness app with workout plans and progress tracking',
-                image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=400&fit=crop',
-                tech: ['Flutter', 'Firebase', 'ML Kit'],
-                url: 'https://example.com'
-            }
-        ];
-
-        let blogPosts = [
-            {
-                id: 1,
-                title: 'The Future of Web Development in 2024',
-                excerpt: 'Exploring emerging trends and technologies shaping the future of web development',
-                content: 'Full blog content here...',
-                image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
-                date: '2024-01-15'
-            },
-            {
-                id: 2,
-                title: 'Building Responsive Websites: Best Practices',
-                excerpt: 'A comprehensive guide to creating websites that work perfectly on all devices',
-                content: 'Full blog content here...',
-                image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&h=400&fit=crop',
-                date: '2024-01-10'
-            },
-            {
-                id: 3,
-                title: 'Why Your Business Needs a Website',
-                excerpt: 'Understanding the critical importance of having an online presence in today\'s digital world',
-                content: 'Full blog content here...',
-                image: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop',
-                date: '2024-01-05'
-            }
-        ];
-
+        // Data Storage - now loaded from Firebase
+        let projects = [];
+        let blogPosts = [];
         let bookings = [];
         let currentEditingProject = null;
         let currentEditingBlog = null;
         let uploadedImageUrl = '';
+
+        // Load Projects from Firebase
+        function loadProjectsFromFirebase() {
+            const projectsRef = window.firebaseRef(window.database, 'projects');
+            window.firebaseOnValue(projectsRef, (snapshot) => {
+                projects = [];
+                snapshot.forEach((childSnapshot) => {
+                    projects.push({
+                        firebaseKey: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+                
+                // If no projects exist, add default ones
+                if (projects.length === 0) {
+                    addDefaultProjects();
+                } else {
+                    renderProjects();
+                    if (document.getElementById('adminDashboard').classList.contains('active')) {
+                        renderAdminProjects();
+                    }
+                }
+            });
+        }
+
+        // Load Blog from Firebase
+        function loadBlogFromFirebase() {
+            const blogRef = window.firebaseRef(window.database, 'blog');
+            window.firebaseOnValue(blogRef, (snapshot) => {
+                blogPosts = [];
+                snapshot.forEach((childSnapshot) => {
+                    blogPosts.push({
+                        firebaseKey: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+                
+                // If no blog posts exist, add default ones
+                if (blogPosts.length === 0) {
+                    addDefaultBlog();
+                } else {
+                    renderBlog();
+                    if (document.getElementById('adminDashboard').classList.contains('active')) {
+                        renderAdminBlog();
+                    }
+                }
+            });
+        }
+
+        // Load Bookings from Firebase
+        function loadBookingsFromFirebase() {
+            const bookingsRef = window.firebaseRef(window.database, 'bookings');
+            window.firebaseOnValue(bookingsRef, (snapshot) => {
+                bookings = [];
+                snapshot.forEach((childSnapshot) => {
+                    bookings.push({
+                        firebaseKey: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+                
+                if (document.getElementById('adminDashboard').classList.contains('active')) {
+                    renderAdminBookings();
+                }
+            });
+        }
+
+        // Add default projects
+        function addDefaultProjects() {
+            const defaultProjects = [
+                {
+                    id: 1,
+                    title: 'E-Commerce Platform',
+                    description: 'Full-stack online store with payment integration and inventory management',
+                    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=400&fit=crop',
+                    tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+                    url: 'https://example.com'
+                },
+                {
+                    id: 2,
+                    title: 'Portfolio Website',
+                    description: 'Modern portfolio for creative professional with stunning animations',
+                    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop',
+                    tech: ['HTML', 'CSS', 'JavaScript'],
+                    url: 'https://example.com'
+                },
+                {
+                    id: 3,
+                    title: 'Restaurant App',
+                    description: 'Mobile-responsive restaurant ordering system with real-time updates',
+                    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop',
+                    tech: ['React Native', 'Firebase'],
+                    url: 'https://example.com'
+                }
+            ];
+
+            const projectsRef = window.firebaseRef(window.database, 'projects');
+            defaultProjects.forEach(project => {
+                const newProjectRef = window.firebasePush(projectsRef);
+                window.firebaseSet(newProjectRef, project);
+            });
+        }
+
+        // Add default blog posts
+        function addDefaultBlog() {
+            const defaultBlog = [
+                {
+                    id: 1,
+                    title: 'The Future of Web Development in 2024',
+                    excerpt: 'Exploring emerging trends and technologies shaping the future of web development',
+                    content: 'Full blog content here...',
+                    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                    date: '2024-01-15'
+                },
+                {
+                    id: 2,
+                    title: 'Building Responsive Websites: Best Practices',
+                    excerpt: 'A comprehensive guide to creating websites that work perfectly on all devices',
+                    content: 'Full blog content here...',
+                    image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&h=400&fit=crop',
+                    date: '2024-01-10'
+                },
+                {
+                    id: 3,
+                    title: 'Why Your Business Needs a Website',
+                    excerpt: 'Understanding the critical importance of having an online presence in today\'s digital world',
+                    content: 'Full blog content here...',
+                    image: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop',
+                    date: '2024-01-05'
+                }
+            ];
+
+            const blogRef = window.firebaseRef(window.database, 'blog');
+            defaultBlog.forEach(post => {
+                const newBlogRef = window.firebasePush(blogRef);
+                window.firebaseSet(newBlogRef, post);
+            });
+        }
 
         // Theme Toggle
         function toggleTheme() {
@@ -1576,8 +1677,7 @@
             document.getElementById('adminPassword').value = '';
         }
 
-        function togglePasswordVisibility() {
-            const input = document.getElementById('adminPassword');
+        function togglePasswordVisibility() {const input = document.getElementById('adminPassword');
             const icon = document.getElementById('eyeIcon');
             if (input.type === 'password') {
                 input.type = 'text';
@@ -1622,13 +1722,13 @@
                         <p style="font-size: 0.875rem; opacity: 0.8;">${project.description.substring(0, 50)}...</p>
                     </div>
                     <div class="admin-actions">
-                        <button class="admin-btn" onclick="editProject(${project.id})">
+                        <button class="admin-btn" onclick="editProject('${project.firebaseKey}')">
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
                         </button>
-                        <button class="admin-btn delete" onclick="deleteProject(${project.id})">
+                        <button class="admin-btn delete" onclick="deleteProject('${project.firebaseKey}')">
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
                             </svg>
@@ -1650,11 +1750,11 @@
             document.getElementById('projectForm').style.display = 'block';
         }
 
-        function editProject(id) {
-            const project = projects.find(p => p.id === id);
+        function editProject(firebaseKey) {
+            const project = projects.find(p => p.firebaseKey === firebaseKey);
             if (!project) return;
 
-            currentEditingProject = id;
+            currentEditingProject = firebaseKey;
             uploadedImageUrl = project.image;
             document.getElementById('projectFormTitle').textContent = 'Edit Project';
             document.getElementById('projectTitle').value = project.title;
@@ -1665,11 +1765,10 @@
             document.getElementById('projectForm').style.display = 'block';
         }
 
-        function deleteProject(id) {
+        function deleteProject(firebaseKey) {
             if (confirm('Are you sure you want to delete this project?')) {
-                projects = projects.filter(p => p.id !== id);
-                renderAdminProjects();
-                renderProjects();
+                const projectRef = window.firebaseRef(window.database, 'projects/' + firebaseKey);
+                window.firebaseRemove(projectRef);
             }
         }
 
@@ -1685,16 +1784,24 @@
                 return;
             }
 
+            const projectData = {
+                id: currentEditingProject ? projects.find(p => p.firebaseKey === currentEditingProject).id : Date.now(),
+                title,
+                description,
+                tech,
+                url,
+                image
+            };
+
             if (currentEditingProject) {
-                const index = projects.findIndex(p => p.id === currentEditingProject);
-                projects[index] = { ...projects[index], title, description, tech, url, image };
+                const projectRef = window.firebaseRef(window.database, 'projects/' + currentEditingProject);
+                window.firebaseUpdate(projectRef, projectData);
             } else {
-                const newId = Math.max(...projects.map(p => p.id), 0) + 1;
-                projects.push({ id: newId, title, description, tech, url, image });
+                const projectsRef = window.firebaseRef(window.database, 'projects');
+                const newProjectRef = window.firebasePush(projectsRef);
+                window.firebaseSet(newProjectRef, projectData);
             }
 
-            renderAdminProjects();
-            renderProjects();
             cancelProjectForm();
         }
 
@@ -1714,13 +1821,13 @@
                         <p style="font-size: 0.875rem; opacity: 0.8;">${new Date(post.date).toLocaleDateString()}</p>
                     </div>
                     <div class="admin-actions">
-                        <button class="admin-btn" onclick="editBlog(${post.id})">
+                        <button class="admin-btn" onclick="editBlog('${post.firebaseKey}')">
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
                         </button>
-                        <button class="admin-btn delete" onclick="deleteBlog(${post.id})">
+                        <button class="admin-btn delete" onclick="deleteBlog('${post.firebaseKey}')">
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
                             </svg>
@@ -1741,11 +1848,11 @@
             document.getElementById('blogForm').style.display = 'block';
         }
 
-        function editBlog(id) {
-            const post = blogPosts.find(p => p.id === id);
+        function editBlog(firebaseKey) {
+            const post = blogPosts.find(p => p.firebaseKey === firebaseKey);
             if (!post) return;
 
-            currentEditingBlog = id;
+            currentEditingBlog = firebaseKey;
             uploadedImageUrl = post.image;
             document.getElementById('blogFormTitle').textContent = 'Edit Blog Post';
             document.getElementById('blogTitle').value = post.title;
@@ -1755,11 +1862,10 @@
             document.getElementById('blogForm').style.display = 'block';
         }
 
-        function deleteBlog(id) {
+        function deleteBlog(firebaseKey) {
             if (confirm('Are you sure you want to delete this blog post?')) {
-                blogPosts = blogPosts.filter(p => p.id !== id);
-                renderAdminBlog();
-                renderBlog();
+                const blogRef = window.firebaseRef(window.database, 'blog/' + firebaseKey);
+                window.firebaseRemove(blogRef);
             }
         }
 
@@ -1775,16 +1881,24 @@
                 return;
             }
 
+            const blogData = {
+                id: currentEditingBlog ? blogPosts.find(p => p.firebaseKey === currentEditingBlog).id : Date.now(),
+                title,
+                excerpt,
+                content,
+                image,
+                date: currentEditingBlog ? blogPosts.find(p => p.firebaseKey === currentEditingBlog).date : date
+            };
+
             if (currentEditingBlog) {
-                const index = blogPosts.findIndex(p => p.id === currentEditingBlog);
-                blogPosts[index] = { ...blogPosts[index], title, excerpt, content, image };
+                const blogRef = window.firebaseRef(window.database, 'blog/' + currentEditingBlog);
+                window.firebaseUpdate(blogRef, blogData);
             } else {
-                const newId = Math.max(...blogPosts.map(p => p.id), 0) + 1;
-                blogPosts.push({ id: newId, title, excerpt, content, image, date });
+                const blogRef = window.firebaseRef(window.database, 'blog');
+                const newBlogRef = window.firebasePush(blogRef);
+                window.firebaseSet(newBlogRef, blogData);
             }
 
-            renderAdminBlog();
-            renderBlog();
             cancelBlogForm();
         }
 
@@ -1802,7 +1916,7 @@
                 return;
             }
 
-            list.innerHTML = bookings.map((booking, index) => `
+            list.innerHTML = bookings.map(booking => `
                 <div class="admin-item">
                     <div>
                         <strong>${booking.name}</strong>
@@ -1814,7 +1928,7 @@
                         </p>
                     </div>
                     <div class="admin-actions">
-                        <button class="admin-btn delete" onclick="deleteBooking(${index})">
+                        <button class="admin-btn delete" onclick="deleteBooking('${booking.firebaseKey}')">
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
                             </svg>
@@ -1824,14 +1938,14 @@
             `).join('');
         }
 
-        function deleteBooking(index) {
+        function deleteBooking(firebaseKey) {
             if (confirm('Are you sure you want to delete this booking?')) {
-                bookings.splice(index, 1);
-                renderAdminBookings();
+                const bookingRef = window.firebaseRef(window.database, 'bookings/' + firebaseKey);
+                window.firebaseRemove(bookingRef);
             }
         }
 
-        // Image Upload Handler
+        // Image Upload Handler with Firebase Storage
         function handleImageUpload(event, type) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1841,53 +1955,32 @@
                 const previewId = type === 'project' ? 'projectImagePreview' : 'blogImagePreview';
                 document.getElementById(previewId).innerHTML = `
                     <img src="${e.target.result}" alt="Preview">
-                    <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.8;">Uploading to Cloudinary...</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.8;">Uploading to Firebase Storage...</p>
                 `;
 
-                // Simulate Cloudinary upload
-                // In production, you would actually upload to Cloudinary here
-                uploadToCloudinary(file, type);
+                uploadToFirebase(file, type);
             };
             reader.readAsDataURL(file);
         }
 
-        function uploadToCloudinary(file, type) {
-            // This is a simulated upload. In production, you would use the actual Cloudinary API
-            setTimeout(() => {
-                // Simulated Cloudinary URL
-                uploadedImageUrl = URL.createObjectURL(file);
+        function uploadToFirebase(file, type) {
+            const timestamp = Date.now();
+            const fileName = `${type}s/${timestamp}_${file.name}`;
+            const fileRef = window.storageRef(window.storage, fileName);
+
+            window.uploadBytes(fileRef, file).then((snapshot) => {
+                return window.getDownloadURL(snapshot.ref);
+            }).then((downloadURL) => {
+                uploadedImageUrl = downloadURL;
                 const previewId = type === 'project' ? 'projectImagePreview' : 'blogImagePreview';
                 document.getElementById(previewId).innerHTML = `
-                    <img src="${uploadedImageUrl}" alt="Preview">
+                    <img src="${downloadURL}" alt="Preview">
                     <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #10b981;">✓ Upload successful!</p>
                 `;
-            }, 1500);
-
-            /* ACTUAL CLOUDINARY UPLOAD CODE (Uncomment and configure for production):
-            
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-            formData.append('api_key', CLOUDINARY_API_KEY);
-
-            fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                uploadedImageUrl = data.secure_url;
-                const previewId = type === 'project' ? 'projectImagePreview' : 'blogImagePreview';
-                document.getElementById(previewId).innerHTML = `
-                    <img src="${uploadedImageUrl}" alt="Preview">
-                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #10b981;">✓ Upload successful!</p>
-                `;
-            })
-            .catch(error => {
+            }).catch((error) => {
                 console.error('Upload error:', error);
                 alert('Image upload failed. Please try again.');
             });
-            */
         }
 
         // Form Submissions
@@ -1917,10 +2010,14 @@
                 date: form.elements[4].value,
                 time: form.elements[5].value,
                 service: form.elements[6].value,
-                details: form.elements[7].value
+                details: form.elements[7].value,
+                timestamp: Date.now()
             };
 
-            bookings.push(booking);
+            // Save to Firebase
+            const bookingsRef = window.firebaseRef(window.database, 'bookings');
+            const newBookingRef = window.firebasePush(bookingsRef);
+            window.firebaseSet(newBookingRef, booking);
             
             // Show success message
             const successMsg = document.getElementById('bookingSuccess');
@@ -1930,11 +2027,6 @@
             setTimeout(() => {
                 successMsg.classList.remove('show');
             }, 3000);
-
-            // If admin panel is open, update bookings list
-            if (document.getElementById('adminDashboard').classList.contains('active')) {
-                renderAdminBookings();
-            }
         }
 
         // Terms Modal
@@ -1961,8 +2053,6 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            renderProjects();
-            renderBlog();
             initScrollAnimations();
             
             // Add smooth scroll behavior
