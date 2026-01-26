@@ -1,9 +1,10 @@
+Sure! Here's the complete HTML code for your portfolio website:
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoLocation/Weather Forecast by Devgodswill</title>
+    <title>Godswill's Web Studio - Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -11,559 +12,1978 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg-dark: #0f172a;
+            --bg-light: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --card-dark: #1e293b;
+            --card-light: #f8fafc;
         }
 
-        .terms-modal {
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        body.light {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* Header & Navigation */
+        header {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light header {
+            background: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .menu-toggle {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover, .menu-toggle:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--bg-dark);
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light .mobile-menu {
+            background: var(--bg-light);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-menu a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1), transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideUp 1s ease-out 0.2s backwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideUp 1s ease-out 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: var(--card-dark);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        body.light .project-card {
+            background: var(--card-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .project-description {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Why Choose Us */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: var(--card-dark);
+            border-radius: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        body.light .feature-card {
+            background: var(--card-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Blog Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--card-dark);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        body.light .blog-card {
+            background: var(--card-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-date {
+            color: var(--primary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-excerpt {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 0.5rem;
+            background: transparent;
+            color: inherit;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Book Section */
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-dark);
+            padding: 3rem;
+            border-radius: 1rem;
+        }
+
+        body.light .booking-form {
+            background: var(--card-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-dark);
+            padding: 3rem 5%;
+            position: relative;
+        }
+
+        body.light footer {
+            background: var(--card-light);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-section a {
+            color: inherit;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+        }
+
+        body.light .footer-bottom {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Admin Dot - Hidden */
+        .admin-trigger {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .admin-trigger:hover {
+            opacity: 0.1;
+        }
+
+        /* Admin Modal */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .admin-modal.active {
+            display: flex;
+        }
+
+        .admin-content {
+            background: var(--bg-dark);
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        body.light .admin-content {
+            background: var(--bg-light);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .close-admin {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .password-input-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .password-input-group input {
+            width: 100%;
+            padding: 1rem;
+            padding-right: 3rem;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 0.5rem;
+            background: transparent;
+            color: inherit;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .admin-dashboard {
+            display: none;
+        }
+
+        .admin-dashboard.active {
+            display: block;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .admin-tab {
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .admin-tab.active {
+            opacity: 1;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .admin-tab-content {
+            display: none;
+        }
+
+        .admin-tab-content.active {
+            display: block;
+        }
+
+        .admin-item {
+            padding: 1rem;
+            background: var(--card-dark);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.light .admin-item {
+            background: var(--card-light);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .admin-btn {
+            padding: 0.5rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 0.25rem;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: var(--accent);
+        }
+
+        .admin-btn.delete {
+            background: #ef4444;
+        }
+
+        /* Terms Modal */
+        .terms-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .terms-modal.active {
+            display: flex;
         }
 
         .terms-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 600px;
+            background: var(--bg-dark);
+            padding: 3rem;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 90%;
             max-height: 80vh;
             overflow-y: auto;
-            animation: slideDown 0.5s ease;
+        }
+
+        body.light .terms-content {
+            background: var(--bg-light);
         }
 
         .terms-content h2 {
-            color: #667eea;
-            margin-bottom: 20px;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .terms-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
         }
 
         .terms-content p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-            color: #333;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 1rem;
         }
 
-        .accept-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .close-terms {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 16px;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
             cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.3s ease;
+            margin-top: 2rem;
         }
 
-        .accept-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 100%;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        h1 {
-            text-align: center;
-            color: #667eea;
-            margin-bottom: 30px;
-            font-size: 2em;
-            animation: slideInDown 1s ease;
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
             }
         }
 
-        .search-container {
-            position: relative;
-            margin-bottom: 30px;
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s, transform 0.6s;
         }
 
-        #cityInput {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
-            border: 2px solid #667eea;
-            border-radius: 50px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s ease;
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        #cityInput:focus {
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .search-btn {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .search-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            margin-top: 5px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 100;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .suggestion-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .suggestion-item:hover {
-            background: #f0f0f0;
-        }
-
-        .location-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-        }
-
-        .location-btn:hover {
-            transform: scale(1.02);
-        }
-
-        .weather-info {
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .weather-icon {
-            width: 100px;
-            height: 100px;
-            margin: 20px auto;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .temperature {
-            font-size: 3em;
-            color: #667eea;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .description {
-            font-size: 1.5em;
-            color: #764ba2;
-            margin-bottom: 20px;
-        }
-
-        .details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .detail-item {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 15px;
-            border-radius: 15px;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .detail-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .detail-value {
-            font-size: 1.2em;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .error {
-            color: #e74c3c;
-            text-align: center;
-            padding: 15px;
-            background: #ffe6e6;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2em;
-            color: #667eea;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+        /* Loading Animation */
+        .loader {
+            border: 3px solid rgba(99, 102, 241, 0.3);
+            border-top: 3px solid var(--primary);
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 2rem auto;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e0e0e0;
+        /* Success Message */
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
         }
 
-        footer p {
-            color: #666;
-            margin: 10px 0;
-            font-size: 0.9em;
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s;
         }
 
-        footer a {
-            color: #667eea;
-            text-decoration: none;
-            transition: color 0.3s ease;
+        /* Upload Preview */
+        .upload-preview {
+            margin-top: 1rem;
         }
 
-        footer a:hover {
-            color: #764ba2;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 1.5em;
-            }
-
-            .temperature {
-                font-size: 2.5em;
-            }
-
-            .details {
-                grid-template-columns: 1fr;
-            }
+        .upload-preview img {
+            max-width: 200px;
+            border-radius: 0.5rem;
         }
     </style>
 </head>
-<body>
-    <div id="termsModal" class="terms-modal">
-        <div class="terms-content">
-            <h2>Terms and Conditions</h2>
-            <p>Welcome to GeoLocation/Weather Forecast by Devgodswill. By using this application, you agree to the following terms:</p>
-            <p>1. This weather forecast application uses third-party APIs to provide weather information. We are not responsible for the accuracy of the data provided.</p>
-            <p>2. We may collect your location data solely for the purpose of providing weather information for your area.</p>
-            <p>3. Your privacy is important to us. We do not store or share your personal information with third parties.</p>
-            <p>4. This service is provided "as is" without any warranties, express or implied.</p>
-            <p>5. We reserve the right to modify these terms at any time.</p>
-            <p>6. By clicking "I Accept", you acknowledge that you have read and agree to these terms and conditions.</p>
-            <button class="accept-btn" onclick="acceptTerms()">I Accept</button>
+<body class="dark">
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Godswill's Web Studio</div>
+            <ul class="nav-links">
+                <li><a onclick="navigateTo('home')">Home</a></li>
+                <li><a onclick="navigateTo('about')">About</a></li>
+                <li><a onclick="navigateTo('portfolio')">Portfolio</a></li>
+                <li><a onclick="navigateTo('blog')">Blog</a></li>
+                <li><a onclick="navigateTo('why-choose')">Why Choose Us</a></li>
+                <li><a onclick="navigateTo('contact')">Contact</a></li>
+                <li><a onclick="navigateTo('book')">Book</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <svg class="sun-icon" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+                <button class="menu-toggle" onclick="toggleMenu()">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a onclick="navigateTo('home'); toggleMenu()">Home</a></li>
+                <li><a onclick="navigateTo('about'); toggleMenu()">About</a></li>
+                <li><a onclick="navigateTo('portfolio'); toggleMenu()">Portfolio</a></li>
+                <li><a onclick="navigateTo('blog'); toggleMenu()">Blog</a></li>
+                <li><a onclick="navigateTo('why-choose'); toggleMenu()">Why Choose Us</a></li>
+                <li><a onclick="navigateTo('contact'); toggleMenu()">Contact</a></li>
+                <li><a onclick="navigateTo('book'); toggleMenu()">Book</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div class="page active" id="home">
+            <section class="hero">
+                <div class="hero-bg"></div>
+                <div class="hero-content">
+                    <h1>Godswill's Web Studio</h1>
+                    <p>Crafting stunning digital experiences that bring your vision to life</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" onclick="navigateTo('portfolio')">View My Work</button>
+                        <button class="btn btn-secondary" onclick="navigateTo('contact')">Get In Touch</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Projects -->
+            <section>
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid" id="featuredProjects"></div>
+            </section>
+        </div>
+
+        <!-- About Page -->
+        <div class="page" id="about">
+            <section>
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <img src="https://res.cloudinary.com/dzxckgbzp/image/upload/v1/about-placeholder.jpg" alt="Godswill" class="about-image">
+                    <div class="about-text">
+                        <h3>Hi, I'm Godswill</h3>
+                        <p>I'm a passionate web developer and designer with years of experience creating beautiful, functional websites that help businesses succeed online. My mission is to transform your ideas into digital realities that exceed expectations.</p>
+                        <p>I specialize in modern web technologies and frameworks, ensuring your website is not only visually stunning but also fast, secure, and scalable. From concept to deployment, I'm dedicated to delivering excellence at every step.</p>
+                        <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, and mentoring aspiring developers.</p>
+                        <div class="skills">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">UI/UX Design</span>
+                            <span class="skill-tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Portfolio Page -->
+        <div class="page" id="portfolio">
+            <section>
+                <h2 class="section-title">My Portfolio</h2>
+                <p class="section-subtitle">Explore my latest web development projects and digital creations</p>
+                <div class="projects-grid" id="portfolioProjects"></div>
+            </section>
+        </div>
+
+        <!-- Blog Page -->
+        <div class="page" id="blog">
+            <section>
+                <h2 class="section-title">Blog</h2>
+                <p class="section-subtitle">Insights, tutorials, and thoughts on web development</p>
+                <div class="blog-grid" id="blogPosts"></div>
+            </section>
+        </div>
+
+        <!-- Why Choose Us Page -->
+        <div class="page" id="why-choose">
+            <section>
+                <h2 class="section-title">Why Choose Godswill's Web Studio</h2>
+                <p class="section-subtitle">Here's what makes us stand out from the competition</p>
+                <div class="features-grid">
+                    <div class="feature-card scroll-animate">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Lightning Fast</h3>
+                        <p>Optimized for speed and performance. Your website will load in milliseconds, providing an exceptional user experience.</p>
+                    </div>
+                    <div class="feature-card scroll-animate">
+                        <div class="feature-icon">📱</div>
+                        <h3>Responsive Design</h3>
+                        <p>Perfect on all devices. Your site will look stunning whether viewed on desktop, tablet, or mobile.</p>
+                    </div>
+                    <div class="feature-card scroll-animate">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Modern Aesthetics</h3>
+                        <p>Beautiful, contemporary designs that capture attention and engage your audience from the first click.</p>
+                    </div>
+                    <div class="feature-card scroll-animate">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure & Reliable</h3>
+                        <p>Built with security best practices. Your website and user data are protected with industry-standard encryption.</p>
+                    </div>
+                    <div class="feature-card scroll-animate">
+                        <div class="feature-icon">⚡</div>
+                        <h3>SEO Optimized</h3>
+                        <p>Optimized for search engines from the ground up. Get found by your target audience easily.</p>
+                    </div>
+                    <div class="feature-card scroll-animate">
+                        <div class="feature-icon">💼</div>
+                        <h3>Professional Support</h3>
+                        <p>Ongoing maintenance and support. I'm here to help your website grow with your business.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Page -->
+        <div class="page" id="contact">
+            <section>
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's discuss your next project</p>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Email</h3>
+                                <p>ihechigodswill575@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Phone</h3>
+                                <p>+234 814 568 8688</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Location</h3>
+                                <p>Nigeria</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                        <div class="success-message" id="contactSuccess">Message sent successfully!</div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" required placeholder="What's this about?">
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea required placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- Book Page -->
+        <div class="page" id="book">
+            <section>
+                <h2 class="section-title">Book a Consultation</h2>
+                <p class="section-subtitle">Schedule a free consultation to discuss your project</p>
+                <form class="booking-form" onsubmit="handleBookingSubmit(event)">
+                    <div class="success-message" id="bookingSuccess">Booking submitted successfully!</div>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" required placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" required placeholder="+234 XXX XXX XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Date</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Time</label>
+                        <input type="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Needed</label>
+                        <select required style="padding: 1rem; border: 2px solid rgba(99, 102, 241, 0.3); border-radius: 0.5rem; background: transparent; color: inherit;">
+                            <option value="">Select a service</option>
+                            <option value="website">Website Development</option>
+                            <option value="ecommerce">E-Commerce Solution</option>
+                            <option value="redesign">Website Redesign</option>
+                            <option value="maintenance">Website Maintenance</option>
+                            <option value="consultation">General Consultation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Project Details</label>
+                        <textarea required placeholder="Tell me about your project requirements..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Book Consultation</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Godswill's Web Studio</h3>
+                <p>Creating exceptional digital experiences for businesses worldwide.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a onclick="navigateTo('home')">Home</a></li>
+                    <li><a onclick="navigateTo('about')">About</a></li>
+                    <li><a onclick="navigateTo('portfolio')">Portfolio</a></li>
+                    <li><a onclick="navigateTo('blog')">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Web Development</a></li>
+                    <li><a href="#">UI/UX Design</a></li>
+                    <li><a href="#">E-Commerce</a></li>
+                    <li><a href="#">Maintenance</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a onclick="showTerms()">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Godswill's Web Studio. All rights reserved.</p>
+        </div>
+        <!-- Hidden Admin Trigger (bottom-right corner of footer) -->
+        <button class="admin-trigger" onclick="showAdmin()" title="Admin Access"></button>
+    </footer>
+
+    <!-- Admin Modal -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Admin Panel</h2>
+                <button class="close-admin" onclick="closeAdmin()">✕</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="adminLogin">
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-input-group">
+                        <input type="password" id="adminPassword" placeholder="Enter admin password">
+                        <button class="toggle-password" onclick="togglePasswordVisibility()">
+                            <svg id="eyeIcon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="adminLogin()" style="width: 100%;">Login</button>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div class="admin-dashboard" id="adminDashboard">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchAdminTab('projects')">Projects</button>
+                    <button class="admin-tab" onclick="switchAdminTab('blog')">Blog</button>
+                    <button class="admin-tab" onclick="switchAdminTab('bookings')">Bookings</button>
+                </div>
+
+                <!-- Projects Tab -->
+                <div class="admin-tab-content active" id="projectsTab">
+                    <button class="btn btn-primary" onclick="showAddProject()" style="margin-bottom: 1rem;">
+                        <span style="margin-right: 0.5rem;">+</span> Add Project
+                    </button>
+                    <div id="projectsList"></div>
+                    
+                    <!-- Add/Edit Project Form -->
+                    <div id="projectForm" style="display: none; margin-top: 2rem; padding: 1.5rem; background: var(--card-dark); border-radius: 0.5rem;">
+                        <h3 id="projectFormTitle">Add New Project</h3>
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" id="projectTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="projectDesc" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Technologies (comma separated)</label>
+                            <input type="text" id="projectTech" placeholder="React, Node.js, MongoDB">
+                        </div>
+                        <div class="form-group">
+                            <label>Project URL</label>
+                            <input type="url" id="projectUrl">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Image</label>
+                            <input type="file" id="projectImage" accept="image/*" onchange="handleImageUpload(event, 'project')">
+                            <div class="upload-preview" id="projectImagePreview"></div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
+                            <button class="btn btn-secondary" onclick="cancelProjectForm()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Tab -->
+                <div class="admin-tab-content" id="blogTab">
+                    <button class="btn btn-primary" onclick="showAddBlog()" style="margin-bottom: 1rem;">
+                        <span style="margin-right: 0.5rem;">+</span> Add Blog Post
+                    </button>
+                    <div id="blogList"></div>
+
+                    <!-- Add/Edit Blog Form -->
+                    <div id="blogForm" style="display: none; margin-top: 2rem; padding: 1.5rem; background: var(--card-dark); border-radius: 0.5rem;">
+                        <h3 id="blogFormTitle">Add New Blog Post</h3>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="blogTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Excerpt</label>
+                            <textarea id="blogExcerpt" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea id="blogContent" required style="min-height: 200px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Image</label>
+                            <input type="file" id="blogImage" accept="image/*" onchange="handleImageUpload(event, 'blog')">
+                            <div class="upload-preview" id="blogImagePreview"></div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn btn-primary" onclick="saveBlog()">Save Post</button>
+                            <button class="btn btn-secondary" onclick="cancelBlogForm()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bookings Tab -->
+                <div class="admin-tab-content" id="bookingsTab">
+                    <h3>Consultation Bookings</h3>
+                    <div id="bookingsList"></div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="container" id="mainApp" style="display: none;">
-        <h1>🌤️ Weather Forecast</h1>
-        
-        <div class="search-container">
-            <input type="text" id="cityInput" placeholder="Enter city name..." autocomplete="off">
-            <button class="search-btn" onclick="searchWeather()">🔍</button>
-            <div id="suggestions" class="suggestions"></div>
+    <!-- Terms & Conditions Modal -->
+    <div class="terms-modal" id="termsModal">
+        <div class="terms-content">
+            <h2>Terms & Conditions</h2>
+            
+            <h3>1. Agreement to Terms</h3>
+            <p>By accessing and using Godswill's Web Studio services, you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, you may not access our services.</p>
+
+            <h3>2. Services</h3>
+            <p>Godswill's Web Studio provides web development, design, and related digital services. We reserve the right to modify, suspend, or discontinue any aspect of our services at any time.</p>
+
+            <h3>3. Intellectual Property</h3>
+            <p>All content, designs, code, and materials created by Godswill's Web Studio remain our intellectual property until full payment is received. Upon full payment, ownership rights are transferred to the client as agreed in the project contract.</p>
+
+            <h3>4. Client Responsibilities</h3>
+            <p>Clients are responsible for providing accurate information, timely feedback, and necessary materials for project completion. Delays caused by client inaction may result in project timeline extensions.</p>
+
+            <h3>5. Payment Terms</h3>
+            <p>Payment terms are outlined in individual project contracts. Typically, a deposit is required before work begins, with the balance due upon project completion. Late payments may incur additional fees.</p>
+
+            <h3>6. Revisions & Changes</h3>
+            <p>Each project includes a specified number of revision rounds. Additional revisions beyond the agreed scope may incur extra charges. Major scope changes will require a new project agreement.</p>
+
+            <h3>7. Project Timeline</h3>
+            <p>Project timelines are estimates and may be affected by factors including client feedback timing, scope changes, and technical challenges. We strive to meet all deadlines but cannot guarantee specific completion dates.</p>
+
+            <h3>8. Confidentiality</h3>
+            <p>We maintain strict confidentiality regarding all client information and project details. We will not disclose sensitive information without explicit client permission.</p>
+
+            <h3>9. Warranties & Limitations</h3>
+            <p>We warrant that our work will be performed professionally and meet industry standards. However, we cannot guarantee specific business results, traffic, or rankings from our services.</p>
+
+            <h3>10. Limitation of Liability</h3>
+            <p>Godswill's Web Studio shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our liability is limited to the amount paid for the specific service.</p>
+
+            <h3>11. Termination</h3>
+            <p>Either party may terminate a project with written notice. Upon termination, client is responsible for payment for work completed to that point.</p>
+
+            <h3>12. Governing Law</h3>
+            <p>These terms are governed by the laws of Nigeria. Any disputes shall be resolved through negotiation or, if necessary, through appropriate legal channels in Nigeria.</p>
+
+            <h3>13. Contact Information</h3>
+            <p>For questions about these terms, please contact us at ihechigodswill575@gmail.com or call +234 814 568 8688.</p>
+
+            <button class="close-terms" onclick="closeTerms()">Close</button>
         </div>
-
-        <button class="location-btn" onclick="getLocationWeather()">📍 Use My Location</button>
-
-        <div id="errorMessage"></div>
-        <div id="loadingMessage"></div>
-        <div id="weatherInfo"></div>
-
-        <footer>
-            <p>© DEVGODSWILL 2026</p>
-            <p>Email: <a href="mailto:ihechigodswill575@gmail.com">ihechigodswill575@gmail.com</a></p>
-            <p>Support: <a href="https://wa.me/2348145688688" target="_blank">WhatsApp: +234 814 568 8688</a></p>
-        </footer>
     </div>
 
     <script>
-        const API_KEY = '84646ccf525940afa54194619262501';
-        const API_URL = 'https://api.weatherapi.com/v1';
-        let searchTimeout;
+        // Cloudinary Configuration
+        const CLOUDINARY_NAME = 'dzxckgbzp';
+        const CLOUDINARY_API_KEY = '166123442148894';
+        const CLOUDINARY_UPLOAD_PRESET = 'ml_default'; // You'll need to set this up in Cloudinary
 
-        function acceptTerms() {
-            document.getElementById('termsModal').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'block';
-        }
-
-        document.getElementById('cityInput').addEventListener('input', function(e) {
-            clearTimeout(searchTimeout);
-            const query = e.target.value.trim();
-            
-            if (query.length < 2) {
-                document.getElementById('suggestions').style.display = 'none';
-                return;
+        // Data Storage (In production, this would be stored in a database)
+        let projects = [
+            {
+                id: 1,
+                title: 'E-Commerce Platform',
+                description: 'Full-stack online store with payment integration and inventory management',
+                image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=400&fit=crop',
+                tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+                url: 'https://example.com'
+            },
+            {
+                id: 2,
+                title: 'Portfolio Website',
+                description: 'Modern portfolio for creative professional with stunning animations',
+                image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop',
+                tech: ['HTML', 'CSS', 'JavaScript'],
+                url: 'https://example.com'
+            },
+            {
+                id: 3,
+                title: 'Restaurant App',
+                description: 'Mobile-responsive restaurant ordering system with real-time updates',
+                image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop',
+                tech: ['React Native', 'Firebase'],
+                url: 'https://example.com'
+            },
+            {
+                id: 4,
+                title: 'Real Estate Platform',
+                description: 'Property listing website with advanced search and filtering',
+                image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop',
+                tech: ['Vue.js', 'Laravel', 'MySQL'],
+                url: 'https://example.com'
+            },
+            {
+                id: 5,
+                title: 'Social Media Dashboard',
+                description: 'Analytics dashboard for managing multiple social media accounts',
+                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+                tech: ['React', 'D3.js', 'Express'],
+                url: 'https://example.com'
+            },
+            {
+                id: 6,
+                title: 'Fitness Tracking App',
+                description: 'Comprehensive fitness app with workout plans and progress tracking',
+                image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=400&fit=crop',
+                tech: ['Flutter', 'Firebase', 'ML Kit'],
+                url: 'https://example.com'
             }
+        ];
 
-            searchTimeout = setTimeout(() => {
-                fetchSuggestions(query);
-            }, 300);
-        });
-
-        async function fetchSuggestions(query) {
-            try {
-                const response = await fetch(`${API_URL}/search.json?key=${API_KEY}&q=${query}`);
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch suggestions');
-                }
-
-                const data = await response.json();
-                displaySuggestions(data);
-            } catch (error) {
-                console.error('Error fetching suggestions:', error);
+        let blogPosts = [
+            {
+                id: 1,
+                title: 'The Future of Web Development in 2024',
+                excerpt: 'Exploring emerging trends and technologies shaping the future of web development',
+                content: 'Full blog content here...',
+                image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                date: '2024-01-15'
+            },
+            {
+                id: 2,
+                title: 'Building Responsive Websites: Best Practices',
+                excerpt: 'A comprehensive guide to creating websites that work perfectly on all devices',
+                content: 'Full blog content here...',
+                image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&h=400&fit=crop',
+                date: '2024-01-10'
+            },
+            {
+                id: 3,
+                title: 'Why Your Business Needs a Website',
+                excerpt: 'Understanding the critical importance of having an online presence in today\'s digital world',
+                content: 'Full blog content here...',
+                image: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop',
+                date: '2024-01-05'
             }
+        ];
+
+        let bookings = [];
+        let currentEditingProject = null;
+        let currentEditingBlog = null;
+        let uploadedImageUrl = '';
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            document.body.classList.toggle('light');
         }
 
-        function displaySuggestions(cities) {
-            const suggestionsDiv = document.getElementById('suggestions');
+        // Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Page Navigation
+        function navigateTo(page) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Render Projects
+        function renderProjects() {
+            const featured = document.getElementById('featuredProjects');
+            const portfolio = document.getElementById('portfolioProjects');
             
-            if (cities.length === 0) {
-                suggestionsDiv.style.display = 'none';
-                return;
-            }
-
-            suggestionsDiv.innerHTML = cities.map(city => 
-                `<div class="suggestion-item" onclick="selectCity('${city.name}, ${city.country}')">${city.name}, ${city.country}</div>`
-            ).join('');
-            
-            suggestionsDiv.style.display = 'block';
-        }
-
-        function selectCity(cityName) {
-            document.getElementById('cityInput').value = cityName;
-            document.getElementById('suggestions').style.display = 'none';
-            searchWeather();
-        }
-
-        async function searchWeather() {
-            const city = document.getElementById('cityInput').value.trim();
-            
-            if (!city) {
-                showError('Please enter a city name');
-                return;
-            }
-
-            await fetchWeather(city);
-        }
-
-        async function getLocationWeather() {
-            if (!navigator.geolocation) {
-                showError('Geolocation is not supported by your browser');
-                return;
-            }
-
-            showLoading();
-            
-            navigator.geolocation.getCurrentPosition(
-                async (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    await fetchWeather(`${lat},${lon}`);
-                },
-                (error) => {
-                    hideLoading();
-                    let errorMessage = 'Unable to get your location. ';
-                    
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage += 'Please allow location access.';
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage += 'Location information is unavailable.';
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage += 'Location request timed out.';
-                            break;
-                        default:
-                            errorMessage += 'An unknown error occurred.';
-                    }
-                    
-                    showError(errorMessage);
-                }
-            );
-        }
-
-        async function fetchWeather(location) {
-            showLoading();
-            clearError();
-
-            try {
-                const response = await fetch(`${API_URL}/current.json?key=${API_KEY}&q=${location}&aqi=no`);
-                
-                if (!response.ok) {
-                    if (response.status === 400) {
-                        throw new Error('City not found. Please check the spelling and try again.');
-                    } else if (response.status === 401) {
-                        throw new Error('API key error. Please contact support.');
-                    } else if (response.status === 403) {
-                        throw new Error('API access denied. Please contact support.');
-                    } else {
-                        throw new Error('Unable to fetch weather data. Please try again later.');
-                    }
-                }
-
-                const data = await response.json();
-                displayWeather(data);
-            } catch (error) {
-                showError(error.message || 'An error occurred while fetching weather data');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        function displayWeather(data) {
-            const weatherInfo = document.getElementById('weatherInfo');
-            
-            weatherInfo.innerHTML = `
-                <img src="https:${data.current.condition.icon}" alt="${data.current.condition.text}" class="weather-icon">
-                <h2>${data.location.name}, ${data.location.country}</h2>
-                <div class="temperature">${data.current.temp_c}°C</div>
-                <div class="description">${data.current.condition.text}</div>
-                <div class="details">
-                    <div class="detail-item">
-                        <div class="detail-label">Feels Like</div>
-                        <div class="detail-value">${data.current.feelslike_c}°C</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Humidity</div>
-                        <div class="detail-value">${data.current.humidity}%</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Wind Speed</div>
-                        <div class="detail-value">${data.current.wind_kph} km/h</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Pressure</div>
-                        <div class="detail-value">${data.current.pressure_mb} mb</div>
+            const projectHTML = projects.map(project => `
+                <div class="project-card scroll-animate">
+                    <img src="${project.image}" alt="${project.title}" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">${project.title}</h3>
+                        <p class="project-description">${project.description}</p>
+                        <div class="project-tech">
+                            ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                        </div>
                     </div>
                 </div>
-            `;
+            `).join('');
+
+            if (featured) featured.innerHTML = projectHTML.split('</div>').slice(0, 3).join('</div>') + '</div>';
+            if (portfolio) portfolio.innerHTML = projectHTML;
+            initScrollAnimations();
         }
 
-        function showLoading() {
-            document.getElementById('loadingMessage').innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading weather data...</p>
+        // Render Blog Posts
+        function renderBlog() {
+            const blogGrid = document.getElementById('blogPosts');
+            if (!blogGrid) return;
+
+            blogGrid.innerHTML = blogPosts.map(post => `
+                <div class="blog-card scroll-animate">
+                    <img src="${post.image}" alt="${post.title}" class="blog-image">
+                    <div class="blog-content">
+                        <p class="blog-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <h3 class="blog-title">${post.title}</h3>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                    </div>
                 </div>
-            `;
+            `).join('');
+            initScrollAnimations();
         }
 
-        function hideLoading() {
-            document.getElementById('loadingMessage').innerHTML = '';
+        // Scroll Animations
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
         }
 
-        function showError(message) {
-            document.getElementById('errorMessage').innerHTML = `<div class="error">${message}</div>`;
+        // Admin Functions
+        function showAdmin() {
+            document.getElementById('adminModal').classList.add('active');
         }
 
-        function clearError() {
-            document.getElementById('errorMessage').innerHTML = '';
+        function closeAdmin() {
+            document.getElementById('adminModal').classList.remove('active');
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminDashboard').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
         }
 
-        document.getElementById('cityInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchWeather();
+        function togglePasswordVisibility() {
+            const input = document.getElementById('adminPassword');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+            } else {
+                input.type = 'password';
+                icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
             }
+        }
+
+        function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === 'ihechigodswill575@gmail.com') {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminDashboard').classList.add('active');
+                renderAdminProjects();
+                renderAdminBlog();
+                renderAdminBookings();
+            } else {
+                alert('Incorrect password!');
+            }
+        }
+
+        function switchAdminTab(tab) {
+            const tabs = document.querySelectorAll('.admin-tab');
+            const contents = document.querySelectorAll('.admin-tab-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        // Project Management
+        function renderAdminProjects() {
+            const list = document.getElementById('projectsList');
+            list.innerHTML = projects.map(project => `
+                <div class="admin-item">
+                    <div>
+                        <strong>${project.title}</strong>
+                        <p style="font-size: 0.875rem; opacity: 0.8;">${project.description.substring(0, 50)}...</p>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="admin-btn" onclick="editProject(${project.id})">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                        </button>
+                        <button class="admin-btn delete" onclick="deleteProject(${project.id})">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showAddProject() {
+            currentEditingProject = null;
+            uploadedImageUrl = '';
+            document.getElementById('projectFormTitle').textContent = 'Add New Project';
+            document.getElementById('projectTitle').value = '';
+            document.getElementById('projectDesc').value = '';
+            document.getElementById('projectTech').value = '';
+            document.getElementById('projectUrl').value = '';
+            document.getElementById('projectImagePreview').innerHTML = '';
+            document.getElementById('projectForm').style.display = 'block';
+        }
+
+        function editProject(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+
+            currentEditingProject = id;
+            uploadedImageUrl = project.image;
+            document.getElementById('projectFormTitle').textContent = 'Edit Project';
+            document.getElementById('projectTitle').value = project.title;
+            document.getElementById('projectDesc').value = project.description;
+            document.getElementById('projectTech').value = project.tech.join(', ');
+            document.getElementById('projectUrl').value = project.url;
+            document.getElementById('projectImagePreview').innerHTML = `<img src="${project.image}" alt="Preview">`;
+            document.getElementById('projectForm').style.display = 'block';
+        }
+
+        function deleteProject(id) {
+            if (confirm('Are you sure you want to delete this project?')) {
+                projects = projects.filter(p => p.id !== id);
+                renderAdminProjects();
+                renderProjects();
+            }
+        }
+
+        function saveProject() {
+            const title = document.getElementById('projectTitle').value;
+            const description = document.getElementById('projectDesc').value;
+            const tech = document.getElementById('projectTech').value.split(',').map(t => t.trim());
+            const url = document.getElementById('projectUrl').value;
+            const image = uploadedImageUrl || 'https://via.placeholder.com/600x400';
+
+            if (!title || !description) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            if (currentEditingProject) {
+                const index = projects.findIndex(p => p.id === currentEditingProject);
+                projects[index] = { ...projects[index], title, description, tech, url, image };
+            } else {
+                const newId = Math.max(...projects.map(p => p.id), 0) + 1;
+                projects.push({ id: newId, title, description, tech, url, image });
+            }
+
+            renderAdminProjects();
+            renderProjects();
+            cancelProjectForm();
+        }
+
+        function cancelProjectForm() {
+            document.getElementById('projectForm').style.display = 'none';
+            currentEditingProject = null;
+            uploadedImageUrl = '';
+        }
+
+        // Blog Management
+        function renderAdminBlog() {
+            const list = document.getElementById('blogList');
+            list.innerHTML = blogPosts.map(post => `
+                <div class="admin-item">
+                    <div>
+                        <strong>${post.title}</strong>
+                        <p style="font-size: 0.875rem; opacity: 0.8;">${new Date(post.date).toLocaleDateString()}</p>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="admin-btn" onclick="editBlog(${post.id})">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                        </button>
+                        <button class="admin-btn delete" onclick="deleteBlog(${post.id})">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showAddBlog() {
+            currentEditingBlog = null;
+            uploadedImageUrl = '';
+            document.getElementById('blogFormTitle').textContent = 'Add New Blog Post';
+            document.getElementById('blogTitle').value = '';
+            document.getElementById('blogExcerpt').value = '';
+            document.getElementById('blogContent').value = '';
+            document.getElementById('blogImagePreview').innerHTML = '';
+            document.getElementById('blogForm').style.display = 'block';
+        }
+
+        function editBlog(id) {
+            const post = blogPosts.find(p => p.id === id);
+            if (!post) return;
+
+            currentEditingBlog = id;
+            uploadedImageUrl = post.image;
+            document.getElementById('blogFormTitle').textContent = 'Edit Blog Post';
+            document.getElementById('blogTitle').value = post.title;
+            document.getElementById('blogExcerpt').value = post.excerpt;
+            document.getElementById('blogContent').value = post.content;
+            document.getElementById('blogImagePreview').innerHTML = `<img src="${post.image}" alt="Preview">`;
+            document.getElementById('blogForm').style.display = 'block';
+        }
+
+        function deleteBlog(id) {
+            if (confirm('Are you sure you want to delete this blog post?')) {
+                blogPosts = blogPosts.filter(p => p.id !== id);
+                renderAdminBlog();
+                renderBlog();
+            }
+        }
+
+        function saveBlog() {
+            const title = document.getElementById('blogTitle').value;
+            const excerpt = document.getElementById('blogExcerpt').value;
+            const content = document.getElementById('blogContent').value;
+            const image = uploadedImageUrl || 'https://via.placeholder.com/600x400';
+            const date = new Date().toISOString().split('T')[0];
+
+            if (!title || !excerpt || !content) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            if (currentEditingBlog) {
+                const index = blogPosts.findIndex(p => p.id === currentEditingBlog);
+                blogPosts[index] = { ...blogPosts[index], title, excerpt, content, image };
+            } else {
+                const newId = Math.max(...blogPosts.map(p => p.id), 0) + 1;
+                blogPosts.push({ id: newId, title, excerpt, content, image, date });
+            }
+
+            renderAdminBlog();
+            renderBlog();
+            cancelBlogForm();
+        }
+
+        function cancelBlogForm() {
+            document.getElementById('blogForm').style.display = 'none';
+            currentEditingBlog = null;
+            uploadedImageUrl = '';
+        }
+
+        // Bookings Management
+        function renderAdminBookings() {
+            const list = document.getElementById('bookingsList');
+            if (bookings.length === 0) {
+                list.innerHTML = '<p style="opacity: 0.6; text-align: center; padding: 2rem;">No bookings yet</p>';
+                return;
+            }
+
+            list.innerHTML = bookings.map((booking, index) => `
+                <div class="admin-item">
+                    <div>
+                        <strong>${booking.name}</strong>
+                        <p style="font-size: 0.875rem; opacity: 0.8;">
+                            ${booking.service} - ${booking.date} at ${booking.time}
+                        </p>
+                        <p style="font-size: 0.875rem; opacity: 0.8;">
+                            ${booking.email} | ${booking.phone}
+                        </p>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="admin-btn delete" onclick="deleteBooking(${index})">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteBooking(index) {
+            if (confirm('Are you sure you want to delete this booking?')) {
+                bookings.splice(index, 1);
+                renderAdminBookings();
+            }
+        }
+
+        // Image Upload Handler
+        function handleImageUpload(event, type) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const previewId = type === 'project' ? 'projectImagePreview' : 'blogImagePreview';
+                document.getElementById(previewId).innerHTML = `
+                    <img src="${e.target.result}" alt="Preview">
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.8;">Uploading to Cloudinary...</p>
+                `;
+
+                // Simulate Cloudinary upload
+                // In production, you would actually upload to Cloudinary here
+                uploadToCloudinary(file, type);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function uploadToCloudinary(file, type) {
+            // This is a simulated upload. In production, you would use the actual Cloudinary API
+            setTimeout(() => {
+                // Simulated Cloudinary URL
+                uploadedImageUrl = URL.createObjectURL(file);
+                const previewId = type === 'project' ? 'projectImagePreview' : 'blogImagePreview';
+                document.getElementById(previewId).innerHTML = `
+                    <img src="${uploadedImageUrl}" alt="Preview">
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #10b981;">✓ Upload successful!</p>
+                `;
+            }, 1500);
+
+            /* ACTUAL CLOUDINARY UPLOAD CODE (Uncomment and configure for production):
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('api_key', CLOUDINARY_API_KEY);
+
+            fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                uploadedImageUrl = data.secure_url;
+                const previewId = type === 'project' ? 'projectImagePreview' : 'blogImagePreview';
+                document.getElementById(previewId).innerHTML = `
+                    <img src="${uploadedImageUrl}" alt="Preview">
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #10b981;">✓ Upload successful!</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Upload error:', error);
+                alert('Image upload failed. Please try again.');
+            });
+            */
+        }
+
+        // Form Submissions
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            
+            // Simulate form submission
+            const successMsg = document.getElementById('contactSuccess');
+            successMsg.classList.add('show');
+            form.reset();
+            
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+        }
+
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            
+            // Collect booking data
+            const booking = {
+                name: form.elements[1].value,
+                email: form.elements[2].value,
+                phone: form.elements[3].value,
+                date: form.elements[4].value,
+                time: form.elements[5].value,
+                service: form.elements[6].value,
+                details: form.elements[7].value
+            };
+
+            bookings.push(booking);
+            
+            // Show success message
+            const successMsg = document.getElementById('bookingSuccess');
+            successMsg.classList.add('show');
+            form.reset();
+            
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+
+            // If admin panel is open, update bookings list
+            if (document.getElementById('adminDashboard').classList.contains('active')) {
+                renderAdminBookings();
+            }
+        }
+
+        // Terms Modal
+        function showTerms() {
+            document.getElementById('termsModal').classList.add('active');
+        }
+
+        function closeTerms() {
+            document.getElementById('termsModal').classList.remove('active');
+        }
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            const adminModal = document.getElementById('adminModal');
+            const termsModal = document.getElementById('termsModal');
+            
+            if (event.target === adminModal) {
+                closeAdmin();
+            }
+            if (event.target === termsModal) {
+                closeTerms();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProjects();
+            renderBlog();
+            initScrollAnimations();
+            
+            // Add smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
         });
 
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-container')) {
-                document.getElementById('suggestions').style.display = 'none';
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-bg');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
             }
         });
     </script>
