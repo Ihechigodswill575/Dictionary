@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Godswill Class 2k26 - Memory Book</title>
+    <title>2k26 DAYSPRING Academy - Memory Book</title>
     
     <style>
         * {
@@ -13,89 +13,112 @@
         }
 
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --accent-color: #fbbf24;
+            --primary-color: #0ea5e9;
+            --secondary-color: #0284c7;
+            --accent-color: #f59e0b;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #e2e8f0;
             --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --bg-light: #f9fafb;
             --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --success: #10b981;
+            --danger: #ef4444;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: var(--text-dark);
+            color: var(--text-light);
+            background: var(--dark-bg);
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         /* Navbar */
         .navbar {
-            background: var(--white);
-            box-shadow: var(--shadow);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            animation: slideDown 0.5s ease;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            border-bottom: 2px solid var(--primary-color);
         }
 
         .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 20px;
+            padding: 1.2rem 20px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary-color);
+            gap: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .logo img {
-            height: 50px;
+            height: 55px;
             width: auto;
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-main {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 400;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: var(--text-light);
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             position: relative;
+            padding: 5px 0;
         }
 
-        .nav-links a::after {
+        .nav-links a::before {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: var(--primary-color);
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
             transition: width 0.3s ease;
         }
 
@@ -103,85 +126,104 @@
             color: var(--primary-color);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::before {
             width: 100%;
         }
 
         .hamburger {
             display: none;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             cursor: pointer;
         }
 
         .hamburger span {
-            width: 25px;
+            width: 28px;
             height: 3px;
             background: var(--primary-color);
+            border-radius: 3px;
             transition: 0.3s;
         }
 
         /* Hero Section */
         .hero {
-            height: 100vh;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: var(--white);
             position: relative;
-            margin-top: 70px;
+            margin-top: 80px;
+            overflow: hidden;
         }
 
-        .hero-overlay {
+        .hero::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path fill="rgba(255,255,255,0.05)" d="M0,300 Q300,200 600,300 T1200,300 L1200,600 L0,600 Z"/></svg>');
-            background-size: cover;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
+            animation: fadeInUp 1s ease;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeIn 1s ease;
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--white), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 80px rgba(14, 165, 233, 0.3);
         }
 
         .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            animation: fadeIn 1.5s ease;
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-light);
+            opacity: 0.9;
         }
 
         .cta-button {
             display: inline-block;
-            padding: 15px 40px;
-            background: var(--accent-color);
-            color: var(--text-dark);
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
             text-decoration: none;
             border-radius: 50px;
-            font-weight: bold;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeIn 2s ease;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(14, 165, 233, 0.5);
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
@@ -191,101 +233,121 @@
 
         /* Section Styles */
         section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             position: relative;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--accent-color);
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
         }
 
         /* About Section */
         .about {
-            background: var(--bg-light);
+            background: linear-gradient(180deg, var(--dark-bg), var(--card-bg));
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
         }
 
         .about-text p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-light);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
         }
 
         .about-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .stat-box {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(245, 158, 11, 0.1));
+            padding: 2.5rem;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.3s ease;
         }
 
         .stat-box:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.3);
         }
 
         .stat-box h3 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
+            font-weight: 900;
+        }
+
+        .stat-box p {
+            color: var(--text-light);
+            font-size: 1.1rem;
         }
 
         /* Gallery Section */
+        .gallery {
+            background: var(--dark-bg);
+        }
+
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
+            border-radius: 20px;
+            border: 2px solid rgba(14, 165, 233, 0.2);
             cursor: pointer;
-            transition: transform 0.3s ease;
-            animation: fadeInUp 0.5s ease;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease;
         }
 
         .gallery-item:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.4);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .gallery-caption {
@@ -293,104 +355,93 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
             color: white;
-            padding: 1rem;
+            padding: 2rem;
             transform: translateY(100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
 
         .gallery-item:hover .gallery-caption {
             transform: translateY(0);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* Blog Section */
         .blog {
-            background: var(--bg-light);
+            background: linear-gradient(180deg, var(--dark-bg), var(--card-bg));
         }
 
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2.5rem;
         }
 
         .blog-card {
-            background: var(--white);
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.05), rgba(245, 158, 11, 0.05));
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 0.5s ease;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease;
         }
 
         .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.4);
         }
 
         .blog-card-header {
-            padding: 1.5rem;
-            background: var(--primary-color);
-            color: white;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
         }
 
         .blog-card-header h3 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.6rem;
+            font-weight: 700;
         }
 
         .blog-date {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             opacity: 0.9;
         }
 
         .blog-card-body {
-            padding: 1.5rem;
+            padding: 2rem;
+            color: var(--text-light);
         }
 
         /* Memory Book Section */
         .book {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .book .section-title {
-            color: white;
-        }
-
-        .book .section-title::after {
-            background: var(--accent-color);
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
         }
 
         .memory-timeline {
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         .timeline-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--accent-color);
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(245, 158, 11, 0.1));
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            border-left: 5px solid var(--accent-color);
             backdrop-filter: blur(10px);
-            animation: slideInLeft 0.5s ease;
+            animation: slideInLeft 0.6s ease;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.3);
         }
 
         @keyframes slideInLeft {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateX(-80px);
             }
             to {
                 opacity: 1;
@@ -399,71 +450,86 @@
         }
 
         /* Contact Section */
+        .contact {
+            background: var(--dark-bg);
+        }
+
         .contact-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 4rem;
         }
 
         .contact-form {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .contact-form input,
         .contact-form textarea {
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            padding: 1.2rem;
+            border: 2px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: rgba(14, 165, 233, 0.05);
+            color: var(--text-light);
+            transition: all 0.3s ease;
         }
 
         .contact-form input:focus,
         .contact-form textarea:focus {
             outline: none;
             border-color: var(--primary-color);
+            background: rgba(14, 165, 233, 0.1);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
         }
 
         .contact-form button {
-            padding: 1rem;
-            background: var(--primary-color);
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .contact-form button:hover {
-            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
         }
 
         .contact-info {
-            background: var(--bg-light);
-            padding: 2rem;
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(245, 158, 11, 0.1));
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid rgba(14, 165, 233, 0.2);
         }
 
         .contact-info h3 {
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
         }
 
         .contact-info p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             font-size: 1.1rem;
+            color: var(--text-light);
         }
 
         /* Footer */
         .footer {
-            background: var(--text-dark);
+            background: var(--card-bg);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 3rem 0 1.5rem;
             position: relative;
+            border-top: 2px solid var(--primary-color);
         }
 
         .footer-content {
@@ -474,129 +540,193 @@
         }
 
         .footer-logo img {
-            height: 60px;
+            height: 70px;
             margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
         }
 
         .footer-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .footer-links a {
-            color: white;
+            color: var(--text-light);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .footer-links a:hover {
             color: var(--accent-color);
         }
 
-        /* Hidden Admin Dot - LOCATION: Bottom right corner, 20px from edges */
+        /* Hidden Admin Dot */
         .admin-dot {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background: transparent;
             cursor: pointer;
             z-index: 999;
             border-radius: 50%;
+            transition: all 0.3s ease;
         }
 
         .admin-dot:hover {
-            background: rgba(37, 99, 235, 0.3);
+            background: rgba(14, 165, 233, 0.5);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8);
         }
 
         /* Modals */
         .admin-modal,
-        .terms-modal {
+        .terms-modal,
+        .manage-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 2000;
             animation: fadeIn 0.3s ease;
         }
 
         .admin-content,
-        .terms-content {
+        .terms-content,
+        .manage-content {
             position: relative;
-            background: white;
+            background: var(--card-bg);
             width: 90%;
-            max-width: 600px;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 10px;
-            max-height: 80vh;
+            max-width: 700px;
+            margin: 3% auto;
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-height: 85vh;
             overflow-y: auto;
-            animation: slideDown 0.3s ease;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .close-modal,
-        .close-terms {
+        .close-terms,
+        .close-manage {
             position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 2rem;
+            top: 15px;
+            right: 25px;
+            font-size: 2.5rem;
             cursor: pointer;
             color: var(--text-light);
+            transition: all 0.3s ease;
         }
 
         .close-modal:hover,
-        .close-terms:hover {
-            color: var(--text-dark);
+        .close-terms:hover,
+        .close-manage:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
         }
 
         #adminDashboard h3 {
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             color: var(--primary-color);
+            font-size: 1.5rem;
+            border-bottom: 2px solid rgba(14, 165, 233, 0.3);
+            padding-bottom: 0.5rem;
         }
 
         #adminDashboard input,
         #adminDashboard textarea {
             width: 100%;
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            border: 2px solid #e5e7eb;
-            border-radius: 5px;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            border: 2px solid rgba(14, 165, 233, 0.3);
+            border-radius: 10px;
+            background: rgba(14, 165, 233, 0.05);
+            color: var(--text-light);
+            font-size: 1rem;
         }
 
         #adminDashboard button {
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 2rem;
             margin: 0.5rem 0.5rem 0.5rem 0;
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         #adminDashboard button:hover {
-            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, var(--danger), #dc2626) !important;
+        }
+
+        .manage-list {
+            margin-top: 1.5rem;
+        }
+
+        .manage-item {
+            background: rgba(14, 165, 233, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .manage-item-content {
+            flex: 1;
+        }
+
+        .manage-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .manage-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .manage-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .manage-item button {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
         }
 
         .terms-text {
             line-height: 1.8;
+            color: var(--text-light);
         }
 
         .terms-text h3 {
             color: var(--primary-color);
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
         }
 
         .loading {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem;
             color: var(--text-light);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
 
         /* Responsive Design */
@@ -607,14 +737,15 @@
 
             .nav-links {
                 position: absolute;
-                top: 70px;
+                top: 80px;
                 left: -100%;
                 flex-direction: column;
-                background: white;
+                background: var(--card-bg);
                 width: 100%;
                 padding: 2rem;
-                box-shadow: var(--shadow);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
                 transition: left 0.3s ease;
+                border-top: 2px solid var(--primary-color);
             }
 
             .nav-links.active {
@@ -622,7 +753,7 @@
             }
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .hero p {
@@ -657,7 +788,10 @@
         <div class="container">
             <div class="logo">
                 <img src="https://i.ibb.co/jP3WtFRh/dayspring-logo-blue-bg-bbffe39d.png" alt="Dayspring Logo">
-                <span>Godswill Class 2k26</span>
+                <div class="logo-text">
+                    <span class="logo-main">2k26</span>
+                    <span class="logo-sub">DAYSPRING Academy</span>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -678,11 +812,10 @@
     <!-- Home Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1 class="fade-in">Welcome to Godswill Class 2k26</h1>
-            <p class="fade-in-delay">Capturing Our Moments, Building Our Legacy</p>
-            <a href="#gallery" class="cta-button">View Our Memories</a>
+            <h1>2k26 DAYSPRING Academy</h1>
+            <p>Building Memories, Creating Futures</p>
+            <a href="#gallery" class="cta-button">Explore Our Journey</a>
         </div>
-        <div class="hero-overlay"></div>
     </section>
 
     <!-- About Section -->
@@ -691,13 +824,13 @@
             <h2 class="section-title">About Our Class</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Welcome to the official memory book of Godswill Class 2k26! We are a dynamic group of students creating unforgettable memories together.</p>
-                    <p>This platform is our digital yearbook where we celebrate our journey, achievements, and the bonds we've created.</p>
+                    <p>Welcome to the official memory hub of 2k26 DAYSPRING Academy! We are a vibrant community of learners, dreamers, and achievers.</p>
+                    <p>This digital space celebrates our collective journey, milestones, and the incredible bonds we're building together.</p>
                 </div>
                 <div class="about-stats">
                     <div class="stat-box">
                         <h3 id="photoCount">0</h3>
-                        <p>Memories Captured</p>
+                        <p>Memories</p>
                     </div>
                     <div class="stat-box">
                         <h3>2026</h3>
@@ -705,7 +838,7 @@
                     </div>
                     <div class="stat-box">
                         <h3>∞</h3>
-                        <p>Friendships</p>
+                        <p>Dreams</p>
                     </div>
                 </div>
             </div>
@@ -715,7 +848,7 @@
     <!-- Gallery Section -->
     <section id="gallery" class="gallery">
         <div class="container">
-            <h2 class="section-title">Our Gallery</h2>
+            <h2 class="section-title">Photo Gallery</h2>
             <div class="gallery-grid" id="galleryGrid">
                 <div class="loading">Loading memories...</div>
             </div>
@@ -725,9 +858,9 @@
     <!-- Blog Section -->
     <section id="blog" class="blog">
         <div class="container">
-            <h2 class="section-title">Class Updates & Stories</h2>
+            <h2 class="section-title">Latest Updates</h2>
             <div class="blog-grid" id="blogGrid">
-                <div class="loading">Loading updates...</div>
+                <div class="loading">Loading posts...</div>
             </div>
         </div>
     </section>
@@ -735,9 +868,9 @@
     <!-- Memory Book Section -->
     <section id="book" class="book">
         <div class="container">
-            <h2 class="section-title">Memory Book</h2>
+            <h2 class="section-title">Memory Timeline</h2>
             <div class="book-content">
-                <p>Our collection of special moments, achievements, and milestones.</p>
+                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">Our journey through milestones and achievements</p>
                 <div class="memory-timeline" id="memoryTimeline"></div>
             </div>
         </div>
@@ -751,14 +884,14 @@
                 <form class="contact-form" id="contactForm">
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="email" name="email" placeholder="Your Email" required>
-                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                    <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
                     <button type="submit">Send Message</button>
                 </form>
                 <div class="contact-info">
                     <h3>Contact Information</h3>
                     <p>📧 Email: ihechigodswill575@gmail.com</p>
-                    <p>📱 Class Representative: Godswill</p>
-                    <p>🏫 Dayspring Class of 2026</p>
+                    <p>📱 Admin: Godswill</p>
+                    <p>🏫 2k26 DAYSPRING Academy</p>
                 </div>
             </div>
         </div>
@@ -770,14 +903,13 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <img src="https://i.ibb.co/jP3WtFRh/dayspring-logo-blue-bg-bbffe39d.png" alt="Dayspring Logo">
-                    <p>&copy; 2026 Godswill Class. All rights reserved.</p>
+                    <p>&copy; 2026 DAYSPRING Academy. All rights reserved.</p>
                 </div>
                 <div class="footer-links">
                     <a href="#" id="termsLink">Terms & Conditions</a>
                     <a href="#" id="privacyLink">Privacy Policy</a>
                 </div>
             </div>
-            <!-- Hidden Admin Dot - Located at bottom right corner, 20px from right, 20px from bottom -->
             <div class="admin-dot" id="adminDot"></div>
         </div>
     </footer>
@@ -786,26 +918,36 @@
     <div class="admin-modal" id="adminModal">
         <div class="admin-content">
             <span class="close-modal">&times;</span>
-            <h2>Admin Panel</h2>
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Admin Panel</h2>
             <div id="loginForm">
-                <input type="email" id="adminEmail" placeholder="Enter Password (Email)">
+                <input type="password" id="adminPassword" placeholder="Enter Admin Password">
                 <button onclick="adminLogin()">Login</button>
             </div>
             <div id="adminDashboard" style="display:none;">
-                <h3>Upload Photo to Gallery</h3>
-                <input type="file" id="photoUpload" accept="image/*" multiple>
-                <input type="text" id="photoCaption" placeholder="Photo caption">
-                <button onclick="uploadPhoto()">Upload to Cloudinary</button>
-                
-                <h3>Add Blog Post</h3>
+                <h3>📝 Publish Blog Post</h3>
                 <input type="text" id="blogTitle" placeholder="Blog Title">
-                <textarea id="blogContent" placeholder="Blog Content" rows="4"></textarea>
-                <button onclick="addBlogPost()">Publish Post</button>
+                <textarea id="blogContent" placeholder="Blog Content" rows="5"></textarea>
+                <button onclick="publishBlog()">Publish Now</button>
                 
-                <h3>Manage Content</h3>
-                <button onclick="viewAllPhotos()">View All Photos</button>
-                <button onclick="logout()">Logout</button>
+                <h3>📸 Upload Photos</h3>
+                <input type="file" id="photoUpload" accept="image/*" multiple>
+                <input type="text" id="photoCaption" placeholder="Photo caption (optional)">
+                <button onclick="uploadPhoto()">Upload Photos</button>
+                
+                <h3>⚙️ Manage Content</h3>
+                <button onclick="openManageModal('blog')">Manage Blog Posts</button>
+                <button onclick="openManageModal('gallery')">Manage Photos</button>
+                <button class="delete-btn" onclick="logout()">Logout</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Manage Content Modal -->
+    <div class="manage-modal" id="manageModal">
+        <div class="manage-content">
+            <span class="close-manage">&times;</span>
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem;" id="manageTitle">Manage Content</h2>
+            <div class="manage-list" id="manageList"></div>
         </div>
     </div>
 
@@ -813,36 +955,35 @@
     <div class="terms-modal" id="termsModal">
         <div class="terms-content">
             <span class="close-terms">&times;</span>
-            <h2>Terms & Conditions</h2>
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Terms & Conditions</h2>
             <div class="terms-text">
                 <p><strong>Last Updated: January 2026</strong></p>
                 <h3>1. Acceptance of Terms</h3>
-                <p>By accessing Godswill Class 2k26 Memory Book, you agree to these terms and conditions.</p>
+                <p>By accessing 2k26 DAYSPRING Academy Memory Book, you agree to these terms.</p>
                 
                 <h3>2. Use of Photos</h3>
-                <p>All photos uploaded are property of the class members. By uploading, you grant permission for display on this platform.</p>
+                <p>All uploaded photos remain the property of class members. By uploading, you grant permission for display on this platform.</p>
                 
                 <h3>3. Privacy</h3>
-                <p>We respect your privacy. Photos and information are only visible to class members and approved visitors.</p>
+                <p>We respect your privacy. Content is visible to class members and approved visitors only.</p>
                 
                 <h3>4. Content Guidelines</h3>
-                <p>All uploaded content must be appropriate and relevant to class activities. Inappropriate content will be removed.</p>
+                <p>All content must be appropriate and relevant to class activities. Inappropriate content will be removed.</p>
                 
                 <h3>5. Admin Rights</h3>
                 <p>The admin reserves the right to moderate, edit, or remove any content deemed inappropriate.</p>
                 
                 <h3>6. Contact</h3>
-                <p>For questions or concerns, contact: ihechigodswill575@gmail.com</p>
+                <p>For questions: ihechigodswill575@gmail.com</p>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
+    <!-- Firebase & JavaScript -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBzUELxbbaL6Wb_M1uNhjwlZHVTorN9XJs",
             authDomain: "my-whatsapp-2c1af.firebaseapp.com",
@@ -853,11 +994,9 @@
             appId: "1:1089455460888:web:15bd0820546c813febe96d"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Make database available globally
         window.firebaseDb = database;
         window.firebaseRef = ref;
         window.firebaseSet = set;
@@ -865,23 +1004,21 @@
         window.firebaseOnValue = onValue;
         window.firebaseRemove = remove;
 
-        // Load initial data
         loadGallery();
         loadBlogs();
         loadMemoryTimeline();
     </script>
 
     <script>
-        // Cloudinary Configuration - UPDATED WITH YOUR CREDENTIALS
         const CLOUDINARY_CLOUD_NAME = 'dzxckgbzp';
         const CLOUDINARY_UPLOAD_PRESET = 'Odegaard';
         const CLOUDINARY_API_KEY = '166123442148894';
-
-        // Admin password
         const ADMIN_PASSWORD = 'ihechigodswill575@gmail.com';
+        
         let isAdminLoggedIn = false;
+        let currentManageType = '';
 
-        // Mobile menu toggle
+        // Mobile menu
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
 
@@ -889,27 +1026,29 @@
             navLinks.classList.toggle('active');
         });
 
-        // Smooth scrolling
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     navLinks.classList.remove('active');
                 }
             });
         });
 
-        // Admin Dot Click
+        // Admin Panel
         const adminDot = document.getElementById('adminDot');
         const adminModal = document.getElementById('adminModal');
         const closeModal = document.querySelector('.close-modal');
 
         adminDot?.addEventListener('click', () => {
+            // Always show login form when clicking admin dot
+            isAdminLoggedIn = false;
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
             adminModal.style.display = 'block';
         });
 
@@ -918,21 +1057,19 @@
         });
 
         window.addEventListener('click', (e) => {
-            if (e.target === adminModal) {
-                adminModal.style.display = 'none';
-            }
+            if (e.target === adminModal) adminModal.style.display = 'none';
         });
 
         // Admin Login
         window.adminLogin = function() {
-            const email = document.getElementById('adminEmail').value;
-            if (email === ADMIN_PASSWORD) {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
                 isAdminLoggedIn = true;
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('adminDashboard').style.display = 'block';
-                alert('Welcome Admin Godswill!');
+                alert('✅ Welcome Admin!');
             } else {
-                alert('Incorrect password!');
+                alert('❌ Incorrect password!');
             }
         };
 
@@ -941,14 +1078,46 @@
             isAdminLoggedIn = false;
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('adminDashboard').style.display = 'none';
-            document.getElementById('adminEmail').value = '';
+            document.getElementById('adminPassword').value = '';
             adminModal.style.display = 'none';
         };
 
-        // Upload Photo to Cloudinary
+        // Publish Blog (Auto-upload without separate button)
+        window.publishBlog = async function() {
+            if (!isAdminLoggedIn) {
+                alert('❌ Please login first!');
+                return;
+            }
+
+            const title = document.getElementById('blogTitle').value;
+            const content = document.getElementById('blogContent').value;
+
+            if (!title || !content) {
+                alert('⚠️ Please fill in all fields!');
+                return;
+            }
+
+            const blogsRef = window.firebaseRef(window.firebaseDb, 'blogs');
+            const newBlogRef = window.firebasePush(blogsRef);
+            
+            await window.firebaseSet(newBlogRef, {
+                id: newBlogRef.key,
+                title: title,
+                content: content,
+                date: new Date().toLocaleDateString(),
+                timestamp: Date.now()
+            });
+
+            alert('✅ Blog published successfully!');
+            document.getElementById('blogTitle').value = '';
+            document.getElementById('blogContent').value = '';
+            loadBlogs();
+        };
+
+        // Upload Photos
         window.uploadPhoto = async function() {
             if (!isAdminLoggedIn) {
-                alert('Please login first!');
+                alert('❌ Please login first!');
                 return;
             }
 
@@ -956,7 +1125,7 @@
             const caption = document.getElementById('photoCaption').value;
             
             if (!fileInput.files.length) {
-                alert('Please select a photo!');
+                alert('⚠️ Please select photos!');
                 return;
             }
 
@@ -971,10 +1140,7 @@
                 try {
                     const response = await fetch(
                         `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-                        {
-                            method: 'POST',
-                            body: formData
-                        }
+                        { method: 'POST', body: formData }
                     );
 
                     const data = await response.json();
@@ -983,63 +1149,103 @@
                         const photosRef = window.firebaseRef(window.firebaseDb, 'gallery');
                         const newPhotoRef = window.firebasePush(photosRef);
                         await window.firebaseSet(newPhotoRef, {
+                            id: newPhotoRef.key,
                             url: data.secure_url,
                             caption: caption || 'Class Memory',
                             timestamp: Date.now()
                         });
-                        
-                        alert('Photo uploaded successfully! 🎉');
                     }
                 } catch (error) {
                     console.error('Upload error:', error);
-                    alert('Upload failed! Error: ' + error.message);
+                    alert('❌ Upload failed: ' + error.message);
                 }
             }
             
+            alert('✅ Photos uploaded successfully!');
             fileInput.value = '';
             document.getElementById('photoCaption').value = '';
             loadGallery();
         };
 
-        // Add Blog Post
-        window.addBlogPost = async function() {
-            if (!isAdminLoggedIn) {
-                alert('Please login first!');
-                return;
-            }
+        // Manage Content Modal
+        const manageModal = document.getElementById('manageModal');
+        const closeManage = document.querySelector('.close-manage');
 
-            const title = document.getElementById('blogTitle').value;
-            const content = document.getElementById('blogContent').value;
+        closeManage?.addEventListener('click', () => {
+            manageModal.style.display = 'none';
+        });
 
-            if (!title || !content) {
-                alert('Please fill in all fields!');
-                return;
-            }
+        window.addEventListener('click', (e) => {
+            if (e.target === manageModal) manageModal.style.display = 'none';
+        });
 
-            const blogsRef = window.firebaseRef(window.firebaseDb, 'blogs');
-            const newBlogRef = window.firebasePush(blogsRef);
+        window.openManageModal = function(type) {
+            currentManageType = type;
+            document.getElementById('manageTitle').textContent = 
+                type === 'blog' ? 'Manage Blog Posts' : 'Manage Photos';
+            manageModal.style.display = 'block';
+            loadManageContent(type);
+        };
+
+        function loadManageContent(type) {
+            const manageList = document.getElementById('manageList');
+            const dataRef = window.firebaseRef(window.firebaseDb, type === 'blog' ? 'blogs' : 'gallery');
             
-            await window.firebaseSet(newBlogRef, {
-                title: title,
-                content: content,
-                date: new Date().toLocaleDateString(),
-                timestamp: Date.now()
+            window.firebaseOnValue(dataRef, (snapshot) => {
+                manageList.innerHTML = '';
+                
+                snapshot.forEach((childSnapshot) => {
+                    const item = childSnapshot.val();
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'manage-item';
+                    
+                    if (type === 'blog') {
+                        itemDiv.innerHTML = `
+                            <div class="manage-item-content">
+                                <h4>${item.title}</h4>
+                                <p>${item.content.substring(0, 100)}...</p>
+                                <small>${item.date}</small>
+                            </div>
+                            <div class="manage-item-actions">
+                                <button class="delete-btn" onclick="deleteItem('blogs', '${childSnapshot.key}')">Delete</button>
+                            </div>
+                        `;
+                    } else {
+                        itemDiv.innerHTML = `
+                            <div class="manage-item-content">
+                                <h4>${item.caption}</h4>
+                                <img src="${item.url}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; margin-top: 0.5rem;">
+                            </div>
+                            <div class="manage-item-actions">
+                                <button class="delete-btn" onclick="deleteItem('gallery', '${childSnapshot.key}')">Delete</button>
+                            </div>
+                        `;
+                    }
+                    
+                    manageList.appendChild(itemDiv);
+                });
+                
+                if (!snapshot.exists()) {
+                    manageList.innerHTML = '<p style="text-align: center; padding: 2rem;">No items found</p>';
+                }
             });
+        }
 
-            alert('Blog post published! 📝');
-            document.getElementById('blogTitle').value = '';
-            document.getElementById('blogContent').value = '';
-            loadBlogs();
+        window.deleteItem = async function(type, id) {
+            if (!confirm('⚠️ Are you sure you want to delete this item?')) return;
+            
+            const itemRef = window.firebaseRef(window.firebaseDb, `${type}/${id}`);
+            await window.firebaseRemove(itemRef);
+            
+            alert('✅ Item deleted successfully!');
+            
+            if (type === 'blogs') loadBlogs();
+            else loadGallery();
+            
+            loadManageContent(currentManageType);
         };
 
-        // View All Photos
-        window.viewAllPhotos = function() {
-            alert('Navigate to Gallery section to view all photos!');
-            window.location.hash = '#gallery';
-            adminModal.style.display = 'none';
-        };
-
-        // Load Gallery from Firebase
+        // Load Gallery
         function loadGallery() {
             const galleryGrid = document.getElementById('galleryGrid');
             const photosRef = window.firebaseRef(window.firebaseDb, 'gallery');
@@ -1071,7 +1277,7 @@
             });
         }
 
-        // Load Blogs from Firebase
+        // Load Blogs
         function loadBlogs() {
             const blogGrid = document.getElementById('blogGrid');
             const blogsRef = window.firebaseRef(window.firebaseDb, 'blogs');
@@ -1099,12 +1305,12 @@
                 });
                 
                 if (!hasBlogs) {
-                    blogGrid.innerHTML = '<div class="loading">No blog posts yet!</div>';
+                    blogGrid.innerHTML = '<div class="loading">No posts yet!</div>';
                 }
             });
         }
 
-        // Load Memory Timeline
+        // Load Timeline
         function loadMemoryTimeline() {
             const timeline = document.getElementById('memoryTimeline');
             const memoriesRef = window.firebaseRef(window.firebaseDb, 'memories');
@@ -1116,15 +1322,15 @@
                     timeline.innerHTML = `
                         <div class="timeline-item">
                             <h3>🎓 Class Formation - 2024</h3>
-                            <p>The beginning of our amazing journey together as Godswill Class 2k26!</p>
+                            <p>The beginning of our journey at DAYSPRING Academy!</p>
                         </div>
                         <div class="timeline-item">
-                            <h3>📚 First Semester Success - 2025</h3>
-                            <p>We conquered our first semester with flying colors and made lasting friendships.</p>
+                            <h3>📚 Academic Excellence - 2025</h3>
+                            <p>Achieving milestones and building lasting friendships.</p>
                         </div>
                         <div class="timeline-item">
-                            <h3>🎉 Class Events - Ongoing</h3>
-                            <p>From study sessions to fun activities, every moment counts!</p>
+                            <h3>🎉 Class Unity - Ongoing</h3>
+                            <p>Together we grow, learn, and create unforgettable memories!</p>
                         </div>
                     `;
                 } else {
@@ -1156,7 +1362,7 @@
                 timestamp: Date.now()
             });
             
-            alert('Message sent successfully! 📧');
+            alert('✅ Message sent successfully!');
             e.target.reset();
         });
 
@@ -1175,17 +1381,10 @@
         });
 
         window.addEventListener('click', (e) => {
-            if (e.target === termsModal) {
-                termsModal.style.display = 'none';
-            }
+            if (e.target === termsModal) termsModal.style.display = 'none';
         });
 
         // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1193,12 +1392,12 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
 
         document.querySelectorAll('section').forEach(section => {
             section.style.opacity = '0';
             section.style.transform = 'translateY(50px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
             observer.observe(section);
         });
     </script>
