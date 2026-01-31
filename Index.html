@@ -23,6 +23,7 @@
             --white: #ffffff;
             --success: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
         body {
@@ -583,7 +584,8 @@
         /* Modals */
         .admin-modal,
         .terms-modal,
-        .manage-modal {
+        .manage-modal,
+        .edit-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -597,7 +599,8 @@
 
         .admin-content,
         .terms-content,
-        .manage-content {
+        .manage-content,
+        .edit-content {
             position: relative;
             background: var(--card-bg);
             width: 90%;
@@ -613,7 +616,8 @@
 
         .close-modal,
         .close-terms,
-        .close-manage {
+        .close-manage,
+        .close-edit {
             position: absolute;
             top: 15px;
             right: 25px;
@@ -625,7 +629,8 @@
 
         .close-modal:hover,
         .close-terms:hover,
-        .close-manage:hover {
+        .close-manage:hover,
+        .close-edit:hover {
             color: var(--danger);
             transform: rotate(90deg);
         }
@@ -639,7 +644,9 @@
         }
 
         #adminDashboard input,
-        #adminDashboard textarea {
+        #adminDashboard textarea,
+        .edit-content input,
+        .edit-content textarea {
             width: 100%;
             padding: 1rem;
             margin: 0.8rem 0;
@@ -650,7 +657,8 @@
             font-size: 1rem;
         }
 
-        #adminDashboard button {
+        #adminDashboard button,
+        .edit-content button {
             padding: 1rem 2rem;
             margin: 0.5rem 0.5rem 0.5rem 0;
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
@@ -663,13 +671,33 @@
             font-size: 1rem;
         }
 
-        #adminDashboard button:hover {
+        #adminDashboard button:hover,
+        .edit-content button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
         }
 
         .delete-btn {
             background: linear-gradient(135deg, var(--danger), #dc2626) !important;
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, var(--warning), #ea580c) !important;
+        }
+
+        .success-btn {
+            background: linear-gradient(135deg, var(--success), #059669) !important;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .admin-grid button {
+            width: 100%;
         }
 
         .manage-list {
@@ -685,6 +713,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
         }
 
         .manage-item-content {
@@ -704,11 +733,56 @@
         .manage-item-actions {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .manage-item button {
             padding: 0.6rem 1.2rem;
             font-size: 0.9rem;
+        }
+
+        .message-item {
+            background: rgba(14, 165, 233, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .message-item.unread {
+            border-color: var(--accent-color);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .message-header h4 {
+            color: var(--primary-color);
+        }
+
+        .message-header small {
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .message-body {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message-actions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
         }
 
         .terms-text {
@@ -727,6 +801,17 @@
             padding: 4rem;
             color: var(--text-light);
             font-size: 1.4rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--danger);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
         }
 
         /* Responsive Design */
@@ -778,6 +863,23 @@
                 flex-direction: column;
                 gap: 2rem;
                 text-align: center;
+            }
+
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .manage-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .manage-item-actions {
+                width: 100%;
+            }
+
+            .manage-item button {
+                flex: 1;
             }
         }
     </style>
@@ -833,12 +935,12 @@
                         <p>Memories</p>
                     </div>
                     <div class="stat-box">
-                        <h3>2026</h3>
-                        <p>Our Year</p>
+                        <h3 id="blogCount">0</h3>
+                        <p>Updates</p>
                     </div>
                     <div class="stat-box">
-                        <h3>∞</h3>
-                        <p>Dreams</p>
+                        <h3 id="messageCount">0</h3>
+                        <p>Messages</p>
                     </div>
                 </div>
             </div>
@@ -918,12 +1020,13 @@
     <div class="admin-modal" id="adminModal">
         <div class="admin-content">
             <span class="close-modal">&times;</span>
-            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Admin Panel</h2>
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">🔐 Admin Panel</h2>
             <div id="loginForm">
                 <input type="password" id="adminPassword" placeholder="Enter Admin Password">
                 <button onclick="adminLogin()">Login</button>
             </div>
             <div id="adminDashboard" style="display:none;">
+                
                 <h3>📝 Publish Blog Post</h3>
                 <input type="text" id="blogTitle" placeholder="Blog Title">
                 <textarea id="blogContent" placeholder="Blog Content" rows="5"></textarea>
@@ -934,10 +1037,20 @@
                 <input type="text" id="photoCaption" placeholder="Photo caption (optional)">
                 <button onclick="uploadPhoto()">Upload Photos</button>
                 
+                <h3>⏱️ Memory Timeline</h3>
+                <input type="text" id="timelineTitle" placeholder="Timeline Title (e.g., 🎓 Graduation Day)">
+                <textarea id="timelineDesc" placeholder="Timeline Description" rows="3"></textarea>
+                <button onclick="addTimeline()">Add Timeline Item</button>
+                
                 <h3>⚙️ Manage Content</h3>
-                <button onclick="openManageModal('blog')">Manage Blog Posts</button>
-                <button onclick="openManageModal('gallery')">Manage Photos</button>
-                <button class="delete-btn" onclick="logout()">Logout</button>
+                <div class="admin-grid">
+                    <button onclick="openManageModal('blog')">📝 Manage Blogs<span class="badge" id="blogBadge">0</span></button>
+                    <button onclick="openManageModal('gallery')">📸 Manage Photos<span class="badge" id="photoBadge">0</span></button>
+                    <button onclick="openManageModal('timeline')">⏱️ Manage Timeline<span class="badge" id="timelineBadge">0</span></button>
+                    <button onclick="openManageModal('messages')">📧 View Messages<span class="badge" id="msgBadge">0</span></button>
+                    <button onclick="changePassword()">🔑 Change Password</button>
+                    <button class="delete-btn" onclick="logout()">🚪 Logout</button>
+                </div>
             </div>
         </div>
     </div>
@@ -948,6 +1061,15 @@
             <span class="close-manage">&times;</span>
             <h2 style="color: var(--primary-color); margin-bottom: 2rem;" id="manageTitle">Manage Content</h2>
             <div class="manage-list" id="manageList"></div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="edit-modal" id="editModal">
+        <div class="edit-content">
+            <span class="close-edit">&times;</span>
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem;" id="editTitle">Edit Item</h2>
+            <div id="editForm"></div>
         </div>
     </div>
 
@@ -982,7 +1104,7 @@
     <!-- Firebase & JavaScript -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBzUELxbbaL6Wb_M1uNhjwlZHVTorN9XJs",
@@ -1003,20 +1125,24 @@
         window.firebasePush = push;
         window.firebaseOnValue = onValue;
         window.firebaseRemove = remove;
+        window.firebaseUpdate = update;
 
         loadGallery();
         loadBlogs();
         loadMemoryTimeline();
+        loadMessages();
     </script>
 
     <script>
         const CLOUDINARY_CLOUD_NAME = 'dzxckgbzp';
         const CLOUDINARY_UPLOAD_PRESET = 'Odegaard';
         const CLOUDINARY_API_KEY = '166123442148894';
-        const ADMIN_PASSWORD = 'ihechigodswill575@gmail.com';
+        const ADMIN_PASSWORD_KEY = 'admin_password';
         
+        let ADMIN_PASSWORD = localStorage.getItem(ADMIN_PASSWORD_KEY) || 'ihechigodswill575@gmail.com';
         let isAdminLoggedIn = false;
         let currentManageType = '';
+        let currentEditItem = null;
 
         // Mobile menu
         const hamburger = document.querySelector('.hamburger');
@@ -1044,7 +1170,6 @@
         const closeModal = document.querySelector('.close-modal');
 
         adminDot?.addEventListener('click', () => {
-            // Always show login form when clicking admin dot
             isAdminLoggedIn = false;
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('adminDashboard').style.display = 'none';
@@ -1068,6 +1193,7 @@
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('adminDashboard').style.display = 'block';
                 alert('✅ Welcome Admin!');
+                updateBadges();
             } else {
                 alert('❌ Incorrect password!');
             }
@@ -1082,7 +1208,19 @@
             adminModal.style.display = 'none';
         };
 
-        // Publish Blog (Auto-upload without separate button)
+        // Change Password
+        window.changePassword = function() {
+            const newPassword = prompt('Enter new admin password:');
+            if (newPassword && newPassword.length >= 6) {
+                ADMIN_PASSWORD = newPassword;
+                localStorage.setItem(ADMIN_PASSWORD_KEY, newPassword);
+                alert('✅ Password changed successfully!');
+            } else if (newPassword) {
+                alert('❌ Password must be at least 6 characters!');
+            }
+        };
+
+        // Publish Blog
         window.publishBlog = async function() {
             if (!isAdminLoggedIn) {
                 alert('❌ Please login first!');
@@ -1112,6 +1250,7 @@
             document.getElementById('blogTitle').value = '';
             document.getElementById('blogContent').value = '';
             loadBlogs();
+            updateBadges();
         };
 
         // Upload Photos
@@ -1165,6 +1304,39 @@
             fileInput.value = '';
             document.getElementById('photoCaption').value = '';
             loadGallery();
+            updateBadges();
+        };
+
+        // Add Timeline
+        window.addTimeline = async function() {
+            if (!isAdminLoggedIn) {
+                alert('❌ Please login first!');
+                return;
+            }
+
+            const title = document.getElementById('timelineTitle').value;
+            const description = document.getElementById('timelineDesc').value;
+
+            if (!title || !description) {
+                alert('⚠️ Please fill in all fields!');
+                return;
+            }
+
+            const timelineRef = window.firebaseRef(window.firebaseDb, 'memories');
+            const newTimelineRef = window.firebasePush(timelineRef);
+            
+            await window.firebaseSet(newTimelineRef, {
+                id: newTimelineRef.key,
+                title: title,
+                description: description,
+                timestamp: Date.now()
+            });
+
+            alert('✅ Timeline item added!');
+            document.getElementById('timelineTitle').value = '';
+            document.getElementById('timelineDesc').value = '';
+            loadMemoryTimeline();
+            updateBadges();
         };
 
         // Manage Content Modal
@@ -1181,15 +1353,32 @@
 
         window.openManageModal = function(type) {
             currentManageType = type;
-            document.getElementById('manageTitle').textContent = 
-                type === 'blog' ? 'Manage Blog Posts' : 'Manage Photos';
+            const titles = {
+                'blog': '📝 Manage Blog Posts',
+                'gallery': '📸 Manage Photos',
+                'timeline': '⏱️ Manage Timeline',
+                'messages': '📧 Contact Messages'
+            };
+            document.getElementById('manageTitle').textContent = titles[type];
             manageModal.style.display = 'block';
             loadManageContent(type);
         };
 
         function loadManageContent(type) {
             const manageList = document.getElementById('manageList');
-            const dataRef = window.firebaseRef(window.firebaseDb, type === 'blog' ? 'blogs' : 'gallery');
+            
+            if (type === 'messages') {
+                loadMessagesAdmin(manageList);
+                return;
+            }
+
+            const paths = {
+                'blog': 'blogs',
+                'gallery': 'gallery',
+                'timeline': 'memories'
+            };
+
+            const dataRef = window.firebaseRef(window.firebaseDb, paths[type]);
             
             window.firebaseOnValue(dataRef, (snapshot) => {
                 manageList.innerHTML = '';
@@ -1203,21 +1392,34 @@
                         itemDiv.innerHTML = `
                             <div class="manage-item-content">
                                 <h4>${item.title}</h4>
-                                <p>${item.content.substring(0, 100)}...</p>
-                                <small>${item.date}</small>
+                                <p>${item.content.substring(0, 100)}${item.content.length > 100 ? '...' : ''}</p>
+                                <small style="opacity: 0.7;">${item.date}</small>
                             </div>
                             <div class="manage-item-actions">
-                                <button class="delete-btn" onclick="deleteItem('blogs', '${childSnapshot.key}')">Delete</button>
+                                <button class="edit-btn" onclick="editItem('blog', '${childSnapshot.key}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️ Edit</button>
+                                <button class="delete-btn" onclick="deleteItem('blogs', '${childSnapshot.key}')">🗑️ Delete</button>
                             </div>
                         `;
-                    } else {
+                    } else if (type === 'gallery') {
                         itemDiv.innerHTML = `
                             <div class="manage-item-content">
                                 <h4>${item.caption}</h4>
-                                <img src="${item.url}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; margin-top: 0.5rem;">
+                                <img src="${item.url}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 12px; margin-top: 0.5rem;">
                             </div>
                             <div class="manage-item-actions">
-                                <button class="delete-btn" onclick="deleteItem('gallery', '${childSnapshot.key}')">Delete</button>
+                                <button class="edit-btn" onclick="editItem('gallery', '${childSnapshot.key}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️ Edit</button>
+                                <button class="delete-btn" onclick="deleteItem('gallery', '${childSnapshot.key}')">🗑️ Delete</button>
+                            </div>
+                        `;
+                    } else if (type === 'timeline') {
+                        itemDiv.innerHTML = `
+                            <div class="manage-item-content">
+                                <h4>${item.title}</h4>
+                                <p>${item.description}</p>
+                            </div>
+                            <div class="manage-item-actions">
+                                <button class="edit-btn" onclick="editItem('timeline', '${childSnapshot.key}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️ Edit</button>
+                                <button class="delete-btn" onclick="deleteItem('memories', '${childSnapshot.key}')">🗑️ Delete</button>
                             </div>
                         `;
                     }
@@ -1226,24 +1428,205 @@
                 });
                 
                 if (!snapshot.exists()) {
-                    manageList.innerHTML = '<p style="text-align: center; padding: 2rem;">No items found</p>';
+                    manageList.innerHTML = '<p style="text-align: center; padding: 2rem; opacity: 0.7;">No items found</p>';
                 }
             });
         }
 
-        window.deleteItem = async function(type, id) {
+        // Edit Modal
+        const editModal = document.getElementById('editModal');
+        const closeEdit = document.querySelector('.close-edit');
+
+        closeEdit?.addEventListener('click', () => {
+            editModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === editModal) editModal.style.display = 'none';
+        });
+
+        window.editItem = function(type, id, item) {
+            currentEditItem = { type, id, item };
+            const editForm = document.getElementById('editForm');
+            
+            const titles = {
+                'blog': '✏️ Edit Blog Post',
+                'gallery': '✏️ Edit Photo',
+                'timeline': '✏️ Edit Timeline'
+            };
+            document.getElementById('editTitle').textContent = titles[type];
+
+            if (type === 'blog') {
+                editForm.innerHTML = `
+                    <input type="text" id="editBlogTitle" value="${item.title}" placeholder="Blog Title">
+                    <textarea id="editBlogContent" rows="8" placeholder="Blog Content">${item.content}</textarea>
+                    <button class="success-btn" onclick="saveEdit()">💾 Save Changes</button>
+                    <button class="delete-btn" onclick="cancelEdit()">❌ Cancel</button>
+                `;
+            } else if (type === 'gallery') {
+                editForm.innerHTML = `
+                    <img src="${item.url}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                    <input type="text" id="editPhotoCaption" value="${item.caption}" placeholder="Photo Caption">
+                    <button class="success-btn" onclick="saveEdit()">💾 Save Changes</button>
+                    <button class="delete-btn" onclick="cancelEdit()">❌ Cancel</button>
+                `;
+            } else if (type === 'timeline') {
+                editForm.innerHTML = `
+                    <input type="text" id="editTimelineTitle" value="${item.title}" placeholder="Timeline Title">
+                    <textarea id="editTimelineDesc" rows="5" placeholder="Timeline Description">${item.description}</textarea>
+                    <button class="success-btn" onclick="saveEdit()">💾 Save Changes</button>
+                    <button class="delete-btn" onclick="cancelEdit()">❌ Cancel</button>
+                `;
+            }
+
+            editModal.style.display = 'block';
+        };
+
+        window.saveEdit = async function() {
+            const { type, id, item } = currentEditItem;
+            const paths = {
+                'blog': 'blogs',
+                'gallery': 'gallery',
+                'timeline': 'memories'
+            };
+
+            let updateData = {};
+
+            if (type === 'blog') {
+                updateData = {
+                    ...item,
+                    title: document.getElementById('editBlogTitle').value,
+                    content: document.getElementById('editBlogContent').value
+                };
+            } else if (type === 'gallery') {
+                updateData = {
+                    ...item,
+                    caption: document.getElementById('editPhotoCaption').value
+                };
+            } else if (type === 'timeline') {
+                updateData = {
+                    ...item,
+                    title: document.getElementById('editTimelineTitle').value,
+                    description: document.getElementById('editTimelineDesc').value
+                };
+            }
+
+            const itemRef = window.firebaseRef(window.firebaseDb, `${paths[type]}/${id}`);
+            await window.firebaseUpdate(itemRef, updateData);
+
+            alert('✅ Changes saved successfully!');
+            editModal.style.display = 'none';
+            
+            if (type === 'blog') loadBlogs();
+            else if (type === 'gallery') loadGallery();
+            else if (type === 'timeline') loadMemoryTimeline();
+            
+            loadManageContent(currentManageType);
+        };
+
+        window.cancelEdit = function() {
+            editModal.style.display = 'none';
+        };
+
+        window.deleteItem = async function(path, id) {
             if (!confirm('⚠️ Are you sure you want to delete this item?')) return;
             
-            const itemRef = window.firebaseRef(window.firebaseDb, `${type}/${id}`);
+            const itemRef = window.firebaseRef(window.firebaseDb, `${path}/${id}`);
             await window.firebaseRemove(itemRef);
             
             alert('✅ Item deleted successfully!');
             
-            if (type === 'blogs') loadBlogs();
-            else loadGallery();
+            if (path === 'blogs') loadBlogs();
+            else if (path === 'gallery') loadGallery();
+            else if (path === 'memories') loadMemoryTimeline();
             
             loadManageContent(currentManageType);
+            updateBadges();
         };
+
+        // Load Messages for Admin
+        function loadMessagesAdmin(container) {
+            const messagesRef = window.firebaseRef(window.firebaseDb, 'contacts');
+            
+            window.firebaseOnValue(messagesRef, (snapshot) => {
+                container.innerHTML = '';
+                
+                snapshot.forEach((childSnapshot) => {
+                    const msg = childSnapshot.val();
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = `message-item ${msg.read ? '' : 'unread'}`;
+                    msgDiv.innerHTML = `
+                        <div class="message-header">
+                            <h4>${msg.name} (${msg.email})</h4>
+                            <small>${new Date(msg.timestamp).toLocaleString()}</small>
+                        </div>
+                        <div class="message-body">
+                            <p>${msg.message}</p>
+                        </div>
+                        <div class="message-actions">
+                            ${!msg.read ? `<button class="success-btn" onclick="markAsRead('${childSnapshot.key}')">✅ Mark Read</button>` : ''}
+                            <button class="delete-btn" onclick="deleteMessage('${childSnapshot.key}')">🗑️ Delete</button>
+                        </div>
+                    `;
+                    container.appendChild(msgDiv);
+                });
+                
+                if (!snapshot.exists()) {
+                    container.innerHTML = '<p style="text-align: center; padding: 2rem; opacity: 0.7;">No messages yet</p>';
+                }
+            });
+        }
+
+        window.markAsRead = async function(id) {
+            const msgRef = window.firebaseRef(window.firebaseDb, `contacts/${id}`);
+            await window.firebaseUpdate(msgRef, { read: true });
+            loadManageContent('messages');
+            updateBadges();
+        };
+
+        window.deleteMessage = async function(id) {
+            if (!confirm('⚠️ Delete this message?')) return;
+            
+            const msgRef = window.firebaseRef(window.firebaseDb, `contacts/${id}`);
+            await window.firebaseRemove(msgRef);
+            
+            alert('✅ Message deleted!');
+            loadManageContent('messages');
+            updateBadges();
+        };
+
+        // Update badges
+        function updateBadges() {
+            const blogsRef = window.firebaseRef(window.firebaseDb, 'blogs');
+            const photosRef = window.firebaseRef(window.firebaseDb, 'gallery');
+            const timelineRef = window.firebaseRef(window.firebaseDb, 'memories');
+            const messagesRef = window.firebaseRef(window.firebaseDb, 'contacts');
+
+            window.firebaseOnValue(blogsRef, (snapshot) => {
+                const count = snapshot.size || 0;
+                document.getElementById('blogBadge').textContent = count;
+                document.getElementById('blogCount').textContent = count;
+            });
+
+            window.firebaseOnValue(photosRef, (snapshot) => {
+                const count = snapshot.size || 0;
+                document.getElementById('photoBadge').textContent = count;
+            });
+
+            window.firebaseOnValue(timelineRef, (snapshot) => {
+                const count = snapshot.size || 0;
+                document.getElementById('timelineBadge').textContent = count;
+            });
+
+            window.firebaseOnValue(messagesRef, (snapshot) => {
+                let unreadCount = 0;
+                snapshot.forEach(child => {
+                    if (!child.val().read) unreadCount++;
+                });
+                document.getElementById('msgBadge').textContent = unreadCount;
+                document.getElementById('messageCount').textContent = snapshot.size || 0;
+            });
+        }
 
         // Load Gallery
         function loadGallery() {
@@ -1348,6 +1731,15 @@
             });
         }
 
+        // Load Messages (for counter)
+        function loadMessages() {
+            const messagesRef = window.firebaseRef(window.firebaseDb, 'contacts');
+            
+            window.firebaseOnValue(messagesRef, (snapshot) => {
+                document.getElementById('messageCount').textContent = snapshot.size || 0;
+            });
+        }
+
         // Contact Form
         document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1359,11 +1751,13 @@
                 name: e.target[0].value,
                 email: e.target[1].value,
                 message: e.target[2].value,
-                timestamp: Date.now()
+                timestamp: Date.now(),
+                read: false
             });
             
             alert('✅ Message sent successfully!');
             e.target.reset();
+            updateBadges();
         });
 
         // Terms Modal
@@ -1400,6 +1794,9 @@
             section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
             observer.observe(section);
         });
+
+        // Initialize badges
+        setTimeout(updateBadges, 1000);
     </script>
 </body>
 </html>
