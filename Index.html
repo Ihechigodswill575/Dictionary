@@ -939,8 +939,8 @@
                         <p>Updates</p>
                     </div>
                     <div class="stat-box">
-                        <h3 id="messageCount">0</h3>
-                        <p>Messages</p>
+                        <h3>2026</h3>
+                        <p>Our Year</p>
                     </div>
                 </div>
             </div>
@@ -1127,10 +1127,46 @@
         window.firebaseRemove = remove;
         window.firebaseUpdate = update;
 
+        // Initialize default timeline items if none exist
+        initializeDefaultTimeline();
+        
         loadGallery();
         loadBlogs();
         loadMemoryTimeline();
-        loadMessages();
+
+        async function initializeDefaultTimeline() {
+            const timelineRef = ref(database, 'memories');
+            onValue(timelineRef, (snapshot) => {
+                if (!snapshot.exists()) {
+                    // Add default timeline items to Firebase
+                    const defaultItems = [
+                        {
+                            title: '🎓 Class Formation - 2024',
+                            description: 'The beginning of our journey at DAYSPRING Academy!',
+                            timestamp: Date.now() - 86400000 * 365
+                        },
+                        {
+                            title: '📚 Academic Excellence - 2025',
+                            description: 'Achieving milestones and building lasting friendships.',
+                            timestamp: Date.now() - 86400000 * 180
+                        },
+                        {
+                            title: '🎉 Class Unity - Ongoing',
+                            description: 'Together we grow, learn, and create unforgettable memories!',
+                            timestamp: Date.now()
+                        }
+                    ];
+
+                    defaultItems.forEach(item => {
+                        const newRef = push(timelineRef);
+                        set(newRef, {
+                            id: newRef.key,
+                            ...item
+                        });
+                    });
+                }
+            }, { onlyOnce: true });
+        }
     </script>
 
     <script>
@@ -1624,7 +1660,6 @@
                     if (!child.val().read) unreadCount++;
                 });
                 document.getElementById('msgBadge').textContent = unreadCount;
-                document.getElementById('messageCount').textContent = snapshot.size || 0;
             });
         }
 
@@ -1702,20 +1737,7 @@
                 timeline.innerHTML = '';
                 
                 if (!snapshot.exists()) {
-                    timeline.innerHTML = `
-                        <div class="timeline-item">
-                            <h3>🎓 Class Formation - 2024</h3>
-                            <p>The beginning of our journey at DAYSPRING Academy!</p>
-                        </div>
-                        <div class="timeline-item">
-                            <h3>📚 Academic Excellence - 2025</h3>
-                            <p>Achieving milestones and building lasting friendships.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <h3>🎉 Class Unity - Ongoing</h3>
-                            <p>Together we grow, learn, and create unforgettable memories!</p>
-                        </div>
-                    `;
+                    timeline.innerHTML = '<div class="loading">No timeline items yet!</div>';
                 } else {
                     snapshot.forEach((childSnapshot) => {
                         const memory = childSnapshot.val();
@@ -1728,15 +1750,6 @@
                         timeline.appendChild(item);
                     });
                 }
-            });
-        }
-
-        // Load Messages (for counter)
-        function loadMessages() {
-            const messagesRef = window.firebaseRef(window.firebaseDb, 'contacts');
-            
-            window.firebaseOnValue(messagesRef, (snapshot) => {
-                document.getElementById('messageCount').textContent = snapshot.size || 0;
             });
         }
 
@@ -1795,7 +1808,7 @@
             observer.observe(section);
         });
 
-        // Initialize badges
+        // Initialize badges after a delay
         setTimeout(updateBadges, 1000);
     </script>
 </body>
