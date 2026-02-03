@@ -311,30 +311,30 @@
 
         <div class="buttons">
             <!-- Row 1 -->
-            <button class="function" onclick="insertFunction('sin(')">sin</button>
-            <button class="function" onclick="insertFunction('cos(')">cos</button>
-            <button class="function" onclick="insertFunction('tan(')">tan</button>
-            <button class="function" onclick="insertFunction('log(')">log</button>
-            <button class="function" onclick="insertFunction('ln(')">ln</button>
+            <button class="function" onclick="applyFunction('sin')">sin</button>
+            <button class="function" onclick="applyFunction('cos')">cos</button>
+            <button class="function" onclick="applyFunction('tan')">tan</button>
+            <button class="function" onclick="applyFunction('log')">log</button>
+            <button class="function" onclick="applyFunction('ln')">ln</button>
 
             <!-- Row 2 -->
-            <button class="function" onclick="insertFunction('asin(')">sin⁻¹</button>
-            <button class="function" onclick="insertFunction('acos(')">cos⁻¹</button>
-            <button class="function" onclick="insertFunction('atan(')">tan⁻¹</button>
+            <button class="function" onclick="applyFunction('asin')">sin⁻¹</button>
+            <button class="function" onclick="applyFunction('acos')">cos⁻¹</button>
+            <button class="function" onclick="applyFunction('atan')">tan⁻¹</button>
             <button class="function" onclick="insertValue('π')">π</button>
             <button class="function" onclick="insertValue('e')">e</button>
 
             <!-- Row 3 -->
-            <button class="function" onclick="insertFunction('sqrt(')">√</button>
-            <button class="function" onclick="insertValue('^')">x^y</button>
-            <button class="function" onclick="insertValue('^2')">x²</button>
-            <button class="function" onclick="insertValue('^3')">x³</button>
-            <button class="function" onclick="insertValue('^(-1)')">1/x</button>
+            <button class="function" onclick="applyFunction('sqrt')">√</button>
+            <button class="function" onclick="needsSecondNumber('^')">x^y</button>
+            <button class="function" onclick="applyPower(2)">x²</button>
+            <button class="function" onclick="applyPower(3)">x³</button>
+            <button class="function" onclick="applyFunction('reciprocal')">1/x</button>
 
             <!-- Row 4 -->
             <button class="function" onclick="insertValue('(')">(</button>
             <button class="function" onclick="insertValue(')')">)</button>
-            <button class="function" onclick="factorial()">n!</button>
+            <button class="function" onclick="applyFunction('factorial')">n!</button>
             <button class="clear" onclick="clearAll()">AC</button>
             <button class="clear" onclick="backspace()">⌫</button>
 
@@ -343,21 +343,21 @@
             <button onclick="insertValue('8')">8</button>
             <button onclick="insertValue('9')">9</button>
             <button class="operator" onclick="insertValue('/')">÷</button>
-            <button class="function" onclick="insertValue('%')">%</button>
+            <button class="function" onclick="needsSecondNumber('%')">%</button>
 
             <!-- Row 6 -->
             <button onclick="insertValue('4')">4</button>
             <button onclick="insertValue('5')">5</button>
             <button onclick="insertValue('6')">6</button>
             <button class="operator" onclick="insertValue('*')">×</button>
-            <button class="function" onclick="abs()">|x|</button>
+            <button class="function" onclick="applyFunction('abs')">|x|</button>
 
             <!-- Row 7 -->
             <button onclick="insertValue('1')">1</button>
             <button onclick="insertValue('2')">2</button>
             <button onclick="insertValue('3')">3</button>
             <button class="operator" onclick="insertValue('-')">−</button>
-            <button class="function" onclick="insertValue('exp(')">exp</button>
+            <button class="function" onclick="applyFunction('exp')">exp</button>
 
             <!-- Row 8 -->
             <button onclick="insertValue('0')">0</button>
@@ -375,14 +375,15 @@
     <script>
         let currentInput = '';
         let history = '';
-        let angleMode = 'deg'; // 'deg' or 'rad'
+        let angleMode = 'deg';
+        let waitingForSecondOperand = false;
+        let pendingOperation = null;
 
         const resultDisplay = document.getElementById('result');
         const historyDisplay = document.getElementById('history');
         const degBtn = document.getElementById('degBtn');
         const radBtn = document.getElementById('radBtn');
 
-        // Toggle angle mode
         degBtn.addEventListener('click', () => {
             angleMode = 'deg';
             degBtn.classList.add('active');
@@ -396,12 +397,12 @@
         });
 
         function insertValue(value) {
-            currentInput += value;
-            updateDisplay();
-        }
-
-        function insertFunction(func) {
-            currentInput += func;
+            if (waitingForSecondOperand) {
+                currentInput = value;
+                waitingForSecondOperand = false;
+            } else {
+                currentInput += value;
+            }
             updateDisplay();
         }
 
@@ -412,6 +413,8 @@
         function clearAll() {
             currentInput = '';
             history = '';
+            waitingForSecondOperand = false;
+            pendingOperation = null;
             historyDisplay.textContent = '';
             updateDisplay();
         }
@@ -422,7 +425,7 @@
         }
 
         function toggleSign() {
-            if (currentInput) {
+            if (currentInput && currentInput !== '0') {
                 if (currentInput.startsWith('-')) {
                     currentInput = currentInput.slice(1);
                 } else {
@@ -430,74 +433,6 @@
                 }
                 updateDisplay();
             }
-        }
-
-        function factorial() {
-            try {
-                let num = parseFloat(currentInput);
-                if (num < 0 || !Number.isInteger(num)) {
-                    throw new Error('Factorial only for non-negative integers');
-                }
-                let result = 1;
-                for (let i = 2; i <= num; i++) {
-                    result *= i;
-                }
-                history = currentInput + '!';
-                currentInput = result.toString();
-                historyDisplay.textContent = history;
-                updateDisplay();
-            } catch (error) {
-                resultDisplay.textContent = 'Error';
-            }
-        }
-
-        function abs() {
-            try {
-                let result = Math.abs(eval(prepareExpression(currentInput)));
-                history = '|' + currentInput + '|';
-                currentInput = result.toString();
-                historyDisplay.textContent = history;
-                updateDisplay();
-            } catch (error) {
-                resultDisplay.textContent = 'Error';
-            }
-        }
-
-        function prepareExpression(expr) {
-            // Replace π and e
-            expr = expr.replace(/π/g, Math.PI);
-            expr = expr.replace(/e(?![a-z])/g, Math.E);
-            
-            // Replace power operator
-            expr = expr.replace(/\^/g, '**');
-            
-            // Handle trigonometric functions
-            expr = expr.replace(/sin\(/g, angleMode === 'deg' ? 'Math.sin(toRadians(' : 'Math.sin(');
-            expr = expr.replace(/cos\(/g, angleMode === 'deg' ? 'Math.cos(toRadians(' : 'Math.cos(');
-            expr = expr.replace(/tan\(/g, angleMode === 'deg' ? 'Math.tan(toRadians(' : 'Math.tan(');
-            
-            // Handle inverse trig functions
-            expr = expr.replace(/asin\(/g, angleMode === 'deg' ? 'toDegrees(Math.asin(' : 'Math.asin(');
-            expr = expr.replace(/acos\(/g, angleMode === 'deg' ? 'toDegrees(Math.acos(' : 'Math.acos(');
-            expr = expr.replace(/atan\(/g, angleMode === 'deg' ? 'toDegrees(Math.atan(' : 'Math.atan(');
-            
-            // Handle logarithms
-            expr = expr.replace(/log\(/g, 'Math.log10(');
-            expr = expr.replace(/ln\(/g, 'Math.log(');
-            
-            // Handle sqrt
-            expr = expr.replace(/sqrt\(/g, 'Math.sqrt(');
-            
-            // Handle exp
-            expr = expr.replace(/exp\(/g, 'Math.exp(');
-            
-            // Add closing parentheses for degree conversions
-            if (angleMode === 'deg') {
-                expr = expr.replace(/(toRadians\([^)]+)\)/g, '$1))');
-                expr = expr.replace(/(toDegrees\([^)]+)\)/g, '$1))');
-            }
-            
-            return expr;
         }
 
         function toRadians(degrees) {
@@ -508,6 +443,113 @@
             return radians * 180 / Math.PI;
         }
 
+        function applyFunction(func) {
+            try {
+                if (!currentInput || currentInput === '0') return;
+                
+                let value = parseFloat(currentInput);
+                let result;
+                let displayFunc = func;
+
+                switch(func) {
+                    case 'sin':
+                        result = angleMode === 'deg' 
+                            ? Math.sin(toRadians(value)) 
+                            : Math.sin(value);
+                        break;
+                    case 'cos':
+                        result = angleMode === 'deg' 
+                            ? Math.cos(toRadians(value)) 
+                            : Math.cos(value);
+                        break;
+                    case 'tan':
+                        result = angleMode === 'deg' 
+                            ? Math.tan(toRadians(value)) 
+                            : Math.tan(value);
+                        break;
+                    case 'asin':
+                        result = Math.asin(value);
+                        result = angleMode === 'deg' ? toDegrees(result) : result;
+                        displayFunc = 'sin⁻¹';
+                        break;
+                    case 'acos':
+                        result = Math.acos(value);
+                        result = angleMode === 'deg' ? toDegrees(result) : result;
+                        displayFunc = 'cos⁻¹';
+                        break;
+                    case 'atan':
+                        result = Math.atan(value);
+                        result = angleMode === 'deg' ? toDegrees(result) : result;
+                        displayFunc = 'tan⁻¹';
+                        break;
+                    case 'log':
+                        result = Math.log10(value);
+                        break;
+                    case 'ln':
+                        result = Math.log(value);
+                        break;
+                    case 'sqrt':
+                        result = Math.sqrt(value);
+                        displayFunc = '√';
+                        break;
+                    case 'exp':
+                        result = Math.exp(value);
+                        break;
+                    case 'abs':
+                        result = Math.abs(value);
+                        displayFunc = '|x|';
+                        break;
+                    case 'factorial':
+                        if (value < 0 || !Number.isInteger(value)) {
+                            throw new Error('Invalid input');
+                        }
+                        result = 1;
+                        for (let i = 2; i <= value; i++) {
+                            result *= i;
+                        }
+                        displayFunc = 'x!';
+                        break;
+                    case 'reciprocal':
+                        result = 1 / value;
+                        displayFunc = '1/x';
+                        break;
+                    default:
+                        return;
+                }
+
+                result = Math.round(result * 1e10) / 1e10;
+                history = displayFunc + '(' + currentInput + ')';
+                currentInput = result.toString();
+                historyDisplay.textContent = history;
+                updateDisplay();
+            } catch (error) {
+                resultDisplay.textContent = 'Error';
+                currentInput = '';
+            }
+        }
+
+        function applyPower(power) {
+            try {
+                if (!currentInput || currentInput === '0') return;
+                
+                let value = parseFloat(currentInput);
+                let result = Math.pow(value, power);
+                
+                result = Math.round(result * 1e10) / 1e10;
+                history = currentInput + '^' + power;
+                currentInput = result.toString();
+                historyDisplay.textContent = history;
+                updateDisplay();
+            } catch (error) {
+                resultDisplay.textContent = 'Error';
+                currentInput = '';
+            }
+        }
+
+        function needsSecondNumber(operator) {
+            insertValue(operator);
+        }
+
         function calculate() {
             try {
                 if (!currentInput) return;
@@ -516,9 +558,7 @@
                 let expression = prepareExpression(currentInput);
                 let result = eval(expression);
                 
-                // Round to avoid floating point errors
                 result = Math.round(result * 1e10) / 1e10;
-                
                 currentInput = result.toString();
                 historyDisplay.textContent = history + ' =';
                 updateDisplay();
@@ -528,7 +568,13 @@
             }
         }
 
-        // Keyboard support
+        function prepareExpression(expr) {
+            expr = expr.replace(/π/g, Math.PI);
+            expr = expr.replace(/e(?![a-z])/g, Math.E);
+            expr = expr.replace(/\^/g, '**');
+            return expr;
+        }
+
         document.addEventListener('keydown', (event) => {
             const key = event.key;
             
