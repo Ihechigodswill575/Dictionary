@@ -2,1814 +2,551 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2k26 DAYSPRING Academy - Memory Book</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Scientific Calculator - By AYOMIDE</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #0ea5e9;
-            --secondary-color: #0284c7;
-            --accent-color: #f59e0b;
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-light: #e2e8f0;
-            --text-dark: #1f2937;
-            --white: #ffffff;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            color: var(--text-light);
-            background: var(--dark-bg);
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Navbar */
-        .navbar {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 20px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .logo img {
-            height: 55px;
-            width: auto;
-            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
-        }
-
-        .logo-text {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             flex-direction: column;
-            line-height: 1.2;
-        }
-
-        .logo-main {
-            font-size: 1.6rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-sub {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 400;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 5px 0;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 28px;
-            height: 3px;
-            background: var(--primary-color);
-            border-radius: 3px;
-            transition: 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            position: relative;
-            margin-top: 80px;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--white), var(--primary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 80px rgba(14, 165, 233, 0.3);
-        }
-
-        .hero p {
-            font-size: 1.8rem;
-            margin-bottom: 2.5rem;
-            color: var(--text-light);
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 18px 50px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(14, 165, 233, 0.5);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 100px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            border-radius: 5px;
-        }
-
-        /* About Section */
-        .about {
-            background: linear-gradient(180deg, var(--dark-bg), var(--card-bg));
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
             align-items: center;
+            min-height: 100vh;
+            padding: 10px;
         }
 
-        .about-text p {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(245, 158, 11, 0.1));
-            padding: 2.5rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid rgba(14, 165, 233, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .stat-box:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.3);
-        }
-
-        .stat-box h3 {
-            font-size: 3.5rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-weight: 900;
-        }
-
-        .stat-box p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        /* Gallery Section */
-        .gallery {
-            background: var(--dark-bg);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            border: 2px solid rgba(14, 165, 233, 0.2);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.4);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.15);
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-            color: white;
-            padding: 2rem;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
-        }
-
-        /* Blog Section */
-        .blog {
-            background: linear-gradient(180deg, var(--dark-bg), var(--card-bg));
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .blog-card {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.05), rgba(245, 158, 11, 0.05));
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(14, 165, 233, 0.2);
-            transition: all 0.4s ease;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.4);
-        }
-
-        .blog-card-header {
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-        }
-
-        .blog-card-header h3 {
-            margin-bottom: 0.8rem;
-            font-size: 1.6rem;
-            font-weight: 700;
-        }
-
-        .blog-date {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        .blog-card-body {
-            padding: 2rem;
-            color: var(--text-light);
-        }
-
-        /* Memory Book Section */
-        .book {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
-        }
-
-        .memory-timeline {
-            margin-top: 3rem;
-        }
-
-        .timeline-item {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(245, 158, 11, 0.1));
-            padding: 2.5rem;
-            border-radius: 20px;
-            margin-bottom: 2.5rem;
-            border-left: 5px solid var(--accent-color);
+        .creator-badge {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            animation: slideInLeft 0.6s ease;
-            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        .timeline-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.3);
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-80px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Contact Section */
-        .contact {
-            background: var(--dark-bg);
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            padding: 1.2rem;
-            border: 2px solid rgba(14, 165, 233, 0.3);
-            border-radius: 12px;
-            font-size: 1.1rem;
-            background: rgba(14, 165, 233, 0.05);
-            color: var(--text-light);
-            transition: all 0.3s ease;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: rgba(14, 165, 233, 0.1);
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
-        }
-
-        .contact-form button {
-            padding: 1.2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+        .creator-badge h3 {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
             letter-spacing: 1px;
         }
 
-        .contact-form button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
+        .creator-badge p {
+            color: #e0e0e0;
+            font-size: 12px;
+            margin-top: 3px;
         }
 
-        .contact-info {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(245, 158, 11, 0.1));
-            padding: 2.5rem;
+        .calculator {
+            background: #1a1a2e;
             border-radius: 20px;
-            border: 2px solid rgba(14, 165, 233, 0.2);
-        }
-
-        .contact-info h3 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-
-        .contact-info p {
-            margin-bottom: 1.2rem;
-            font-size: 1.1rem;
-            color: var(--text-light);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--card-bg);
-            color: white;
-            padding: 3rem 0 1.5rem;
-            position: relative;
-            border-top: 2px solid var(--primary-color);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 2rem;
-        }
-
-        .footer-logo img {
-            height: 70px;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .footer-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Hidden Admin Dot */
-        .admin-dot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 12px;
-            height: 12px;
-            background: transparent;
-            cursor: pointer;
-            z-index: 999;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .admin-dot:hover {
-            background: rgba(14, 165, 233, 0.5);
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8);
-        }
-
-        /* Modals */
-        .admin-modal,
-        .terms-modal,
-        .manage-modal,
-        .edit-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 2000;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .admin-content,
-        .terms-content,
-        .manage-content,
-        .edit-content {
-            position: relative;
-            background: var(--card-bg);
-            width: 90%;
-            max-width: 700px;
-            margin: 3% auto;
-            padding: 2.5rem;
-            border-radius: 20px;
-            max-height: 85vh;
-            overflow-y: auto;
-            border: 2px solid var(--primary-color);
+            padding: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .close-modal,
-        .close-terms,
-        .close-manage,
-        .close-edit {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 2.5rem;
-            cursor: pointer;
-            color: var(--text-light);
-            transition: all 0.3s ease;
-        }
-
-        .close-modal:hover,
-        .close-terms:hover,
-        .close-manage:hover,
-        .close-edit:hover {
-            color: var(--danger);
-            transform: rotate(90deg);
-        }
-
-        #adminDashboard h3 {
-            margin-top: 2rem;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            border-bottom: 2px solid rgba(14, 165, 233, 0.3);
-            padding-bottom: 0.5rem;
-        }
-
-        #adminDashboard input,
-        #adminDashboard textarea,
-        .edit-content input,
-        .edit-content textarea {
+            max-width: 450px;
             width: 100%;
-            padding: 1rem;
-            margin: 0.8rem 0;
-            border: 2px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .display {
+            background: #0f3460;
             border-radius: 10px;
-            background: rgba(14, 165, 233, 0.05);
-            color: var(--text-light);
-            font-size: 1rem;
+            padding: 20px;
+            margin-bottom: 15px;
+            min-height: 90px;
         }
 
-        #adminDashboard button,
-        .edit-content button {
-            padding: 1rem 2rem;
-            margin: 0.5rem 0.5rem 0.5rem 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 1rem;
+        .display-history {
+            color: #888;
+            font-size: 14px;
+            min-height: 20px;
+            text-align: right;
+            word-wrap: break-word;
+            overflow-x: auto;
         }
 
-        #adminDashboard button:hover,
-        .edit-content button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+        .display-result {
+            color: #fff;
+            font-size: 36px;
+            text-align: right;
+            margin-top: 10px;
+            word-wrap: break-word;
+            font-weight: 500;
+            overflow-x: auto;
         }
 
-        .delete-btn {
-            background: linear-gradient(135deg, var(--danger), #dc2626) !important;
-        }
-
-        .edit-btn {
-            background: linear-gradient(135deg, var(--warning), #ea580c) !important;
-        }
-
-        .success-btn {
-            background: linear-gradient(135deg, var(--success), #059669) !important;
-        }
-
-        .admin-grid {
+        .buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
         }
 
-        .admin-grid button {
-            width: 100%;
-        }
-
-        .manage-list {
-            margin-top: 1.5rem;
-        }
-
-        .manage-item {
-            background: rgba(14, 165, 233, 0.05);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+        button {
+            background: #16213e;
+            border: none;
             border-radius: 12px;
-            border: 1px solid rgba(14, 165, 233, 0.2);
+            color: #fff;
+            font-size: 16px;
+            padding: 18px 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        button:active {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+
+        .operator {
+            background: #e94560;
+            font-size: 20px;
+        }
+
+        .function {
+            background: #533483;
+            font-size: 14px;
+        }
+
+        .clear {
+            background: #d63447;
+        }
+
+        .equals {
+            background: #00d9ff;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        .mode-toggle {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 15px;
+            gap: 10px;
         }
 
-        .manage-item-content {
-            flex: 1;
+        .mode-btn {
+            background: #16213e;
+            padding: 10px 24px;
+            font-size: 14px;
+            border-radius: 8px;
+            touch-action: manipulation;
         }
 
-        .manage-item h4 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
+        .mode-btn.active {
+            background: #e94560;
         }
 
-        .manage-item p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        .manage-item-actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .manage-item button {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
-        }
-
-        .message-item {
-            background: rgba(14, 165, 233, 0.05);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(14, 165, 233, 0.2);
-        }
-
-        .message-item.unread {
-            border-color: var(--accent-color);
-            background: rgba(245, 158, 11, 0.1);
-        }
-
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .message-header h4 {
-            color: var(--primary-color);
-        }
-
-        .message-header small {
-            color: var(--text-light);
-            opacity: 0.7;
-        }
-
-        .message-body {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-
-        .message-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .message-actions button {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-        }
-
-        .terms-text {
-            line-height: 1.8;
-            color: var(--text-light);
-        }
-
-        .terms-text h3 {
-            color: var(--primary-color);
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .loading {
+        .footer {
+            margin-top: 15px;
             text-align: center;
-            padding: 4rem;
-            color: var(--text-light);
-            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--danger);
-            color: white;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-left: 0.5rem;
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .creator-badge {
+                padding: 8px 16px;
+                margin-bottom: 10px;
+            }
+
+            .creator-badge h3 {
+                font-size: 14px;
+            }
+
+            .creator-badge p {
+                font-size: 11px;
+            }
+
+            .calculator {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            .display {
+                padding: 15px;
+                min-height: 80px;
+            }
+
+            .display-result {
+                font-size: 32px;
+            }
+
+            button {
+                padding: 16px 6px;
+                font-size: 15px;
+                border-radius: 10px;
+            }
+
+            .function {
+                font-size: 13px;
+            }
+
+            .operator {
+                font-size: 18px;
+            }
+
+            .buttons {
+                gap: 6px;
+            }
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
+        @media (max-width: 360px) {
+            .display-result {
+                font-size: 28px;
             }
 
-            .nav-links {
-                position: absolute;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: var(--card-bg);
-                width: 100%;
-                padding: 2rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-                transition: left 0.3s ease;
-                border-top: 2px solid var(--primary-color);
+            button {
+                padding: 14px 4px;
+                font-size: 14px;
             }
 
-            .nav-links.active {
-                left: 0;
+            .function {
+                font-size: 12px;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .mode-btn {
+                padding: 8px 18px;
+                font-size: 13px;
+            }
+        }
+
+        /* Landscape mode on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 5px;
             }
 
-            .hero p {
-                font-size: 1.2rem;
+            .creator-badge {
+                padding: 6px 14px;
+                margin-bottom: 8px;
             }
 
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
+            .creator-badge h3 {
+                font-size: 12px;
             }
 
-            .about-stats {
-                grid-template-columns: 1fr;
+            .creator-badge p {
+                font-size: 10px;
             }
 
-            .gallery-grid,
-            .blog-grid {
-                grid-template-columns: 1fr;
+            .calculator {
+                padding: 10px;
             }
 
-            .footer-content {
-                flex-direction: column;
-                gap: 2rem;
-                text-align: center;
+            .display {
+                padding: 12px;
+                min-height: 60px;
+                margin-bottom: 10px;
             }
 
-            .admin-grid {
-                grid-template-columns: 1fr;
+            .display-result {
+                font-size: 24px;
+                margin-top: 5px;
             }
 
-            .manage-item {
-                flex-direction: column;
-                align-items: flex-start;
+            .display-history {
+                font-size: 12px;
             }
 
-            .manage-item-actions {
-                width: 100%;
+            button {
+                padding: 12px 6px;
+                font-size: 14px;
             }
 
-            .manage-item button {
-                flex: 1;
+            .function {
+                font-size: 11px;
+            }
+
+            .mode-toggle {
+                margin-bottom: 10px;
+            }
+
+            .mode-btn {
+                padding: 6px 16px;
+                font-size: 12px;
+            }
+
+            .footer {
+                margin-top: 8px;
+                font-size: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <img src="https://i.ibb.co/jP3WtFRh/dayspring-logo-blue-bg-bbffe39d.png" alt="Dayspring Logo">
-                <div class="logo-text">
-                    <span class="logo-main">2k26</span>
-                    <span class="logo-sub">DAYSPRING Academy</span>
-                </div>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#book">Memory Book</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Home Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>2k26 DAYSPRING Academy</h1>
-            <p>Building Memories, Creating Futures</p>
-            <a href="#gallery" class="cta-button">Explore Our Journey</a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About Our Class</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Welcome to the official memory hub of 2k26 DAYSPRING Academy! We are a vibrant community of learners, dreamers, and achievers.</p>
-                    <p>This digital space celebrates our collective journey, milestones, and the incredible bonds we're building together.</p>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-box">
-                        <h3 id="photoCount">0</h3>
-                        <p>Memories</p>
-                    </div>
-                    <div class="stat-box">
-                        <h3 id="blogCount">0</h3>
-                        <p>Updates</p>
-                    </div>
-                    <div class="stat-box">
-                        <h3>2026</h3>
-                        <p>Our Year</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery">
-        <div class="container">
-            <h2 class="section-title">Photo Gallery</h2>
-            <div class="gallery-grid" id="galleryGrid">
-                <div class="loading">Loading memories...</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog" class="blog">
-        <div class="container">
-            <h2 class="section-title">Latest Updates</h2>
-            <div class="blog-grid" id="blogGrid">
-                <div class="loading">Loading posts...</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Memory Book Section -->
-    <section id="book" class="book">
-        <div class="container">
-            <h2 class="section-title">Memory Timeline</h2>
-            <div class="book-content">
-                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">Our journey through milestones and achievements</p>
-                <div class="memory-timeline" id="memoryTimeline"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <form class="contact-form" id="contactForm">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
-                    <button type="submit">Send Message</button>
-                </form>
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <p>📧 Email: ihechigodswill575@gmail.com</p>
-                    <p>📱 Admin: Godswill</p>
-                    <p>🏫 2k26 DAYSPRING Academy</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="https://i.ibb.co/jP3WtFRh/dayspring-logo-blue-bg-bbffe39d.png" alt="Dayspring Logo">
-                    <p>&copy; 2026 DAYSPRING Academy. All rights reserved.</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#" id="termsLink">Terms & Conditions</a>
-                    <a href="#" id="privacyLink">Privacy Policy</a>
-                </div>
-            </div>
-            <div class="admin-dot" id="adminDot"></div>
-        </div>
-    </footer>
-
-    <!-- Admin Panel Modal -->
-    <div class="admin-modal" id="adminModal">
-        <div class="admin-content">
-            <span class="close-modal">&times;</span>
-            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">🔐 Admin Panel</h2>
-            <div id="loginForm">
-                <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-                <button onclick="adminLogin()">Login</button>
-            </div>
-            <div id="adminDashboard" style="display:none;">
-                
-                <h3>📝 Publish Blog Post</h3>
-                <input type="text" id="blogTitle" placeholder="Blog Title">
-                <textarea id="blogContent" placeholder="Blog Content" rows="5"></textarea>
-                <button onclick="publishBlog()">Publish Now</button>
-                
-                <h3>📸 Upload Photos</h3>
-                <input type="file" id="photoUpload" accept="image/*" multiple>
-                <input type="text" id="photoCaption" placeholder="Photo caption (optional)">
-                <button onclick="uploadPhoto()">Upload Photos</button>
-                
-                <h3>⏱️ Memory Timeline</h3>
-                <input type="text" id="timelineTitle" placeholder="Timeline Title (e.g., 🎓 Graduation Day)">
-                <textarea id="timelineDesc" placeholder="Timeline Description" rows="3"></textarea>
-                <button onclick="addTimeline()">Add Timeline Item</button>
-                
-                <h3>⚙️ Manage Content</h3>
-                <div class="admin-grid">
-                    <button onclick="openManageModal('blog')">📝 Manage Blogs<span class="badge" id="blogBadge">0</span></button>
-                    <button onclick="openManageModal('gallery')">📸 Manage Photos<span class="badge" id="photoBadge">0</span></button>
-                    <button onclick="openManageModal('timeline')">⏱️ Manage Timeline<span class="badge" id="timelineBadge">0</span></button>
-                    <button onclick="openManageModal('messages')">📧 View Messages<span class="badge" id="msgBadge">0</span></button>
-                    <button onclick="changePassword()">🔑 Change Password</button>
-                    <button class="delete-btn" onclick="logout()">🚪 Logout</button>
-                </div>
-            </div>
-        </div>
+    <div class="creator-badge">
+        <h3>CREATED BY AYOMIDE</h3>
+        <p>Scientific Calculator</p>
     </div>
 
-    <!-- Manage Content Modal -->
-    <div class="manage-modal" id="manageModal">
-        <div class="manage-content">
-            <span class="close-manage">&times;</span>
-            <h2 style="color: var(--primary-color); margin-bottom: 2rem;" id="manageTitle">Manage Content</h2>
-            <div class="manage-list" id="manageList"></div>
+    <div class="calculator">
+        <div class="mode-toggle">
+            <button class="mode-btn active" id="degBtn">DEG</button>
+            <button class="mode-btn" id="radBtn">RAD</button>
         </div>
-    </div>
-
-    <!-- Edit Modal -->
-    <div class="edit-modal" id="editModal">
-        <div class="edit-content">
-            <span class="close-edit">&times;</span>
-            <h2 style="color: var(--primary-color); margin-bottom: 2rem;" id="editTitle">Edit Item</h2>
-            <div id="editForm"></div>
-        </div>
-    </div>
-
-    <!-- Terms & Conditions Modal -->
-    <div class="terms-modal" id="termsModal">
-        <div class="terms-content">
-            <span class="close-terms">&times;</span>
-            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Terms & Conditions</h2>
-            <div class="terms-text">
-                <p><strong>Last Updated: January 2026</strong></p>
-                <h3>1. Acceptance of Terms</h3>
-                <p>By accessing 2k26 DAYSPRING Academy Memory Book, you agree to these terms.</p>
-                
-                <h3>2. Use of Photos</h3>
-                <p>All uploaded photos remain the property of class members. By uploading, you grant permission for display on this platform.</p>
-                
-                <h3>3. Privacy</h3>
-                <p>We respect your privacy. Content is visible to class members and approved visitors only.</p>
-                
-                <h3>4. Content Guidelines</h3>
-                <p>All content must be appropriate and relevant to class activities. Inappropriate content will be removed.</p>
-                
-                <h3>5. Admin Rights</h3>
-                <p>The admin reserves the right to moderate, edit, or remove any content deemed inappropriate.</p>
-                
-                <h3>6. Contact</h3>
-                <p>For questions: ihechigodswill575@gmail.com</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase & JavaScript -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBzUELxbbaL6Wb_M1uNhjwlZHVTorN9XJs",
-            authDomain: "my-whatsapp-2c1af.firebaseapp.com",
-            databaseURL: "https://my-whatsapp-2c1af-default-rtdb.firebaseio.com",
-            projectId: "my-whatsapp-2c1af",
-            storageBucket: "my-whatsapp-2c1af.firebasestorage.app",
-            messagingSenderId: "1089455460888",
-            appId: "1:1089455460888:web:15bd0820546c813febe96d"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        window.firebaseDb = database;
-        window.firebaseRef = ref;
-        window.firebaseSet = set;
-        window.firebasePush = push;
-        window.firebaseOnValue = onValue;
-        window.firebaseRemove = remove;
-        window.firebaseUpdate = update;
-
-        // Initialize default timeline items if none exist
-        initializeDefaultTimeline();
         
-        loadGallery();
-        loadBlogs();
-        loadMemoryTimeline();
+        <div class="display">
+            <div class="display-history" id="history"></div>
+            <div class="display-result" id="result">0</div>
+        </div>
 
-        async function initializeDefaultTimeline() {
-            const timelineRef = ref(database, 'memories');
-            onValue(timelineRef, (snapshot) => {
-                if (!snapshot.exists()) {
-                    // Add default timeline items to Firebase
-                    const defaultItems = [
-                        {
-                            title: '🎓 Class Formation - 2024',
-                            description: 'The beginning of our journey at DAYSPRING Academy!',
-                            timestamp: Date.now() - 86400000 * 365
-                        },
-                        {
-                            title: '📚 Academic Excellence - 2025',
-                            description: 'Achieving milestones and building lasting friendships.',
-                            timestamp: Date.now() - 86400000 * 180
-                        },
-                        {
-                            title: '🎉 Class Unity - Ongoing',
-                            description: 'Together we grow, learn, and create unforgettable memories!',
-                            timestamp: Date.now()
-                        }
-                    ];
+        <div class="buttons">
+            <!-- Row 1 -->
+            <button class="function" onclick="insertFunction('sin(')">sin</button>
+            <button class="function" onclick="insertFunction('cos(')">cos</button>
+            <button class="function" onclick="insertFunction('tan(')">tan</button>
+            <button class="function" onclick="insertFunction('log(')">log</button>
+            <button class="function" onclick="insertFunction('ln(')">ln</button>
 
-                    defaultItems.forEach(item => {
-                        const newRef = push(timelineRef);
-                        set(newRef, {
-                            id: newRef.key,
-                            ...item
-                        });
-                    });
-                }
-            }, { onlyOnce: true });
-        }
-    </script>
+            <!-- Row 2 -->
+            <button class="function" onclick="insertFunction('asin(')">sin⁻¹</button>
+            <button class="function" onclick="insertFunction('acos(')">cos⁻¹</button>
+            <button class="function" onclick="insertFunction('atan(')">tan⁻¹</button>
+            <button class="function" onclick="insertValue('π')">π</button>
+            <button class="function" onclick="insertValue('e')">e</button>
+
+            <!-- Row 3 -->
+            <button class="function" onclick="insertFunction('sqrt(')">√</button>
+            <button class="function" onclick="insertValue('^')">x^y</button>
+            <button class="function" onclick="insertValue('^2')">x²</button>
+            <button class="function" onclick="insertValue('^3')">x³</button>
+            <button class="function" onclick="insertValue('^(-1)')">1/x</button>
+
+            <!-- Row 4 -->
+            <button class="function" onclick="insertValue('(')">(</button>
+            <button class="function" onclick="insertValue(')')">)</button>
+            <button class="function" onclick="factorial()">n!</button>
+            <button class="clear" onclick="clearAll()">AC</button>
+            <button class="clear" onclick="backspace()">⌫</button>
+
+            <!-- Row 5 -->
+            <button onclick="insertValue('7')">7</button>
+            <button onclick="insertValue('8')">8</button>
+            <button onclick="insertValue('9')">9</button>
+            <button class="operator" onclick="insertValue('/')">÷</button>
+            <button class="function" onclick="insertValue('%')">%</button>
+
+            <!-- Row 6 -->
+            <button onclick="insertValue('4')">4</button>
+            <button onclick="insertValue('5')">5</button>
+            <button onclick="insertValue('6')">6</button>
+            <button class="operator" onclick="insertValue('*')">×</button>
+            <button class="function" onclick="abs()">|x|</button>
+
+            <!-- Row 7 -->
+            <button onclick="insertValue('1')">1</button>
+            <button onclick="insertValue('2')">2</button>
+            <button onclick="insertValue('3')">3</button>
+            <button class="operator" onclick="insertValue('-')">−</button>
+            <button class="function" onclick="insertValue('exp(')">exp</button>
+
+            <!-- Row 8 -->
+            <button onclick="insertValue('0')">0</button>
+            <button onclick="insertValue('.')">.</button>
+            <button onclick="toggleSign()">+/−</button>
+            <button class="operator" onclick="insertValue('+')">+</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+
+        <div class="footer">
+            © 2024 AYOMIDE - All Rights Reserved
+        </div>
+    </div>
 
     <script>
-        const CLOUDINARY_CLOUD_NAME = 'dzxckgbzp';
-        const CLOUDINARY_UPLOAD_PRESET = 'Odegaard';
-        const CLOUDINARY_API_KEY = '166123442148894';
-        const ADMIN_PASSWORD_KEY = 'admin_password';
-        
-        let ADMIN_PASSWORD = localStorage.getItem(ADMIN_PASSWORD_KEY) || 'ihechigodswill575@gmail.com';
-        let isAdminLoggedIn = false;
-        let currentManageType = '';
-        let currentEditItem = null;
+        let currentInput = '';
+        let history = '';
+        let angleMode = 'deg'; // 'deg' or 'rad'
 
-        // Mobile menu
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+        const resultDisplay = document.getElementById('result');
+        const historyDisplay = document.getElementById('history');
+        const degBtn = document.getElementById('degBtn');
+        const radBtn = document.getElementById('radBtn');
 
-        hamburger?.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+        // Toggle angle mode
+        degBtn.addEventListener('click', () => {
+            angleMode = 'deg';
+            degBtn.classList.add('active');
+            radBtn.classList.remove('active');
         });
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    navLinks.classList.remove('active');
-                }
-            });
+        radBtn.addEventListener('click', () => {
+            angleMode = 'rad';
+            radBtn.classList.add('active');
+            degBtn.classList.remove('active');
         });
 
-        // Admin Panel
-        const adminDot = document.getElementById('adminDot');
-        const adminModal = document.getElementById('adminModal');
-        const closeModal = document.querySelector('.close-modal');
-
-        adminDot?.addEventListener('click', () => {
-            isAdminLoggedIn = false;
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('adminDashboard').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-            adminModal.style.display = 'block';
-        });
-
-        closeModal?.addEventListener('click', () => {
-            adminModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === adminModal) adminModal.style.display = 'none';
-        });
-
-        // Admin Login
-        window.adminLogin = function() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === ADMIN_PASSWORD) {
-                isAdminLoggedIn = true;
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('adminDashboard').style.display = 'block';
-                alert('✅ Welcome Admin!');
-                updateBadges();
-            } else {
-                alert('❌ Incorrect password!');
-            }
-        };
-
-        // Logout
-        window.logout = function() {
-            isAdminLoggedIn = false;
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('adminDashboard').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-            adminModal.style.display = 'none';
-        };
-
-        // Change Password
-        window.changePassword = function() {
-            const newPassword = prompt('Enter new admin password:');
-            if (newPassword && newPassword.length >= 6) {
-                ADMIN_PASSWORD = newPassword;
-                localStorage.setItem(ADMIN_PASSWORD_KEY, newPassword);
-                alert('✅ Password changed successfully!');
-            } else if (newPassword) {
-                alert('❌ Password must be at least 6 characters!');
-            }
-        };
-
-        // Publish Blog
-        window.publishBlog = async function() {
-            if (!isAdminLoggedIn) {
-                alert('❌ Please login first!');
-                return;
-            }
-
-            const title = document.getElementById('blogTitle').value;
-            const content = document.getElementById('blogContent').value;
-
-            if (!title || !content) {
-                alert('⚠️ Please fill in all fields!');
-                return;
-            }
-
-            const blogsRef = window.firebaseRef(window.firebaseDb, 'blogs');
-            const newBlogRef = window.firebasePush(blogsRef);
-            
-            await window.firebaseSet(newBlogRef, {
-                id: newBlogRef.key,
-                title: title,
-                content: content,
-                date: new Date().toLocaleDateString(),
-                timestamp: Date.now()
-            });
-
-            alert('✅ Blog published successfully!');
-            document.getElementById('blogTitle').value = '';
-            document.getElementById('blogContent').value = '';
-            loadBlogs();
-            updateBadges();
-        };
-
-        // Upload Photos
-        window.uploadPhoto = async function() {
-            if (!isAdminLoggedIn) {
-                alert('❌ Please login first!');
-                return;
-            }
-
-            const fileInput = document.getElementById('photoUpload');
-            const caption = document.getElementById('photoCaption').value;
-            
-            if (!fileInput.files.length) {
-                alert('⚠️ Please select photos!');
-                return;
-            }
-
-            const files = Array.from(fileInput.files);
-            
-            for (const file of files) {
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                formData.append('cloud_name', CLOUDINARY_CLOUD_NAME);
-
-                try {
-                    const response = await fetch(
-                        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-                        { method: 'POST', body: formData }
-                    );
-
-                    const data = await response.json();
-                    
-                    if (data.secure_url) {
-                        const photosRef = window.firebaseRef(window.firebaseDb, 'gallery');
-                        const newPhotoRef = window.firebasePush(photosRef);
-                        await window.firebaseSet(newPhotoRef, {
-                            id: newPhotoRef.key,
-                            url: data.secure_url,
-                            caption: caption || 'Class Memory',
-                            timestamp: Date.now()
-                        });
-                    }
-                } catch (error) {
-                    console.error('Upload error:', error);
-                    alert('❌ Upload failed: ' + error.message);
-                }
-            }
-            
-            alert('✅ Photos uploaded successfully!');
-            fileInput.value = '';
-            document.getElementById('photoCaption').value = '';
-            loadGallery();
-            updateBadges();
-        };
-
-        // Add Timeline
-        window.addTimeline = async function() {
-            if (!isAdminLoggedIn) {
-                alert('❌ Please login first!');
-                return;
-            }
-
-            const title = document.getElementById('timelineTitle').value;
-            const description = document.getElementById('timelineDesc').value;
-
-            if (!title || !description) {
-                alert('⚠️ Please fill in all fields!');
-                return;
-            }
-
-            const timelineRef = window.firebaseRef(window.firebaseDb, 'memories');
-            const newTimelineRef = window.firebasePush(timelineRef);
-            
-            await window.firebaseSet(newTimelineRef, {
-                id: newTimelineRef.key,
-                title: title,
-                description: description,
-                timestamp: Date.now()
-            });
-
-            alert('✅ Timeline item added!');
-            document.getElementById('timelineTitle').value = '';
-            document.getElementById('timelineDesc').value = '';
-            loadMemoryTimeline();
-            updateBadges();
-        };
-
-        // Manage Content Modal
-        const manageModal = document.getElementById('manageModal');
-        const closeManage = document.querySelector('.close-manage');
-
-        closeManage?.addEventListener('click', () => {
-            manageModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === manageModal) manageModal.style.display = 'none';
-        });
-
-        window.openManageModal = function(type) {
-            currentManageType = type;
-            const titles = {
-                'blog': '📝 Manage Blog Posts',
-                'gallery': '📸 Manage Photos',
-                'timeline': '⏱️ Manage Timeline',
-                'messages': '📧 Contact Messages'
-            };
-            document.getElementById('manageTitle').textContent = titles[type];
-            manageModal.style.display = 'block';
-            loadManageContent(type);
-        };
-
-        function loadManageContent(type) {
-            const manageList = document.getElementById('manageList');
-            
-            if (type === 'messages') {
-                loadMessagesAdmin(manageList);
-                return;
-            }
-
-            const paths = {
-                'blog': 'blogs',
-                'gallery': 'gallery',
-                'timeline': 'memories'
-            };
-
-            const dataRef = window.firebaseRef(window.firebaseDb, paths[type]);
-            
-            window.firebaseOnValue(dataRef, (snapshot) => {
-                manageList.innerHTML = '';
-                
-                snapshot.forEach((childSnapshot) => {
-                    const item = childSnapshot.val();
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'manage-item';
-                    
-                    if (type === 'blog') {
-                        itemDiv.innerHTML = `
-                            <div class="manage-item-content">
-                                <h4>${item.title}</h4>
-                                <p>${item.content.substring(0, 100)}${item.content.length > 100 ? '...' : ''}</p>
-                                <small style="opacity: 0.7;">${item.date}</small>
-                            </div>
-                            <div class="manage-item-actions">
-                                <button class="edit-btn" onclick="editItem('blog', '${childSnapshot.key}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️ Edit</button>
-                                <button class="delete-btn" onclick="deleteItem('blogs', '${childSnapshot.key}')">🗑️ Delete</button>
-                            </div>
-                        `;
-                    } else if (type === 'gallery') {
-                        itemDiv.innerHTML = `
-                            <div class="manage-item-content">
-                                <h4>${item.caption}</h4>
-                                <img src="${item.url}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 12px; margin-top: 0.5rem;">
-                            </div>
-                            <div class="manage-item-actions">
-                                <button class="edit-btn" onclick="editItem('gallery', '${childSnapshot.key}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️ Edit</button>
-                                <button class="delete-btn" onclick="deleteItem('gallery', '${childSnapshot.key}')">🗑️ Delete</button>
-                            </div>
-                        `;
-                    } else if (type === 'timeline') {
-                        itemDiv.innerHTML = `
-                            <div class="manage-item-content">
-                                <h4>${item.title}</h4>
-                                <p>${item.description}</p>
-                            </div>
-                            <div class="manage-item-actions">
-                                <button class="edit-btn" onclick="editItem('timeline', '${childSnapshot.key}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️ Edit</button>
-                                <button class="delete-btn" onclick="deleteItem('memories', '${childSnapshot.key}')">🗑️ Delete</button>
-                            </div>
-                        `;
-                    }
-                    
-                    manageList.appendChild(itemDiv);
-                });
-                
-                if (!snapshot.exists()) {
-                    manageList.innerHTML = '<p style="text-align: center; padding: 2rem; opacity: 0.7;">No items found</p>';
-                }
-            });
+        function insertValue(value) {
+            currentInput += value;
+            updateDisplay();
         }
 
-        // Edit Modal
-        const editModal = document.getElementById('editModal');
-        const closeEdit = document.querySelector('.close-edit');
-
-        closeEdit?.addEventListener('click', () => {
-            editModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === editModal) editModal.style.display = 'none';
-        });
-
-        window.editItem = function(type, id, item) {
-            currentEditItem = { type, id, item };
-            const editForm = document.getElementById('editForm');
-            
-            const titles = {
-                'blog': '✏️ Edit Blog Post',
-                'gallery': '✏️ Edit Photo',
-                'timeline': '✏️ Edit Timeline'
-            };
-            document.getElementById('editTitle').textContent = titles[type];
-
-            if (type === 'blog') {
-                editForm.innerHTML = `
-                    <input type="text" id="editBlogTitle" value="${item.title}" placeholder="Blog Title">
-                    <textarea id="editBlogContent" rows="8" placeholder="Blog Content">${item.content}</textarea>
-                    <button class="success-btn" onclick="saveEdit()">💾 Save Changes</button>
-                    <button class="delete-btn" onclick="cancelEdit()">❌ Cancel</button>
-                `;
-            } else if (type === 'gallery') {
-                editForm.innerHTML = `
-                    <img src="${item.url}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
-                    <input type="text" id="editPhotoCaption" value="${item.caption}" placeholder="Photo Caption">
-                    <button class="success-btn" onclick="saveEdit()">💾 Save Changes</button>
-                    <button class="delete-btn" onclick="cancelEdit()">❌ Cancel</button>
-                `;
-            } else if (type === 'timeline') {
-                editForm.innerHTML = `
-                    <input type="text" id="editTimelineTitle" value="${item.title}" placeholder="Timeline Title">
-                    <textarea id="editTimelineDesc" rows="5" placeholder="Timeline Description">${item.description}</textarea>
-                    <button class="success-btn" onclick="saveEdit()">💾 Save Changes</button>
-                    <button class="delete-btn" onclick="cancelEdit()">❌ Cancel</button>
-                `;
-            }
-
-            editModal.style.display = 'block';
-        };
-
-        window.saveEdit = async function() {
-            const { type, id, item } = currentEditItem;
-            const paths = {
-                'blog': 'blogs',
-                'gallery': 'gallery',
-                'timeline': 'memories'
-            };
-
-            let updateData = {};
-
-            if (type === 'blog') {
-                updateData = {
-                    ...item,
-                    title: document.getElementById('editBlogTitle').value,
-                    content: document.getElementById('editBlogContent').value
-                };
-            } else if (type === 'gallery') {
-                updateData = {
-                    ...item,
-                    caption: document.getElementById('editPhotoCaption').value
-                };
-            } else if (type === 'timeline') {
-                updateData = {
-                    ...item,
-                    title: document.getElementById('editTimelineTitle').value,
-                    description: document.getElementById('editTimelineDesc').value
-                };
-            }
-
-            const itemRef = window.firebaseRef(window.firebaseDb, `${paths[type]}/${id}`);
-            await window.firebaseUpdate(itemRef, updateData);
-
-            alert('✅ Changes saved successfully!');
-            editModal.style.display = 'none';
-            
-            if (type === 'blog') loadBlogs();
-            else if (type === 'gallery') loadGallery();
-            else if (type === 'timeline') loadMemoryTimeline();
-            
-            loadManageContent(currentManageType);
-        };
-
-        window.cancelEdit = function() {
-            editModal.style.display = 'none';
-        };
-
-        window.deleteItem = async function(path, id) {
-            if (!confirm('⚠️ Are you sure you want to delete this item?')) return;
-            
-            const itemRef = window.firebaseRef(window.firebaseDb, `${path}/${id}`);
-            await window.firebaseRemove(itemRef);
-            
-            alert('✅ Item deleted successfully!');
-            
-            if (path === 'blogs') loadBlogs();
-            else if (path === 'gallery') loadGallery();
-            else if (path === 'memories') loadMemoryTimeline();
-            
-            loadManageContent(currentManageType);
-            updateBadges();
-        };
-
-        // Load Messages for Admin
-        function loadMessagesAdmin(container) {
-            const messagesRef = window.firebaseRef(window.firebaseDb, 'contacts');
-            
-            window.firebaseOnValue(messagesRef, (snapshot) => {
-                container.innerHTML = '';
-                
-                snapshot.forEach((childSnapshot) => {
-                    const msg = childSnapshot.val();
-                    const msgDiv = document.createElement('div');
-                    msgDiv.className = `message-item ${msg.read ? '' : 'unread'}`;
-                    msgDiv.innerHTML = `
-                        <div class="message-header">
-                            <h4>${msg.name} (${msg.email})</h4>
-                            <small>${new Date(msg.timestamp).toLocaleString()}</small>
-                        </div>
-                        <div class="message-body">
-                            <p>${msg.message}</p>
-                        </div>
-                        <div class="message-actions">
-                            ${!msg.read ? `<button class="success-btn" onclick="markAsRead('${childSnapshot.key}')">✅ Mark Read</button>` : ''}
-                            <button class="delete-btn" onclick="deleteMessage('${childSnapshot.key}')">🗑️ Delete</button>
-                        </div>
-                    `;
-                    container.appendChild(msgDiv);
-                });
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; padding: 2rem; opacity: 0.7;">No messages yet</p>';
-                }
-            });
+        function insertFunction(func) {
+            currentInput += func;
+            updateDisplay();
         }
 
-        window.markAsRead = async function(id) {
-            const msgRef = window.firebaseRef(window.firebaseDb, `contacts/${id}`);
-            await window.firebaseUpdate(msgRef, { read: true });
-            loadManageContent('messages');
-            updateBadges();
-        };
-
-        window.deleteMessage = async function(id) {
-            if (!confirm('⚠️ Delete this message?')) return;
-            
-            const msgRef = window.firebaseRef(window.firebaseDb, `contacts/${id}`);
-            await window.firebaseRemove(msgRef);
-            
-            alert('✅ Message deleted!');
-            loadManageContent('messages');
-            updateBadges();
-        };
-
-        // Update badges
-        function updateBadges() {
-            const blogsRef = window.firebaseRef(window.firebaseDb, 'blogs');
-            const photosRef = window.firebaseRef(window.firebaseDb, 'gallery');
-            const timelineRef = window.firebaseRef(window.firebaseDb, 'memories');
-            const messagesRef = window.firebaseRef(window.firebaseDb, 'contacts');
-
-            window.firebaseOnValue(blogsRef, (snapshot) => {
-                const count = snapshot.size || 0;
-                document.getElementById('blogBadge').textContent = count;
-                document.getElementById('blogCount').textContent = count;
-            });
-
-            window.firebaseOnValue(photosRef, (snapshot) => {
-                const count = snapshot.size || 0;
-                document.getElementById('photoBadge').textContent = count;
-            });
-
-            window.firebaseOnValue(timelineRef, (snapshot) => {
-                const count = snapshot.size || 0;
-                document.getElementById('timelineBadge').textContent = count;
-            });
-
-            window.firebaseOnValue(messagesRef, (snapshot) => {
-                let unreadCount = 0;
-                snapshot.forEach(child => {
-                    if (!child.val().read) unreadCount++;
-                });
-                document.getElementById('msgBadge').textContent = unreadCount;
-            });
+        function updateDisplay() {
+            resultDisplay.textContent = currentInput || '0';
         }
 
-        // Load Gallery
-        function loadGallery() {
-            const galleryGrid = document.getElementById('galleryGrid');
-            const photosRef = window.firebaseRef(window.firebaseDb, 'gallery');
-            
-            window.firebaseOnValue(photosRef, (snapshot) => {
-                galleryGrid.innerHTML = '';
-                let count = 0;
-                
-                snapshot.forEach((childSnapshot) => {
-                    const photo = childSnapshot.val();
-                    count++;
-                    
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-                    item.innerHTML = `
-                        <img src="${photo.url}" alt="${photo.caption}">
-                        <div class="gallery-caption">
-                            <p>${photo.caption}</p>
-                        </div>
-                    `;
-                    galleryGrid.appendChild(item);
-                });
-                
-                if (count === 0) {
-                    galleryGrid.innerHTML = '<div class="loading">No photos yet. Admin can upload!</div>';
-                }
-                
-                document.getElementById('photoCount').textContent = count;
-            });
+        function clearAll() {
+            currentInput = '';
+            history = '';
+            historyDisplay.textContent = '';
+            updateDisplay();
         }
 
-        // Load Blogs
-        function loadBlogs() {
-            const blogGrid = document.getElementById('blogGrid');
-            const blogsRef = window.firebaseRef(window.firebaseDb, 'blogs');
-            
-            window.firebaseOnValue(blogsRef, (snapshot) => {
-                blogGrid.innerHTML = '';
-                let hasBlogs = false;
-                
-                snapshot.forEach((childSnapshot) => {
-                    const blog = childSnapshot.val();
-                    hasBlogs = true;
-                    
-                    const card = document.createElement('div');
-                    card.className = 'blog-card';
-                    card.innerHTML = `
-                        <div class="blog-card-header">
-                            <h3>${blog.title}</h3>
-                            <span class="blog-date">${blog.date}</span>
-                        </div>
-                        <div class="blog-card-body">
-                            <p>${blog.content}</p>
-                        </div>
-                    `;
-                    blogGrid.appendChild(card);
-                });
-                
-                if (!hasBlogs) {
-                    blogGrid.innerHTML = '<div class="loading">No posts yet!</div>';
-                }
-            });
+        function backspace() {
+            currentInput = currentInput.slice(0, -1);
+            updateDisplay();
         }
 
-        // Load Timeline
-        function loadMemoryTimeline() {
-            const timeline = document.getElementById('memoryTimeline');
-            const memoriesRef = window.firebaseRef(window.firebaseDb, 'memories');
-            
-            window.firebaseOnValue(memoriesRef, (snapshot) => {
-                timeline.innerHTML = '';
-                
-                if (!snapshot.exists()) {
-                    timeline.innerHTML = '<div class="loading">No timeline items yet!</div>';
+        function toggleSign() {
+            if (currentInput) {
+                if (currentInput.startsWith('-')) {
+                    currentInput = currentInput.slice(1);
                 } else {
-                    snapshot.forEach((childSnapshot) => {
-                        const memory = childSnapshot.val();
-                        const item = document.createElement('div');
-                        item.className = 'timeline-item';
-                        item.innerHTML = `
-                            <h3>${memory.title}</h3>
-                            <p>${memory.description}</p>
-                        `;
-                        timeline.appendChild(item);
-                    });
+                    currentInput = '-' + currentInput;
                 }
-            });
+                updateDisplay();
+            }
         }
 
-        // Contact Form
-        document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const contactRef = window.firebaseRef(window.firebaseDb, 'contacts');
-            const newContactRef = window.firebasePush(contactRef);
-            
-            await window.firebaseSet(newContactRef, {
-                name: e.target[0].value,
-                email: e.target[1].value,
-                message: e.target[2].value,
-                timestamp: Date.now(),
-                read: false
-            });
-            
-            alert('✅ Message sent successfully!');
-            e.target.reset();
-            updateBadges();
-        });
-
-        // Terms Modal
-        const termsLink = document.getElementById('termsLink');
-        const termsModal = document.getElementById('termsModal');
-        const closeTerms = document.querySelector('.close-terms');
-
-        termsLink?.addEventListener('click', (e) => {
-            e.preventDefault();
-            termsModal.style.display = 'block';
-        });
-
-        closeTerms?.addEventListener('click', () => {
-            termsModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === termsModal) termsModal.style.display = 'none';
-        });
-
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        function factorial() {
+            try {
+                let num = parseFloat(currentInput);
+                if (num < 0 || !Number.isInteger(num)) {
+                    throw new Error('Factorial only for non-negative integers');
                 }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+                let result = 1;
+                for (let i = 2; i <= num; i++) {
+                    result *= i;
+                }
+                history = currentInput + '!';
+                currentInput = result.toString();
+                historyDisplay.textContent = history;
+                updateDisplay();
+            } catch (error) {
+                resultDisplay.textContent = 'Error';
+            }
+        }
 
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            observer.observe(section);
+        function abs() {
+            try {
+                let result = Math.abs(eval(prepareExpression(currentInput)));
+                history = '|' + currentInput + '|';
+                currentInput = result.toString();
+                historyDisplay.textContent = history;
+                updateDisplay();
+            } catch (error) {
+                resultDisplay.textContent = 'Error';
+            }
+        }
+
+        function prepareExpression(expr) {
+            // Replace π and e
+            expr = expr.replace(/π/g, Math.PI);
+            expr = expr.replace(/e(?![a-z])/g, Math.E);
+            
+            // Replace power operator
+            expr = expr.replace(/\^/g, '**');
+            
+            // Handle trigonometric functions
+            expr = expr.replace(/sin\(/g, angleMode === 'deg' ? 'Math.sin(toRadians(' : 'Math.sin(');
+            expr = expr.replace(/cos\(/g, angleMode === 'deg' ? 'Math.cos(toRadians(' : 'Math.cos(');
+            expr = expr.replace(/tan\(/g, angleMode === 'deg' ? 'Math.tan(toRadians(' : 'Math.tan(');
+            
+            // Handle inverse trig functions
+            expr = expr.replace(/asin\(/g, angleMode === 'deg' ? 'toDegrees(Math.asin(' : 'Math.asin(');
+            expr = expr.replace(/acos\(/g, angleMode === 'deg' ? 'toDegrees(Math.acos(' : 'Math.acos(');
+            expr = expr.replace(/atan\(/g, angleMode === 'deg' ? 'toDegrees(Math.atan(' : 'Math.atan(');
+            
+            // Handle logarithms
+            expr = expr.replace(/log\(/g, 'Math.log10(');
+            expr = expr.replace(/ln\(/g, 'Math.log(');
+            
+            // Handle sqrt
+            expr = expr.replace(/sqrt\(/g, 'Math.sqrt(');
+            
+            // Handle exp
+            expr = expr.replace(/exp\(/g, 'Math.exp(');
+            
+            // Add closing parentheses for degree conversions
+            if (angleMode === 'deg') {
+                expr = expr.replace(/(toRadians\([^)]+)\)/g, '$1))');
+                expr = expr.replace(/(toDegrees\([^)]+)\)/g, '$1))');
+            }
+            
+            return expr;
+        }
+
+        function toRadians(degrees) {
+            return degrees * Math.PI / 180;
+        }
+
+        function toDegrees(radians) {
+            return radians * 180 / Math.PI;
+        }
+
+        function calculate() {
+            try {
+                if (!currentInput) return;
+                
+                history = currentInput;
+                let expression = prepareExpression(currentInput);
+                let result = eval(expression);
+                
+                // Round to avoid floating point errors
+                result = Math.round(result * 1e10) / 1e10;
+                
+                currentInput = result.toString();
+                historyDisplay.textContent = history + ' =';
+                updateDisplay();
+            } catch (error) {
+                resultDisplay.textContent = 'Error';
+                currentInput = '';
+            }
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            
+            if (key >= '0' && key <= '9' || key === '.') {
+                insertValue(key);
+            } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+                insertValue(key);
+            } else if (key === 'Enter') {
+                event.preventDefault();
+                calculate();
+            } else if (key === 'Escape') {
+                clearAll();
+            } else if (key === 'Backspace') {
+                backspace();
+            } else if (key === '(' || key === ')') {
+                insertValue(key);
+            }
         });
-
-        // Initialize badges after a delay
-        setTimeout(updateBadges, 1000);
     </script>
 </body>
 </html>
